@@ -1,0 +1,12 @@
+{
+  "name": "156-week-blueprint",
+  "private": true,
+  "description": "156-week full-stack SaaS developer learning blueprint",
+  "scripts": {
+    "build": "node scripts/build-html.mjs"
+  },
+  "devDependencies": {
+    "marked": "^15.0.7",
+    "node-html-parser": "^7.1.0"
+  }
+}
