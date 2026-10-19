@@ -4,7 +4,7 @@
 
 ## 阅读入口
 
-- [156 周学习蓝图](./156-week-blueprint.md)
+- [156 周学习蓝图](./156-week-blueprint.md) —— **每次学习前先看其中的「第零部分：执行版总日程」**
 - [TypeScript 从 0 到 1 教程](./typescript-zero-to-one.md)
 - [浏览器版学习蓝图](./dist/156-week-blueprint.html)
 
@@ -24,7 +24,7 @@
 
 ## 本地使用
 
-要求：Node.js 20 或更高版本。
+要求：Node.js 22 或更高版本（推荐 24 LTS，安装方法见 TS 教程 2.1.1）。
 
 ```bash
 npm ci

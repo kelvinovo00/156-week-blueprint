@@ -1,8 +1,9 @@
 # TypeScript 0→1：零编程基础完整学习教程
 
 > **适用起点：** 从未学过 JavaScript、TypeScript 或其他编程语言；只要会使用电脑和浏览器即可
-> **对应总蓝图：** 自包含第 1–8 周补齐编程基础；第 9–12 周对应总蓝图原第 11–14 周
-> **时间预算：** 12 周核心课程 + 1–2 周毕业项目，每周 10–15 小时；低于 8 小时时延长当前周，不跳课
+> **版本：** 2026-10 更新版（TypeScript 7、Node.js 24 LTS、新增第 4B 周与闭包/事件循环/Vitest 课程）
+> **对应总蓝图：** 本教程第 1–8 周替代总蓝图第 5–7 周；第 9–12 周替代总蓝图第 11–14 周。两份文档如何交替执行，以总蓝图「第零部分：执行版总日程」为准
+> **时间预算：** 13 周核心课程（12 周 + 新增第 4B 周）+ 1–2 周毕业项目，每周 10–15 小时；低于 8 小时时延长当前周，不跳课
 > **最终产出：** 80+ 道练习、8 个渐进式小项目、浏览器天气应用、Node.js CLI 和一个综合毕业项目
 > **教学语言：** 从第一行代码起直接写 TypeScript，同时把 JavaScript 的运行规则一起学会
 
@@ -65,14 +66,17 @@
 | 第 2 周 | 运算符、输入处理、条件判断 | 价格与折扣计算器 |
 | 第 3 周 | 循环、函数、参数与返回值 | 猜数字逻辑 + 函数练习集 |
 | 第 4 周 | 字符串、数组、对象 | 学生成绩统计器 |
-| 第 5 周 | 数组方法、数据转换、回调 | 商品筛选与购物车统计 |
-| 第 6 周 | 作用域、拆分问题、错误与调试 | 命令行待办核心逻辑 |
+| 第 4B 周（新增） | 解构、展开/剩余、Map/Set、Intl 格式化 | 订单报表生成器 |
+| 第 5 周 | 数组方法、数据转换、回调、**闭包（Day 1B）** | 商品筛选与购物车统计 |
+| 第 6 周 | 作用域、拆分问题、错误与调试、**Vitest 测试（Day 5）** | 命令行待办核心逻辑 |
 | 第 7 周 | 最小 HTML、DOM、事件和表单 | 浏览器待办应用 |
-| 第 8 周 | Promise、`async/await`、`fetch`、模块 | API 查询小应用 |
+| 第 8 周 | Promise、`async/await`、**事件循环（Day 2B）**、`fetch`、模块 | API 查询小应用 |
 | 第 9 周 | 系统整理基础类型、函数与对象契约 | 20 道严格类型练习 |
 | 第 10 周 | 联合、收窄、`unknown`、状态建模 | 安全 JSON 解析器 |
 | 第 11 周 | 泛型、`keyof`、工具类型 | 泛型工具函数集 |
 | 第 12 周 | `tsconfig`、模块、DOM/Node 项目实践 | 天气应用 + Markdown CLI |
+
+> 加粗内容是 2026-10 新增的课时，原因见对应章节开头的说明。
 
 如果某周验收未通过，就把它拉长到 10 天或 14 天。周次是课程顺序，不是截止日期。第 12 周之后再用 1–2 周完成毕业项目，不学习新语法，只整合已有能力。
 
@@ -87,7 +91,7 @@
 
 ### 升级到 React 前的硬门槛
 
-以下 12 项至少完成 10 项；第 1、2、3、6、7、8 项必须完成：
+以下 15 项至少完成 12 项；第 1、2、3、6、7、8 项以及最后三项新增内容必须完成：
 
 - [ ] 所有练习能通过 `pnpm typecheck`，且 `strict: true`。
 - [ ] 正式代码中没有显式 `any`、`as any` 和无解释的非空断言 `!`。
@@ -99,6 +103,9 @@
 - [ ] 能接收 `unknown` 并通过收窄安全使用。
 - [ ] 能解释泛型 `T` 表达的类型关系，而不只是背语法。
 - [ ] 能独立处理 `querySelector` 的 `null`。
+- [ ] 能在函数参数中解构并写对类型注解，能正确写一层嵌套的不可变更新（第 4B 周）。
+- [ ] 能用自己的话解释闭包，并预测“捕获旧值”的输出（第 5 周 Day 1B）。
+- [ ] 所有练习的测试用 Vitest 运行，`pnpm test:run` 全绿（第 6 周起）。
 - [ ] 能说明 Node 项目为什么使用 `NodeNext`，而打包器项目使用 `Bundler`。
 - [ ] 能从空目录创建、运行、构建一个小型 TypeScript 项目。
 - [ ] 综合毕业项目达到 80/100，且能逐行讲解一条完整用户操作的数据流。
@@ -287,11 +294,42 @@ pnpm --version
 判断结果：
 
 - 三条都显示版本号：进入 2.2。
-- `node: command not found`：从 [Node.js 官方下载页](https://nodejs.org/en/download) 安装当前 **LTS** 版，安装后彻底关闭并重新打开终端，再验证 `node --version` 和 `npm --version`。
+- `node: command not found`，或版本低于 v22：按下面「2.1.1 用版本管理器安装 Node」操作。
+- 版本是 v22：可以继续学习，但请在本周内按 2.1.1 升级到 v24。
 - Node 和 npm 有版本，pnpm 没有：执行 `npm install --global pnpm`，完成后再执行 `pnpm --version`。
 - 显示权限错误：不要反复加 `sudo`。保存完整错误信息，先确认 Node 的安装方式；必要时按总蓝图的开发环境章节重新配置。
 
 不要追求文档截图中的完全相同版本号。看到有效版本号即可；项目会把 TypeScript 安装在自己目录中，以保证可复现。
+
+#### 2.1.1 用版本管理器安装 Node（2026-10 更新）
+
+**为什么：** Node 20 已于 2026 年 4 月停止维护；当前推荐 **Node 24 LTS**（维护到 2028 年 4 月）。Node 26 计划在 2026 年 10 月下旬进入 LTS，之后两者都可以用。以后不同项目可能需要不同版本，用版本管理器 `fnm` 可以一条命令切换，不用反复去官网下载安装包。
+
+1. 安装 Homebrew（如果 `brew --version` 已有版本号，跳过）：打开 [brew.sh](https://brew.sh/)，复制首页那一行安装命令到终端执行，按提示输入电脑密码。结束时终端会提示你再执行两行 `echo ... >> ~/.zprofile` 和 `eval ...` 命令，照做。
+2. 安装 fnm：
+
+   ```bash
+   brew install fnm
+   ```
+
+3. 让 fnm 在每次打开终端时生效：
+
+   ```bash
+   echo 'eval "$(fnm env --use-on-cd --shell zsh)"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+4. 安装并设为默认：
+
+   ```bash
+   fnm install 24
+   fnm default 24
+   node --version   # 应显示 v24.x.x
+   ```
+
+5. 如果你之前用官网安装包装过 Node，执行 `which node`：路径里包含 `fnm` 说明已经生效；如果是 `/usr/local/bin/node`，关闭并重开终端再看一次。
+6. 重新安装 pnpm（换了 Node 版本后全局包需要重装）：`npm install --global pnpm`，然后 `pnpm --version`。
+7. 在每个项目根目录放一个 `.node-version` 文件，内容只有一行 `24`。`fnm` 进入目录时会自动切换到这个版本，别人也能知道项目需要哪个版本。
 
 ### 2.2 终端生存课：只学今天需要的 8 条命令
 
@@ -415,7 +453,8 @@ pnpm exec tsc --version
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
@@ -428,6 +467,9 @@ pnpm exec tsc --version
 - `noUncheckedIndexedAccess` 让 `items[0]` 保留“不一定存在”的事实。
 - `exactOptionalPropertyTypes` 区分“属性不存在”和“属性存在但值为 `undefined`”。
 - `NodeNext` 让 TypeScript 按现代 Node.js 的真实模块规则检查代码。
+- `"types": ["node"]` 必须写：从 TypeScript 6 开始，`types` 默认是空数组，不再自动加载 `@types/node`。不写的话，`process`、`node:fs` 会报“找不到名称”。
+
+> **关于 TypeScript 7（2026 年夏天发布）：** 现在执行 `pnpm add -D typescript` 安装的是 7.x，`tsc` 由 Go 重写，速度快很多，用法完全相同。`pnpm exec tsc --version` 显示 `Version 7.x` 即正常。需要知道的三点：① `strict` 现在默认开启（我们仍然显式写上，便于阅读）；② TypeScript 6 中标记为废弃的选项（如 `baseUrl`、`moduleResolution: "node"`、`target: "es5"`）在 7 中会直接报错——以后在网上复制配置时如果看到它们，删掉或换成本教程的写法；③ 少数依赖 TypeScript 编程接口的工具（例如部分 ESLint 插件）暂时需要 TypeScript 6，遇到时总蓝图会单独说明，本教程不受影响。
 
 在 `src/index.ts` 输入：
 
@@ -826,6 +868,14 @@ Day 5 练习：
 - [ ] 个人名片项目不少于 20 行，且能解释每一行。
 - [ ] 错误日志至少 3 条。
 
+#### 本周练习资源（第 1 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [MDN：语法和数据类型](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_types) | 只读“声明”和“数据结构和类型”两节，遇到不懂再回来查 |
+| [现代 JavaScript 教程：字符串](https://zh.javascript.info/string) | 做文末任务“首字母大写”“检查 spam”“截断文本” |
+| [现代 JavaScript 教程：数字类型](https://zh.javascript.info/number) | 只做“来自访问者的数字的总和”“为什么 6.35.toFixed(1) == 6.3？”两题 |
+
 ---
 
 ### 第 2 周：比较、条件与业务规则
@@ -1092,6 +1142,14 @@ if (quantity >= 5) {
 - [ ] 能把输入字符串转数字并拒绝 `NaN`。
 - [ ] 价格计算器覆盖测试表全部场景。
 - [ ] 能逐步说明每项优惠的应用顺序。
+
+#### 本周练习资源（第 2 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：条件分支 if 和 '?'](https://zh.javascript.info/ifelse) | 做文末全部任务，答案写成 `.ts` 函数 |
+| [现代 JavaScript 教程：逻辑运算符](https://zh.javascript.info/logical-operators) | 做文末全部任务（重点：检查值是否位于范围区间内） |
+| [现代 JavaScript 教程：空值合并运算符 ??](https://zh.javascript.info/nullish-coalescing-operator) | 读完，对照本周 Day 4 写出 `??` 与 `||` 的 3 个差异例子 |
 
 ---
 
@@ -1386,6 +1444,14 @@ const guesses = [10, 50, 30, 37, 40];
 - [ ] 能用提前返回处理错误输入。
 - [ ] 不依赖无意义的全局可变变量。
 - [ ] 猜数字模拟器能在命中时正确停止。
+
+#### 本周练习资源（第 3 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：循环 while 和 for](https://zh.javascript.info/while-for) | 做文末全部任务（“输出素数”作为加分题） |
+| [现代 JavaScript 教程：函数](https://zh.javascript.info/function-basics) | 做文末任务“函数 min(a, b)”“函数 pow(x,n)”，加上参数和返回类型 |
+| [现代 JavaScript 教程：递归和堆栈](https://zh.javascript.info/recursion) | 选学：只读前半部分，理解“函数调用自己” |
 
 ---
 
@@ -1688,6 +1754,536 @@ function findTopStudent(students: Student[]): Student | undefined;
 - [ ] 能解释修改原对象与创建新对象的差异。
 - [ ] 成绩统计器每个函数都有测试样例。
 
+#### 本周练习资源（第 4 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：对象](https://zh.javascript.info/object) | 做文末任务“你好，对象”“检查空对象”“对象属性求和”“将数值属性值都乘以 2” |
+| [MDN：Array](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array) | 不通读；本周用到 `push`、`pop`、`includes`、`indexOf` 时查对应条目 |
+| [现代 JavaScript 教程：字符串](https://zh.javascript.info/string) | 复习“查找子字符串”“获取子字符串”两节 |
+
+---
+
+### 第 4B 周（新增）：解构、展开与剩余、Map/Set、格式化输出
+
+> **为什么新增这一周：** 原总蓝图的第 5–7 周用 JavaScript 讲过解构、展开运算符和 `Set`，而本教程替代了那几周，但之前没有专门讲这些内容。React 的第一天就会用到它们：`const [count, setCount] = useState(0)` 是数组解构，`function Card({ title }: Props)` 是参数解构，`{ ...task, completed: true }` 是对象展开。不补这一周，进入 React 时你会看不懂最常见的写法。
+>
+> **位置：** 完成第 4 周验收后、开始第 5 周之前学习。时间与普通周相同（7 天，每天 60–90 分钟）。
+>
+> **文件组织：** 新建 `src/week-04b/`，每天一个 `day-0N.ts`。每个没有 `import` / `export` 的文件末尾保留 `export {};`。
+
+#### 本周目标
+
+结束时你能：
+
+- 从对象和数组中按需取出字段，并在函数参数中直接解构。
+- 用 `...` 复制、合并、追加数据，并说清“展开”和“剩余”的区别。
+- 识别浅拷贝陷阱，正确地不可变更新嵌套数据。
+- 判断什么时候用 `Map` / `Set`，什么时候用普通对象 / 数组。
+- 用 `Intl` 输出货币、百分比和日期，用“分”为单位保存金额。
+- 完成“订单报表生成器”小项目。
+
+#### Day 1：对象解构——一次取出多个字段
+
+**第一步：先看没有解构时的写法。** 在 `src/week-04b/day-01.ts` 输入：
+
+```ts
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  age: number;
+}
+
+const user: User = {
+  id: "u1",
+  name: "Ada",
+  email: "ada@example.com",
+  age: 28
+};
+
+const userName = user.name;
+const userEmail = user.email;
+console.log(userName, userEmail);
+
+export {};
+```
+
+**第二步：改用解构。** 把中间两行替换为：
+
+```ts
+const { name, email } = user;
+console.log(name, email);
+```
+
+读法：“从 `user` 里取出 `name` 和 `email` 两个属性，分别放进同名常量。”花括号在 `=` 左边时不是创建对象，而是“拆开对象”。运行 `pnpm exec tsx src/week-04b/day-01.ts` 确认输出相同。
+
+**第三步：重命名。** 当变量名会冲突，或者你想要更清楚的名字：
+
+```ts
+const { name: displayName } = user;
+console.log(displayName); // "Ada"
+```
+
+注意冒号在这里的意思是“改名为”，**不是类型注解**。这是本周最重要的陷阱，Day 1 第五步还会遇到。
+
+**第四步：默认值。** 只对可选属性有意义：
+
+```ts
+interface Profile {
+  name: string;
+  nickname?: string;
+}
+
+const profile: Profile = { name: "Lin" };
+const { nickname = "（未设置昵称）" } = profile;
+console.log(nickname); // "（未设置昵称）"
+```
+
+默认值只在属性值为 `undefined` 时生效；如果值是 `""` 或 `0`，不会使用默认值。把 `profile` 改成 `{ name: "Lin", nickname: "" }` 运行一次，亲眼确认。
+
+**第五步：在函数参数里解构（React 组件天天这么写）。**
+
+```ts
+function formatUser({ name, age }: User): string {
+  return `${name}（${age} 岁）`;
+}
+
+console.log(formatUser(user));
+```
+
+类型注解写在**整个花括号后面**。下面是错误写法，请故意输入一次，阅读报错：
+
+```ts
+// ❌ 这不是“name 的类型是 string”，而是“把 name 改名为 string”
+function wrongFormat({ name: string }) {
+  return string;
+}
+```
+
+在 `strict` 模式下你会看到“绑定元素隐式具有 any 类型”一类的错误。把报错记进 `learning-notes.md`：期望、实际、根因（冒号在解构中表示改名）。
+
+**第六步：嵌套解构（了解即可，不要滥用）。**
+
+```ts
+interface Order {
+  id: string;
+  shipping: { city: string; postcode: string };
+}
+
+const order: Order = { id: "o1", shipping: { city: "Singapore", postcode: "018956" } };
+const { shipping: { city } } = order;
+console.log(city);
+```
+
+嵌套超过两层时，可读性会快速下降，写成两行通常更清楚：`const { shipping } = order; const { city } = shipping;`。
+
+Day 1 练习（写在同一文件中，每题之间用注释隔开）：
+
+1. 给定 `const book = { title: "TS 入门", author: "Ada", pages: 320 }`，用一行解构取出 `title` 和 `pages`。
+2. 取出 `author` 并重命名为 `writer`。
+3. 定义 `interface Settings { theme?: "light" | "dark"; fontSize?: number }`，解构时给 `theme` 默认 `"light"`、`fontSize` 默认 `16`，分别用 `{}` 和 `{ fontSize: 0 }` 测试，记录 `fontSize` 的结果并解释。
+4. 写 `function describeBook({ title, author }: Book): string`，返回 `《title》— author`。
+5. 把第 4 周成绩统计器里的 `getGrade` 调用处改写一次：先 `const { name, score } = student;` 再输出。
+
+#### Day 2：数组解构——按位置取值
+
+**第一步：基本写法。**
+
+```ts
+const scores: number[] = [92, 85, 70];
+const [first, second] = scores;
+console.log(first, second);
+```
+
+把鼠标悬停在 `first` 上：类型是 `number | undefined`。这是因为我们的 tsconfig 打开了 `noUncheckedIndexedAccess`——数组可能比你想的短，TypeScript 让你承认这一点。处理方式和第 4 周一样：
+
+```ts
+if (first !== undefined) {
+  console.log(first.toFixed(1));
+}
+```
+
+**第二步：元组没有这个问题。** 元组的长度是固定的：
+
+```ts
+const point: [number, number] = [3, 4];
+const [x, y] = point;
+console.log(x * y); // x、y 都是 number
+```
+
+**第三步：跳过和交换。**
+
+```ts
+const [, secondOnly] = scores; // 逗号前留空表示跳过第一个
+
+let left = "左";
+let right = "右";
+[left, right] = [right, left];
+console.log(left, right); // "右 左"
+```
+
+**第四步：函数返回多个值。** 当一个函数自然地产生“一对”结果时，返回元组再解构：
+
+```ts
+function splitFullName(fullName: string): [string, string] {
+  const trimmed = fullName.trim();
+  const spaceIndex = trimmed.indexOf(" ");
+  if (spaceIndex === -1) {
+    return [trimmed, ""];
+  }
+  return [trimmed.slice(0, spaceIndex), trimmed.slice(spaceIndex + 1)];
+}
+
+const [givenName, familyName] = splitFullName("Ada Lovelace");
+```
+
+**第五步：认识你将在 React 里看到的形状。**
+
+```ts
+// 这是 React 代码，现在不用运行，只需看懂“左边在做什么”：
+// const [count, setCount] = useState(0);
+```
+
+`useState(0)` 返回一个两项数组：第 0 项是当前值，第 1 项是修改它的函数。左边用数组解构给它们起名字。名字可以随便起，位置不能乱。
+
+**第六步：在 `for...of` 中解构。** 第 4 周你遍历过对象数组，现在可以直接拆开：
+
+```ts
+interface Student { name: string; score: number }
+const students: Student[] = [{ name: "Ada", score: 92 }, { name: "Lin", score: 58 }];
+
+for (const { name, score } of students) {
+  console.log(`${name}: ${score}`);
+}
+```
+
+Day 2 练习：
+
+1. `const rgb: [number, number, number] = [255, 128, 0]`，解构为 `red`、`green`、`blue`。
+2. 写 `minMax(values: number[]): [number, number] | undefined`：空数组返回 `undefined`，否则返回 `[最小值, 最大值]`。调用后先判断再解构。
+3. 用交换写法交换两个 `let` 变量三次，预测并验证最终结果。
+4. 给定 `const entries: [string, number][] = [["apple", 3], ["pear", 5]]`，用 `for (const [fruit, count] of entries)` 输出每一行。
+5. 用一句话写下：“数组解构按 ___ 取值，对象解构按 ___ 取值。”
+
+#### Day 3：展开 `...` 与剩余 `...`
+
+同一个 `...`，出现在不同位置，含义相反：
+
+| 位置 | 名称 | 作用 | 例子 |
+|---|---|---|---|
+| 在值的位置（右边、函数调用实参） | 展开（spread） | 把一个整体“摊开”成多个元素/属性 | `[...a, 4]`、`{ ...task }`、`Math.max(...nums)` |
+| 在接收的位置（左边、函数形参） | 剩余（rest） | 把“剩下的”收集成一个数组/对象 | `function sum(...nums)`、`const { id, ...rest } = obj` |
+
+**第一步：数组展开——复制、合并、追加。**
+
+```ts
+const base = [1, 2, 3];
+const copy = [...base];
+const merged = [...base, ...[4, 5]];
+const withZero = [0, ...base];
+
+console.log(copy === base); // false：新数组
+```
+
+第 5、6 周的不可变更新 `[...tasks, newTask]` 就是这个写法。
+
+**第二步：对象展开——复制并覆盖字段。**
+
+```ts
+interface Task { id: string; title: string; completed: boolean }
+
+const task: Task = { id: "t1", title: "写作业", completed: false };
+const done = { ...task, completed: true };
+```
+
+顺序有意义：后写的覆盖先写的。把它写成 `{ completed: true, ...task }`，预测 `completed` 的值，再运行验证。
+
+**第三步：浅拷贝陷阱（必须亲手复现）。**
+
+```ts
+const original = { title: "A", tags: ["x"] };
+const shallow = { ...original };
+
+shallow.tags.push("y");
+console.log(original.tags); // ["x", "y"] —— 原对象也变了！
+```
+
+原因：展开只复制“第一层”。`tags` 是同一个数组的引用，两个对象指向同一份数据。正确的不可变更新是每一层都创建新值：
+
+```ts
+const updated = { ...original, tags: [...original.tags, "y"] };
+```
+
+在 React 中，直接修改嵌套数组是“页面不刷新”最常见的原因之一。
+
+**第四步：剩余参数——接收任意数量的参数。**
+
+```ts
+function sum(...values: number[]): number {
+  let total = 0;
+  for (const value of values) {
+    total = total + value;
+  }
+  return total;
+}
+
+console.log(sum(1, 2, 3)); // 6
+console.log(sum());        // 0
+```
+
+**第五步：剩余属性——“去掉某些字段，保留其他”。** 常用于把敏感字段从对象中剥离：
+
+```ts
+interface Account { id: string; email: string; passwordHash: string }
+
+function toPublicAccount(account: Account): Omit<Account, "passwordHash"> {
+  const { passwordHash, ...publicFields } = account;
+  return publicFields;
+}
+```
+
+`Omit` 是第 11 周的工具类型，这里先理解为“Account 去掉 passwordHash”。（`passwordHash` 这个变量没有被使用，这是有意为之。）
+
+**第六步：一个边界。** `Math.max(...[])` 得到 `-Infinity`。用展开调用函数时，要先处理空数组。
+
+Day 3 练习：
+
+1. 写 `appendItem(items: string[], item: string): string[]`，不修改原数组。用 `===` 证明返回的是新数组。
+2. 写 `updateTitle(task: Task, title: string): Task`，返回新对象。
+3. 给定 `const user = { name: "Ada", address: { city: "SG", zip: "018956" } }`，写出只修改 `city` 的正确不可变更新，并证明 `user.address.city` 没变。
+4. 写 `average(...values: number[]): number | undefined`。
+5. 写 `withoutId(task: Task)`，用剩余属性返回没有 `id` 的对象，悬停查看返回值的推断类型。
+
+#### Day 4：`Map` 与 `Set`
+
+**第一步：`Set`——不重复的集合。**
+
+```ts
+const tags = ["ts", "react", "ts", "css", "react"];
+const uniqueTags = new Set(tags);
+
+console.log(uniqueTags.size);         // 3
+console.log(uniqueTags.has("css"));   // true
+uniqueTags.add("node");
+uniqueTags.delete("ts");
+
+const uniqueArray = [...uniqueTags];  // 展开回数组
+```
+
+`Set` 适合：去重、快速判断“是否存在”（例如已选中的 ID）。
+
+**第二步：`Map`——任意键到值的映射。** 统计每个词出现几次：
+
+```ts
+function countWords(words: string[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const word of words) {
+    counts.set(word, (counts.get(word) ?? 0) + 1);
+  }
+  return counts;
+}
+
+const counts = countWords(["a", "b", "a"]);
+console.log(counts.get("a")); // 2
+console.log(counts.get("z")); // undefined
+```
+
+`Map<string, number>` 读作“键是 string、值是 number 的 Map”。尖括号是第 11 周泛型的语法，现在只需会读。`get` 的返回类型是 `number | undefined`，所以用了第 2 周学过的 `??`。
+
+**第三步：遍历 Map（用到 Day 2 的数组解构）。**
+
+```ts
+for (const [word, count] of counts) {
+  console.log(`${word}: ${count}`);
+}
+```
+
+**第四步：对象与 Map 互相转换。**
+
+```ts
+const asObject = Object.fromEntries(counts);         // { a: 2, b: 1 }
+const backToMap = new Map(Object.entries(asObject));
+```
+
+**第五步：陷阱——`JSON.stringify(new Map(...))` 得到 `"{}"`。** 要存进 `localStorage` 或发给服务器时，先转成对象或数组。请亲手运行一次确认。
+
+**第六步：如何选择。**
+
+| 需求 | 选择 |
+|---|---|
+| 字段固定、已知（用户、订单） | `interface` + 普通对象 |
+| 键在运行时才知道，需要频繁增删、计数、分组 | `Map` |
+| 只关心“有没有”，需要去重 | `Set` |
+| 有顺序的一组同类值 | 数组 |
+
+Day 4 练习：
+
+1. 写 `uniqueSorted(values: string[]): string[]`：去重后按字母排序。
+2. 写 `groupByCategory(products: Product[]): Map<string, Product[]>`（`Product` 有 `name`、`category`）。
+3. 写 `findDuplicates(ids: string[]): string[]`：只返回出现过 2 次及以上的 ID，用两个 `Set` 实现。
+4. 把第 2 题的结果转成普通对象，并用 `JSON.stringify` 输出。
+5. 用表格写出 3 个你认为该用 `Map`、3 个该用对象的真实场景。
+
+#### Day 5：格式化输出——`Intl`、金额与日期
+
+**第一步：小数的坑。** 运行：
+
+```ts
+console.log(0.1 + 0.2); // 0.30000000000000004
+```
+
+计算机用二进制存小数，有些十进制小数无法精确表示。**涉及金额时，用“分”为单位保存整数**——这也是 Stripe 等支付平台的做法：
+
+```ts
+const priceInCents = 1999;  // 19.99
+const quantity = 3;
+const totalInCents = priceInCents * quantity; // 5997，整数，精确
+```
+
+**第二步：用 `Intl.NumberFormat` 显示货币。**
+
+```ts
+const sgd = new Intl.NumberFormat("en-SG", { style: "currency", currency: "SGD" });
+const cny = new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY" });
+
+function formatCents(cents: number, formatter: Intl.NumberFormat): string {
+  return formatter.format(cents / 100);
+}
+
+console.log(formatCents(5997, sgd));
+console.log(formatCents(5997, cny));
+```
+
+先在注释中写下你**预测**的输出，再运行，记录实际结果。把地区改成 `"en-US"` + `"USD"` 再试一次，观察符号和千分位的变化。
+
+**第三步：百分比和千分位。**
+
+```ts
+const percent = new Intl.NumberFormat("zh-CN", { style: "percent", maximumFractionDigits: 1 });
+console.log(percent.format(0.256)); // 输入是比例，不是 25.6
+
+const plain = new Intl.NumberFormat("zh-CN");
+console.log(plain.format(1234567.891));
+```
+
+**第四步：日期基础与两个陷阱。**
+
+```ts
+const now = new Date();
+console.log(now.toISOString()); // UTC 时间的标准字符串，适合存储和传输
+
+const january = new Date(2026, 0, 15); // 陷阱 1：月份从 0 开始，0 = 一月
+console.log(january.getMonth());       // 0
+
+const invalid = new Date("不是日期");
+console.log(Number.isNaN(invalid.getTime())); // 陷阱 2：无效日期不会报错，要自己检查
+```
+
+**第五步：用 `Intl.DateTimeFormat` 显示日期。**
+
+```ts
+const longDate = new Intl.DateTimeFormat("zh-CN", { dateStyle: "long" });
+console.log(longDate.format(january));
+
+const withTime = new Intl.DateTimeFormat("zh-CN", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Asia/Singapore"
+});
+console.log(withTime.format(now));
+```
+
+原则：**存储用 UTC 的 ISO 字符串，显示时再按用户时区格式化。** 新的日期 API `Temporal` 正在各运行环境中逐步落地，现阶段先用 `Date` + `Intl`；遇到复杂的日期计算再引入专门的库。
+
+Day 5 练习：
+
+1. 写 `toCents(input: string): number | undefined`：把 `"19.99"` 转成 `1999`，非法输入返回 `undefined`（提示：先用第 2 周的数字验证，再 `Math.round(value * 100)`）。
+2. 写 `formatPrice(cents: number, currency: "SGD" | "CNY" | "USD"): string`。
+3. 写 `formatDiscount(rate: number): string`，`0.15` 输出百分比格式。
+4. 写 `isValidIsoDate(text: string): boolean`。
+5. 写 `formatOrderDate(iso: string): string`，用 `Asia/Singapore` 时区和 `dateStyle: "medium"`。
+
+#### Day 6：小项目——订单报表生成器
+
+在 `src/week-04b/order-report.ts` 中完成。样例数据（亲手输入，至少 5 个订单，可以修改内容）：
+
+```ts
+interface OrderItem {
+  sku: string;
+  name: string;
+  priceInCents: number;
+  quantity: number;
+}
+
+interface Order {
+  id: string;
+  customer: { name: string; country: "SG" | "CN" | "US" };
+  items: OrderItem[];
+  tags: string[];
+  createdAt: string; // ISO 字符串
+}
+
+const orders: Order[] = [
+  {
+    id: "o-1001",
+    customer: { name: "Ada", country: "SG" },
+    items: [
+      { sku: "book-ts", name: "TS 入门", priceInCents: 3990, quantity: 1 },
+      { sku: "pen", name: "钢笔", priceInCents: 1250, quantity: 2 }
+    ],
+    tags: ["gift", "express"],
+    createdAt: "2026-10-01T03:15:00.000Z"
+  }
+  // 再写至少 4 个订单，包含：空 items 的订单、重复 tag、不同国家
+];
+```
+
+要求（每条都写成独立函数）：
+
+1. `calculateOrderTotal({ items }: Order): number`——参数解构，返回总金额（分）。
+2. `formatOrderLine(order: Order): string`——输出 `o-1001 | Ada | SG | 2026年10月1日 | S$...`，日期和金额都用 `Intl`。
+3. `totalsByCountry(orders: Order[]): Map<string, number>`——每个国家的销售额（分）。
+4. `allTags(orders: Order[]): string[]`——全部订单中出现过的标签，去重并排序。
+5. `addItem(order: Order, item: OrderItem): Order`——返回新订单，原订单不变（用 `===` 和打印原数组证明）。
+6. `toAnonymousSummary(order: Order)`——用剩余属性去掉 `customer`，返回其余字段和总金额。
+7. `buildReport(orders: Order[]): string`——拼出完整多行报表：每行订单 + 各国合计 + 全部标签。
+
+验证：每个函数至少 3 条 `console.assert`，其中至少 1 条是边界（空 items、空订单数组）。
+
+#### Day 7：复习与周测
+
+闭卷回答：
+
+1. `const { a: b } = obj` 和 `function f({ a }: { a: string })` 中的冒号分别是什么意思？
+2. 为什么 `const [first] = numbers` 的类型可能带 `undefined`，而元组不会？
+3. 写出“展开”和“剩余”各两个例子，并说明你是如何从位置判断的。
+4. 什么叫浅拷贝？写出一个会意外修改原数据的例子以及修正版本。
+5. `Map` 和普通对象各适合什么？`JSON.stringify(map)` 会得到什么？
+6. 为什么金额用“分”的整数保存？
+7. 闭卷写 `countBy(items: string[]): Map<string, number>`。
+
+第 4B 周验收：
+
+- [ ] 能在函数参数中正确解构并写类型注解。
+- [ ] 能独立写出对象、数组的不可变更新，包括一层嵌套。
+- [ ] 能解释并复现浅拷贝陷阱。
+- [ ] 能用 `Map` 分组/计数，用 `Set` 去重。
+- [ ] 能用 `Intl` 格式化金额、百分比、日期；金额以“分”存储。
+- [ ] 订单报表生成器 7 个函数全部完成，`pnpm typecheck` 零错误。
+
+#### 本周练习资源（按顺序做，不需要另外找）
+
+| 天 | 资源 | 做什么 |
+|---|---|---|
+| Day 1–2 | [现代 JavaScript 教程：解构赋值](https://zh.javascript.info/destructuring-assignment) | 读完后做文末全部“任务”，用 `.ts` 文件并加类型 |
+| Day 3 | [现代 JavaScript 教程：Rest 参数与 Spread 语法](https://zh.javascript.info/rest-parameters-spread) | 读完，对照本教程的表格再写 3 个例子 |
+| Day 4 | [现代 JavaScript 教程：Map and Set](https://zh.javascript.info/map-set) | 做文末任务（过滤字谜、迭代键等） |
+| Day 5 | [MDN：Intl.NumberFormat](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)、[现代 JavaScript 教程：日期和时间](https://zh.javascript.info/date) | NumberFormat 只看“示例”部分；日期章节做前 4 个任务 |
+| 任意时间 | [TypeScript Playground](https://www.typescriptlang.org/play) | 把不确定的解构类型粘进去，悬停查看推断结果 |
+
+参考答案见第 8 节「8.0.9 新增单元参考答案」。
+
 ---
 
 ### 第 5 周：数组方法、回调与数据转换
@@ -1742,6 +2338,138 @@ Day 1 练习：
 3. 写 `repeatMessage(message, formatter)`。
 4. 判断下面哪些是函数、哪些是调用结果：`greet`、`greet("Ada")`。
 5. 解释回调为什么必须写清参数和返回类型。
+
+#### Day 1B（新增）：闭包——函数记得它出生时的变量
+
+> 这一天紧接 Day 1，因为闭包的前提是“函数可以作为值返回”。它是理解 React 中“事件处理函数里拿到的是旧值”这类 bug 的基础，不要跳过。用时约 90 分钟，文件 `src/week-05/day-01b.ts`。
+
+**第一步：一个能“记住”次数的函数。** 输入并运行：
+
+```ts
+function createCounter(): () => number {
+  let count = 0;
+
+  return () => {
+    count = count + 1;
+    return count;
+  };
+}
+
+const counterA = createCounter();
+console.log(counterA()); // ?
+console.log(counterA()); // ?
+
+const counterB = createCounter();
+console.log(counterB()); // ?
+console.log(counterA()); // ?
+
+export {};
+```
+
+先在每行的 `?` 处写下预测，再运行。正确结果是 `1、2、1、3`。
+
+**第二步：用追踪表理解发生了什么。**
+
+| 步骤 | 发生了什么 | counterA 的 count | counterB 的 count |
+|---|---|---:|---:|
+| `createCounter()` 第一次 | 创建一个 `count = 0`，返回一个内部函数，赋给 counterA | 0 | — |
+| `counterA()` | 内部函数修改**它出生时那份** `count` | 1 | — |
+| `counterA()` | 同一份 `count` 继续加 | 2 | — |
+| `createCounter()` 第二次 | 又创建一份全新的 `count = 0` | 2 | 0 |
+| `counterB()` | 修改第二份 | 2 | 1 |
+| `counterA()` | 第一份不受影响 | 3 | 1 |
+
+**定义：** 一个函数，加上它被创建时能看到的外部变量，合起来叫闭包。`createCounter` 已经执行完了，但它的 `count` 没有消失，因为返回出去的函数还在使用它。
+
+**第三步：闭包的三个常见用途。**
+
+用途一：预先配置好参数的“函数工厂”：
+
+```ts
+function makeDiscounter(rate: number): (priceInCents: number) => number {
+  return (priceInCents) => Math.round(priceInCents * (1 - rate));
+}
+
+const tenPercentOff = makeDiscounter(0.1);
+console.log(tenPercentOff(2000)); // 1800
+```
+
+用途二：私有状态（外部无法直接改 `nextId`）：
+
+```ts
+function createIdGenerator(prefix: string): () => string {
+  let nextId = 1;
+  return () => {
+    const id = `${prefix}-${nextId}`;
+    nextId = nextId + 1;
+    return id;
+  };
+}
+
+const nextTaskId = createIdGenerator("task");
+console.log(nextTaskId(), nextTaskId()); // task-1 task-2
+```
+
+用途三：返回一组共享同一状态的函数：
+
+```ts
+interface Counter {
+  increment: () => void;
+  reset: () => void;
+  current: () => number;
+}
+
+function createResettableCounter(): Counter {
+  let count = 0;
+  return {
+    increment: () => { count = count + 1; },
+    reset: () => { count = 0; },
+    current: () => count
+  };
+}
+```
+
+**第四步：“捕获的旧值”——React 里最常见的闭包现象。** `setTimeout` 第 8 周会细讲，这里只需知道它会在 1 秒后执行回调：
+
+```ts
+let message = "旧消息";
+
+function scheduleLog(): void {
+  const captured = message;
+  setTimeout(() => {
+    console.log("捕获的：", captured, "｜当前的：", message);
+  }, 1000);
+}
+
+scheduleLog();
+message = "新消息";
+```
+
+输出：`捕获的： 旧消息 ｜当前的： 新消息`。`captured` 是调用 `scheduleLog` 那一刻复制下来的值，之后外面怎么改都不影响它。React 中每次渲染都会创建新的函数，每个函数“捕获”的是那一次渲染时的状态——你在 React 第 16 周看到“状态是快照”时，回到这里重读这一段。
+
+**第五步：循环中的闭包。**
+
+```ts
+const printers: Array<() => void> = [];
+
+for (let i = 1; i <= 3; i++) {
+  printers.push(() => console.log(i));
+}
+
+for (const print of printers) {
+  print(); // 1、2、3
+}
+```
+
+`Array<() => void>` 读作“元素是‘无参数、无返回值的函数’的数组”。`let` 在每一轮循环都会创建新的 `i`，所以三个函数各自记住不同的值。（旧代码里的 `var` 不会这样，三个都会输出 4——这是 `var` 被淘汰的原因之一，你只需会认。）
+
+Day 1B 练习：
+
+1. 预测并运行：调用 `createCounter()` 三次得到三个计数器，交替调用它们，写出每次输出。
+2. 写 `makeMultiplier(factor: number)`，返回把数字乘以 `factor` 的函数。用它创建 `double`、`triple`。
+3. 写 `once(fn: () => string): () => string | undefined`：第一次调用时执行 `fn` 并返回结果，以后调用都返回 `undefined` 且不再执行 `fn`。
+4. 完成 `createResettableCounter`，写 5 条 `console.assert` 验证 `increment`、`reset`、`current`。
+5. 用自己的话写下：为什么 `counterA` 和 `counterB` 互不影响？为什么 `captured` 不会变成“新消息”？
 
 #### Day 2：`forEach` 做动作，`map` 产生新数组
 
@@ -1929,6 +2657,13 @@ Day 6 小项目——商品筛选与购物车统计：
 - [ ] 不用复杂链式调用掩盖业务步骤。
 - [ ] 商品项目至少包含 5 个独立处理函数。
 
+#### 本周练习资源（第 5 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：数组方法](https://zh.javascript.info/array-methods) | 做文末任务：“将 border-left-width 转换成 borderLeftWidth”“过滤范围”“映射到名字”“映射到对象”“按年龄对用户排序”“创建键（id）→ 值的对象” |
+| [现代 JavaScript 教程：变量作用域，闭包](https://zh.javascript.info/closure) | 配合 Day 1B：读完全文，做任务“函数会选择最新的内容吗？”“Counter 是独立的吗？”“通过函数筛选”“按字段排序” |
+
 ---
 
 ### 第 6 周：问题拆解、可变性、错误与调试
@@ -2094,7 +2829,73 @@ console.assert(add(0, 0) === 0, "zero case");
 - 边界：空数组、0、最小/最大允许值。
 - 非法：负数量、空标题、找不到 ID。
 
-本周先用 `console.assert` 和测试表；第 12 周再使用正式测试工具和 `node:assert`。
+本周先用 `console.assert` 理解“测试是什么”。今天的后半段就换成真正的测试工具 Vitest——总蓝图第 29 周和 Phase 3 都用它，越早养成习惯越好。
+
+**安装 Vitest（约 20 分钟，按顺序执行）：**
+
+1. 在 `ts-zero-to-one` 目录执行：
+
+   ```bash
+   pnpm add -D vitest
+   ```
+
+2. 打开 `package.json`，在 `scripts` 中增加两行（保留原有的 `dev`、`typecheck`、`build`、`start`）：
+
+   ```json
+   "test": "vitest",
+   "test:run": "vitest run"
+   ```
+
+   `test` 是监听模式，保存文件会自动重跑，按 `q` 退出；`test:run` 跑一次就结束。
+
+3. 把要测试的函数放进普通文件并导出，例如 `src/week-06/grades.ts`：
+
+   ```ts
+   export function getGrade(score: number): string {
+     if (!Number.isFinite(score) || score < 0 || score > 100) {
+       return "invalid";
+     }
+     if (score >= 90) return "A";
+     if (score >= 80) return "B";
+     if (score >= 70) return "C";
+     if (score >= 60) return "D";
+     return "F";
+   }
+   ```
+
+4. 在同目录新建 `src/week-06/grades.test.ts`：
+
+   ```ts
+   import { describe, expect, it } from "vitest";
+   import { getGrade } from "./grades.js";
+
+   describe("getGrade", () => {
+     it("正常：95 分是 A", () => {
+       expect(getGrade(95)).toBe("A");
+     });
+
+     it("边界：恰好 90 分是 A，89 分是 B", () => {
+       expect(getGrade(90)).toBe("A");
+       expect(getGrade(89)).toBe("B");
+     });
+
+     it("非法：负数和超过 100 返回 invalid", () => {
+       expect(getGrade(-1)).toBe("invalid");
+       expect(getGrade(101)).toBe("invalid");
+     });
+   });
+   ```
+
+   注意 import 路径写 `./grades.js`，不是 `.ts`。这是 `NodeNext` 模块规则的要求：路径写的是编译后会存在的文件名。Vitest 能自动找到对应的 `.ts` 文件。
+
+5. 运行 `pnpm test:run`。看到绿色的 `✓` 和 `Tests 3 passed` 即成功。
+
+6. **故意让测试失败一次：** 把 `toBe("A")` 改成 `toBe("B")` 再运行，阅读红色输出中的 `Expected` 和 `Received`，然后改回来。读懂失败输出和写测试一样重要。
+
+7. 再运行 `pnpm typecheck`，确认测试文件本身也没有类型错误。
+
+从今天起，第 6 周 Day 6 待办核心、第 7 周以后的所有“至少 N 个测试”都写成 `*.test.ts` 文件，用 `pnpm test:run` 运行。第 12 周提到的 `node:assert` 可以继续了解，但日常练习统一用 Vitest。
+
 
 Day 5 练习：为 `getGrade`、`calculateAverage`、`findProduct`、`applyDiscount` 各写至少 5 个测试，其中至少 2 个边界或非法场景。
 
@@ -2140,6 +2941,14 @@ interface Task {
 - [ ] 至少实际使用一次断点。
 - [ ] 能做对象和数组的不可变更新。
 - [ ] 待办核心所有函数有正常、边界、非法测试。
+
+#### 本周练习资源（第 6 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：错误处理，try...catch](https://zh.javascript.info/try-catch) | 读完，做任务“Finally 还是直接放在代码后面？” |
+| [Vitest 官方指南](https://vitest.dev/guide/) | 只读 “Getting Started” 和 “Writing Tests” 两页，对照 Day 5 的安装步骤 |
+| [Chrome DevTools：调试 JavaScript](https://developer.chrome.com/docs/devtools/javascript) | 跟着官方示例做一遍断点调试（约 20 分钟），配合 Day 4 |
 
 ---
 
@@ -2507,6 +3316,16 @@ src/
 - [ ] localStorage 的缺失值和损坏值都被处理。
 - [ ] 待办项目通过完整人工测试表。
 
+#### 本周练习资源（第 7 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：getElement*，querySelector*](https://zh.javascript.info/searching-elements-dom) | 做文末任务“搜索元素” |
+| [现代 JavaScript 教程：修改文档](https://zh.javascript.info/modifying-document) | 做任务“从对象创建树”之前的全部任务 |
+| [现代 JavaScript 教程：浏览器事件简介](https://zh.javascript.info/introduction-browser-events) | 做任务“点击隐藏”“创建滑动菜单” |
+| [现代 JavaScript 教程：事件委托](https://zh.javascript.info/event-delegation) | 做任务“使用委托隐藏消息” |
+| [现代 JavaScript 教程：LocalStorage](https://zh.javascript.info/localstorage) | 做任务“自动保存表单字段” |
+
 ---
 
 ### 第 8 周：异步、`fetch` 与模块
@@ -2594,6 +3413,116 @@ Day 2 练习：
 3. 观察忘记 `await` 时变量是 Promise 而不是用户对象。
 4. 顺序等待两次和 `Promise.all` 同时等待两次，比较耗时。
 5. 解释 `Promise<string>` 与 `string` 的区别。
+
+#### Day 2B（新增）：事件循环——谁先执行？
+
+> 文件 `src/week-08/day-02b.ts`。这一课解决两个问题：为什么异步代码的输出顺序和书写顺序不同；为什么一段很慢的同步代码会让整个页面“卡死”。约 75 分钟。
+
+**第一步：先预测，再运行。** 在注释里写下你认为的输出顺序：
+
+```ts
+console.log("1 同步");
+
+setTimeout(() => {
+  console.log("2 定时器回调");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3 Promise 回调");
+});
+
+console.log("4 同步");
+
+export {};
+```
+
+实际顺序是 `1、4、3、2`。即使定时器写的是 0 毫秒，它也排在 Promise 回调之后。
+
+**第二步：记住三条规则。**
+
+1. **同步代码先全部执行完。** 它们在“调用栈”上一行一行跑，中间不会被打断。
+2. **然后清空“微任务队列”。** `Promise.then` 的回调、`await` 之后的代码，都进入微任务队列。
+3. **然后才从“任务队列”取出一个任务执行**（定时器回调、点击事件、网络响应等），执行完再回到第 2 步。
+
+用一张图记忆：
+
+```text
+调用栈（同步代码） ──全部跑完──▶ 微任务队列（Promise / await 之后）──全部清空──▶ 取一个任务（定时器 / 事件）──▶ 再清空微任务 ──▶ ……
+```
+
+**第三步：`await` 之后的代码也是微任务。**
+
+```ts
+async function demo(): Promise<void> {
+  console.log("A：async 函数开始，这里仍是同步的");
+  await null;
+  console.log("C：await 之后，进入微任务");
+}
+
+demo();
+console.log("B：demo() 调用之后的同步代码");
+```
+
+预测后运行，结果是 `A、B、C`。`async` 函数在遇到第一个 `await` 之前，都是同步执行的。
+
+**第四步：亲眼看到“页面卡死”。** 在第 7 周的浏览器项目（Vite）中临时加一个按钮：
+
+```ts
+const blockButton = document.querySelector<HTMLButtonElement>("#block");
+blockButton?.addEventListener("click", () => {
+  const start = Date.now();
+  while (Date.now() - start < 3000) {
+    // 什么都不做，只是占住调用栈 3 秒
+  }
+  console.log("终于结束");
+});
+```
+
+点击后马上试着选中页面文字、点击其他按钮：3 秒内页面完全没有反应。因为同步代码没跑完，事件循环无法处理任何点击。结论：**耗时的工作不能写成长时间的同步循环**；网络请求之所以设计成异步，就是为了不卡住页面。做完实验后删除这个按钮。
+
+**第五步：同时等待多个 Promise。** Day 2 练习 4 中你比较过顺序等待和 `Promise.all` 的耗时，现在补上失败时的区别：
+
+```ts
+function delayValue(value: string, ms: number, fail = false): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (fail) {
+        reject(new Error(`${value} 失败`));
+      } else {
+        resolve(value);
+      }
+    }, ms);
+  });
+}
+
+// Promise.all：全部成功才成功；任何一个失败，整体立即失败
+try {
+  const values = await Promise.all([delayValue("用户", 300), delayValue("订单", 500, true)]);
+  console.log(values);
+} catch (error) {
+  console.log("all 失败：", error instanceof Error ? error.message : error);
+}
+
+// Promise.allSettled：等所有都结束，逐个告诉你成功还是失败
+const results = await Promise.allSettled([delayValue("用户", 300), delayValue("订单", 500, true)]);
+for (const result of results) {
+  if (result.status === "fulfilled") {
+    console.log("成功：", result.value);
+  } else {
+    console.log("失败：", result.reason);
+  }
+}
+```
+
+选择规则：几项数据**缺一不可**（例如页面必须同时有用户和权限）用 `Promise.all`；几项数据**各自独立**（例如仪表盘上的三个卡片）用 `Promise.allSettled`，失败的那张卡片单独显示错误。
+
+Day 2B 练习：
+
+1. 预测并验证：两个 `setTimeout(…, 0)`、两个 `Promise.resolve().then(…)`、两行同步日志交错书写时的输出顺序。
+2. 预测并验证：在 `then` 回调里再 `setTimeout` 一次，它排在哪里？
+3. 写一个 `async` 函数，在第一个 `await` 前后各输出一行，并在调用处后面输出一行，预测顺序。
+4. 用 `Promise.allSettled` 加载 3 个模拟数据（其中 1 个失败），输出“成功 2 项、失败 1 项”。
+5. 用一句话解释：为什么 3 秒的 `while` 循环会让按钮点不动？
 
 #### Day 3：失败、`throw` 与 `try/catch`
 
@@ -2787,6 +3716,17 @@ Day 5 练习：
 - [ ] 能独立完成第 1–8 周总检查至少 6/7 项。
 
 完成这一阶段后，你已经学会 JavaScript 的核心运行能力，只是学习载体一直是 TypeScript。接下来四周会系统整理类型思维，并把前面“先会用”的语法解释到可以稳定迁移到 React/Next.js 的程度。
+
+#### 本周练习资源（第 8 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [现代 JavaScript 教程：Promise](https://zh.javascript.info/promise-basics) | 做任务“用 promise 重新解决？”“基于 promise 的延时” |
+| [现代 JavaScript 教程：事件循环](https://zh.javascript.info/event-loop) + [微任务](https://zh.javascript.info/microtask-queue) | 配合 Day 2B：读完两章，用自己的话复述“同步 → 微任务 → 一个任务”的顺序，再把章节里的示例代码亲手运行一遍 |
+| [现代 JavaScript 教程：Promise API](https://zh.javascript.info/promise-api) | 只读 `Promise.all`、`Promise.allSettled` 两节 |
+| [现代 JavaScript 教程：Async/await](https://zh.javascript.info/async-await) | 做任务“用 async/await 来重写” |
+| [现代 JavaScript 教程：Fetch](https://zh.javascript.info/fetch) | 做任务“从 GitHub fetch 用户信息”，用 TypeScript + `unknown` 守卫完成 |
+| [现代 JavaScript 教程：模块简介](https://zh.javascript.info/modules-intro) | 读完，对照 Day 5 解释 `import` / `export` |
 
 ---
 
@@ -3245,6 +4185,14 @@ const element = document.querySelector("#app")!;
 - [ ] 没有 `any`、`!`、双重断言。
 - [ ] 至少记录 5 条错误日志。
 - [ ] 能当面解释“类型检查不等于运行时校验”。
+
+### 本周练习资源（第 9 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [TypeScript Handbook：Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html) | 每读一节，在 Playground 中改写一个例子 |
+| [TypeScript Handbook：Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | 读“Optional Properties”“readonly Properties”“Extending Types” 三节 |
+| [type-challenges：Pick（中文）](https://github.com/type-challenges/type-challenges/blob/main/questions/00004-easy-pick/README.zh-CN.md) | 只读题目，看懂“要求输入什么、输出什么”；第 11 周再做 |
 
 ---
 
@@ -3724,6 +4672,13 @@ function summarizeResponse(response: TaskResponse): string;
 - [ ] 没有通过 `as` 假装外部数据已经验证。
 - [ ] 至少记录 5 条错误日志。
 
+### 本周练习资源（第 10 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [TypeScript Handbook：Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | 本周主文档，按 Day 2 的顺序对照阅读 |
+| [Zod 官方文档](https://zod.dev/) | 读首页“Basic usage”。对比你手写的类型守卫：理解为什么项目里用校验库，但本周仍要手写 |
+
 ---
 
 ## 6. 第 11 周：泛型与类型派生
@@ -4178,6 +5133,27 @@ function sortBy<T>(
 - [ ] 完成至少 6 道基础类型挑战且有思路注释。
 - [ ] 没有为炫技引入递归复杂类型。
 - [ ] 断言只出现在局部实现边界，并附有原因注释。
+
+### 本周练习资源（第 11 周）
+
+Day 6 的 10 道挑战题，题目页（中文）：
+[Pick](https://github.com/type-challenges/type-challenges/blob/main/questions/00004-easy-pick/README.zh-CN.md) ·
+[Readonly](https://github.com/type-challenges/type-challenges/blob/main/questions/00007-easy-readonly/README.zh-CN.md) ·
+[Tuple to Object](https://github.com/type-challenges/type-challenges/blob/main/questions/00011-easy-tuple-to-object/README.zh-CN.md) ·
+[First of Array](https://github.com/type-challenges/type-challenges/blob/main/questions/00014-easy-first/README.zh-CN.md) ·
+[Length of Tuple](https://github.com/type-challenges/type-challenges/blob/main/questions/00018-easy-tuple-length/README.zh-CN.md) ·
+[Exclude](https://github.com/type-challenges/type-challenges/blob/main/questions/00043-easy-exclude/README.zh-CN.md) ·
+[Awaited](https://github.com/type-challenges/type-challenges/blob/main/questions/00189-easy-awaited/README.zh-CN.md) ·
+[If](https://github.com/type-challenges/type-challenges/blob/main/questions/00268-easy-if/README.zh-CN.md) ·
+[Concat](https://github.com/type-challenges/type-challenges/blob/main/questions/00533-easy-concat/README.zh-CN.md) ·
+[Includes](https://github.com/type-challenges/type-challenges/blob/main/questions/00898-easy-includes/README.zh-CN.md)
+
+每个题目页都有“接受挑战”按钮，会在 TypeScript Playground 中打开带测试的题目，不需要本地安装。
+
+| 资源 | 做什么 |
+|---|---|
+| [TypeScript Handbook：Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) | 本周主文档 |
+| [TypeScript Handbook：Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html) | 查询手册，Day 3 用到哪个查哪个 |
 
 ---
 
@@ -4738,6 +5714,15 @@ assert.equal(isTask(null), false);
 - [ ] 能独立完成 5 分钟口试中的至少 8 题。
 - [ ] 代码目录已有备份；如果已完成总蓝图 Git 单元，则使用 Conventional Commits 推送到 GitHub。
 
+### 本周练习资源（第 12 周）
+
+| 资源 | 做什么 |
+|---|---|
+| [TSConfig Reference](https://www.typescriptlang.org/tsconfig/) | Day 1 逐项查你 tsconfig 里的每一个选项 |
+| [Choosing Compiler Options](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html) | Day 1 配置 A / B 的官方依据 |
+| [Open-Meteo API 文档](https://open-meteo.com/en/docs) | Day 5 天气应用 |
+| [Vite 官方指南](https://vite.dev/guide/) | Day 3、Day 5 浏览器项目 |
+
 ### 毕业项目：从空目录独立完成一个产品
 
 核心课程结束后，用 7–14 天独立完成。三选一：
@@ -5241,6 +6226,226 @@ await start();
 ```
 
 评分点：404、非法 JSON、错误字段、空数组和正常数组是五个不同测试场景；`finally` 恢复加载状态；`main.ts` 不直接重复 API 校验逻辑。
+
+#### 8.0.9 新增单元参考答案（第 4B 周、第 5 周 Day 1B、第 8 周 Day 2B）
+
+> 先独立完成，再对照。答案只是一种写法；只要类型诚实、边界处理正确、不修改输入，就算正确。
+
+**第 4B 周 Day 1**
+
+```ts
+const book = { title: "TS 入门", author: "Ada", pages: 320 };
+const { title, pages } = book;             // 1
+const { author: writer } = book;           // 2
+
+interface Settings { theme?: "light" | "dark"; fontSize?: number }
+function readSettings(settings: Settings): string {
+  const { theme = "light", fontSize = 16 } = settings;   // 3
+  return `${theme}/${fontSize}`;
+}
+readSettings({});              // "light/16"
+readSettings({ fontSize: 0 }); // "light/0" —— 0 不是 undefined，所以不用默认值
+
+interface Book { title: string; author: string; pages: number }
+function describeBook({ title, author }: Book): string {  // 4
+  return `《${title}》— ${author}`;
+}
+```
+
+**第 4B 周 Day 2**
+
+```ts
+const rgb: [number, number, number] = [255, 128, 0];
+const [red, green, blue] = rgb;                           // 1
+
+function minMax(values: number[]): [number, number] | undefined { // 2
+  const [first] = values;
+  if (first === undefined) {
+    return undefined;
+  }
+  let min = first;
+  let max = first;
+  for (const value of values) {
+    if (value < min) min = value;
+    if (value > max) max = value;
+  }
+  return [min, max];
+}
+
+const range = minMax([4, 9, 1]);
+if (range !== undefined) {
+  const [low, high] = range;
+  console.log(low, high);
+}
+```
+
+第 5 题：数组解构按**位置**取值，对象解构按**属性名**取值。
+
+**第 4B 周 Day 3**
+
+```ts
+function appendItem(items: string[], item: string): string[] {
+  return [...items, item];
+}
+
+interface Task { id: string; title: string; completed: boolean }
+function updateTitle(task: Task, title: string): Task {
+  return { ...task, title };
+}
+
+const user = { name: "Ada", address: { city: "SG", zip: "018956" } };
+const moved = { ...user, address: { ...user.address, city: "KL" } };
+console.log(user.address.city); // "SG"
+
+function average(...values: number[]): number | undefined {
+  if (values.length === 0) {
+    return undefined;
+  }
+  let total = 0;
+  for (const value of values) total = total + value;
+  return total / values.length;
+}
+
+function withoutId(task: Task) {
+  const { id, ...rest } = task;
+  return rest; // 推断为 { title: string; completed: boolean }
+}
+```
+
+**第 4B 周 Day 4**
+
+```ts
+function uniqueSorted(values: string[]): string[] {
+  return [...new Set(values)].sort();
+}
+
+interface Product { name: string; category: string }
+function groupByCategory(products: Product[]): Map<string, Product[]> {
+  const groups = new Map<string, Product[]>();
+  for (const product of products) {
+    const existing = groups.get(product.category) ?? [];
+    groups.set(product.category, [...existing, product]);
+  }
+  return groups;
+}
+
+function findDuplicates(ids: string[]): string[] {
+  const seen = new Set<string>();
+  const duplicates = new Set<string>();
+  for (const id of ids) {
+    if (seen.has(id)) {
+      duplicates.add(id);
+    } else {
+      seen.add(id);
+    }
+  }
+  return [...duplicates];
+}
+
+// 4：JSON.stringify(Object.fromEntries(groupByCategory(products)))
+```
+
+**第 4B 周 Day 5**
+
+```ts
+function toCents(input: string): number | undefined {
+  const trimmed = input.trim();
+  if (trimmed === "") return undefined;
+  const value = Number(trimmed);
+  if (!Number.isFinite(value) || value < 0) return undefined;
+  return Math.round(value * 100);
+}
+
+const formatters = {
+  SGD: new Intl.NumberFormat("en-SG", { style: "currency", currency: "SGD" }),
+  CNY: new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY" }),
+  USD: new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
+};
+
+function formatPrice(cents: number, currency: "SGD" | "CNY" | "USD"): string {
+  return formatters[currency].format(cents / 100);
+}
+
+function formatDiscount(rate: number): string {
+  return new Intl.NumberFormat("zh-CN", { style: "percent" }).format(rate);
+}
+
+function isValidIsoDate(text: string): boolean {
+  return !Number.isNaN(new Date(text).getTime());
+}
+
+function formatOrderDate(iso: string): string {
+  return new Intl.DateTimeFormat("zh-CN", { dateStyle: "medium", timeZone: "Asia/Singapore" }).format(new Date(iso));
+}
+```
+
+**第 4B 周 Day 6（核心函数，报表拼接自行完成）**
+
+```ts
+function calculateOrderTotal({ items }: Order): number {
+  let total = 0;
+  for (const { priceInCents, quantity } of items) {
+    total = total + priceInCents * quantity;
+  }
+  return total;
+}
+
+function totalsByCountry(orders: Order[]): Map<string, number> {
+  const totals = new Map<string, number>();
+  for (const order of orders) {
+    const country = order.customer.country;
+    totals.set(country, (totals.get(country) ?? 0) + calculateOrderTotal(order));
+  }
+  return totals;
+}
+
+function allTags(orders: Order[]): string[] {
+  const tags = new Set<string>();
+  for (const order of orders) {
+    for (const tag of order.tags) tags.add(tag);
+  }
+  return [...tags].sort();
+}
+
+function addItem(order: Order, item: OrderItem): Order {
+  return { ...order, items: [...order.items, item] };
+}
+
+function toAnonymousSummary(order: Order) {
+  const { customer, ...rest } = order;
+  return { ...rest, totalInCents: calculateOrderTotal(order) };
+}
+```
+
+**第 5 周 Day 1B（闭包）**
+
+```ts
+function makeMultiplier(factor: number): (value: number) => number {
+  return (value) => value * factor;
+}
+const double = makeMultiplier(2);
+const triple = makeMultiplier(3);
+
+function once(fn: () => string): () => string | undefined {
+  let called = false;
+  return () => {
+    if (called) {
+      return undefined;
+    }
+    called = true;
+    return fn();
+  };
+}
+```
+
+第 5 题要点：每次调用 `createCounter()` 都会创建一份新的 `count`，返回的函数只记得自己那一份；`captured` 是在调用那一刻把值复制进局部常量，之后外部变量变化不影响它。
+
+**第 8 周 Day 2B（事件循环）**
+
+1. 所有同步日志 → 所有 Promise 回调（按书写顺序）→ 所有定时器回调（按书写顺序）。
+2. 在 `then` 里注册的 `setTimeout` 会排在**之前已注册**的定时器之后，因为它注册得更晚。
+3. 顺序是：`await` 前那行 → 调用处后面的同步行 → `await` 后那行。
+5. JavaScript 在一个线程上执行；同步循环没结束，事件循环就没有机会处理点击事件。
 
 ### 8.1 第 9 周关键练习答案
 
@@ -6058,6 +7263,7 @@ Just-in-Time Learning 同样适用于 TypeScript。不要把会写产品推迟�
 | 第 2 周 | 比较、条件、输入转换 | 业务规则与边界表 | 价格计算器 | 能验证输入并解释分支顺序 |
 | 第 3 周 | 循环、函数、作用域 | 追踪表与函数拆分 | 猜数字模拟器 | 能闭卷写基础函数与循环 |
 | 第 4 周 | 字符串、数组、对象 | 求和、查找、统计 | 成绩统计器 | 能处理空数组和对象数组 |
+| 第 4B 周 | 解构、展开/剩余、Map/Set、Intl | 不可变更新与分组统计 | 订单报表生成器 | 能解释浅拷贝陷阱，金额用分存储 |
 | 第 5 周 | 回调与数组方法 | 同一需求用不同方法比较 | 商品/购物车统计 | 能解释 map/filter/find/reduce |
 | 第 6 周 | 问题拆解、调试、不可变更新 | 最小复现和测试表 | 待办核心逻辑 | 能定位四类错误 |
 | 第 7 周 | HTML、DOM、事件、存储 | 事件→状态→渲染 | 浏览器待办 | 手测表全部通过 |
@@ -6076,7 +7282,7 @@ Just-in-Time Learning 同样适用于 TypeScript。不要把会写产品推迟�
 - 7 天后：在新业务场景中使用。
 - 30 天后：从 React / Next.js 代码中找到真实用例。
 
-建议建立 18 张以内的高价值卡片，不做几百张语法卡：
+建议建立 21 张以内的高价值卡片，不做几百张语法卡：
 
 1. 输入→处理→输出如何拆解需求。
 2. 值、变量、表达式、语句的区别。
@@ -6084,6 +7290,9 @@ Just-in-Time Learning 同样适用于 TypeScript。不要把会写产品推迟�
 4. 循环的初始值、继续条件、更新。
 5. 参数、返回值、作用域。
 6. 数组的求和、查找、筛选、转换模式。
+6a. 解构中冒号的含义（改名，不是类型）；展开 vs 剩余。
+6b. 闭包：函数记得出生时的变量；“捕获的旧值”。
+6c. 事件循环：同步 → 微任务 → 一个任务。
 7. 事件→状态→渲染的数据流。
 8. 同步值与 Promise 的区别。
 9. 类型检查与运行时校验的边界。

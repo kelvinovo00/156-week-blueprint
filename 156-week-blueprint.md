@@ -1,14 +1,163 @@
 # 156 周全栈独立 SaaS 开发者学习蓝图
 
-> **版本：** 2026 年 7 月（v3，执行版） | **适用对象：** 完全零基础（从未写过网页）至已有基础的兼职学习者，每周 10-15 小时
+> **版本：** 2026 年 10 月（v4，执行版 + 逐日细化） | **适用对象：** 完全零基础（从未写过网页）至已有基础的兼职学习者，每周 10-15 小时
 >
 > **核心目标：** 约三年内从零基础成长为能独立构建、上线和运营 SaaS 产品的全栈开发者
 >
-> **技术栈：** TypeScript + Next.js 16 + Tailwind CSS + shadcn/ui + Supabase + Vercel
+> **技术栈：** TypeScript 7 + Next.js 16.4（Cache Components）+ Tailwind CSS v4 + shadcn/ui + Supabase + Drizzle + Stripe + Vercel
 >
-> **特别说明：** 本蓝图包含 8 周的 Phase 0 预备期（纯 HTML/CSS/JS），适合从未写过一行代码的学习者。如果你已有 HTML/CSS/JS 基础，可以直接从第 9 周（Phase 1）开始。
+> **特别说明：** 本蓝图与《TypeScript 0→1》教程（`typescript-zero-to-one.md`）配套使用。**每次学习前先看「第零部分：执行版总日程」**——它规定两份文档的执行顺序、哪些周可以跳过，以及中断后如何回来。
 
-> **执行版更新：** 本版统一为 **156 周**，修正原文中 162/156 周、Phase 检查点和 Phase 2 周次重复的问题。前 52 周按周执行，后两年作为方向性路线，每 12 周滚动复盘一次；技术生态、工具价格和产品方向变化时，以当前官方文档和真实用户反馈为准。
+> **v4 更新（2026-10）：** 新增第零部分；第 1–52 周全部细化到逐日步骤并附练习资源；按 2026 年 10 月的技术现状修正了 Next.js、Tailwind、Supabase、TypeScript、Node.js、支付等内容。完整变更见 0.9 节。
+>
+> **v3 执行版更新：** 本版统一为 **156 周**，修正原文中 162/156 周、Phase 检查点和 Phase 2 周次重复的问题。前 52 周按周执行，后两年作为方向性路线，每 12 周滚动复盘一次；技术生态、工具价格和产品方向变化时，以当前官方文档和真实用户反馈为准。
+
+---
+
+## 第零部分：执行版总日程（每次学习前先看这里）
+
+> 这一部分是两份文档的“总调度表”。总蓝图（本文件）和《TypeScript 0→1》教程（`typescript-zero-to-one.md`）各自按“周 / Day”编号；本部分规定**先做哪一个、后做哪一个、哪些可以跳过**。当两份文档的说法不一致时，以本部分和 2026-10 更新后的内容为准。
+
+---
+
+### 0.1 你现在的位置（2026-10-15 盘点）
+
+| 线路 | 已完成 | 下一步 |
+|---|---|---|
+| 网页基础（总蓝图 Phase 0，仓库 `learn-web`） | 第 1 周、第 2 周（含作业 midnight-snack-archive）；第 3 周 Day 1（flex-playground） | 先按 0.5「回归协议」复习，再做**第 3 周 Day 2** |
+| 编程基础（TS 教程，仓库 `ts-zero-to-one`） | 第 1 周、第 2 周；第 3 周 Day 1–4 | 先按 0.5「回归协议」复习，再做**TS 第 3 周 Day 5** |
+
+编号说明：本文用 **W** 表示总蓝图的周（如 W3 = 总蓝图第 3 周），用 **T** 表示 TS 教程的周（如 T3 = TS 教程第 3 周）。带字母的是 2026-10 新增单元：W3B、W32B、T4B。
+
+---
+
+### 0.2 完整执行顺序（从现在到第一个 SaaS 上线）
+
+| 阶段 | 按顺序做这些单元 | 来源 | 估计周数* | 进入下一阶段的条件 |
+|---|---|---|---:|---|
+| **A. 双轨基础** | 编程线：T3（Day 5 起）→ T4 → **T4B** → T5（含 Day 1B）→ T6 → T7 → T8（含 Day 2B）<br>网页线：W3（Day 2 起）→ **W3B** → W4 | TS 教程 + 总蓝图 | 12–14 | T8 验收 + W4 着陆页作业完成 |
+| **B. 上线与工具** | W8（Git + 部署，按 W8 开头的“跳过清单”精简）→ W9 → W10 | 总蓝图 | 3 | W10 作业完成 |
+| **C. 类型系统** | T9 → T10 → T11 → T12 → TS 毕业项目 | TS 教程 | 5–6 | TS 教程「升级到 React 前的硬门槛」通过 |
+| **D. React 与前端工程** | W15 → … → W32（同时从 W15 开始每周做「SQL 副线」） | 总蓝图 | 18 | Phase 1 能力检查清单 |
+| **E. 全栈与 MVP** | **W32B（HTTP 基础）** → W33 → … → W52 | 总蓝图 | 21–24 | 第一个 SaaS MVP 上线 |
+| **F. 产品化与规模化** | W53 → W156（每 12 周滚动细化，见 0.8） | 总蓝图 | 104 | — |
+
+\*按每周 10–15 小时估算。**不需要的单元：** 总蓝图 W5、W6、W7（被 T1–T8 替代）；总蓝图 W11–W14（被 T9–T12 替代）。这些周的正文保留作参考，开头都有“跳过”提示。
+
+**和原计划相比时间线的变化：** 以前 React 从第 15 周开始；按新顺序，从现在算起大约 **20–23 周后**进入 W15。原因是：TS 教程比原 Phase 0 的 JS 部分扎实得多，而且新增了 W3B、T4B 两个单元。这是有意的取舍：地基越牢，后面越快。
+
+---
+
+### 0.3 阶段 A 的“双轨周”怎么安排
+
+阶段 A 同时推进两条线，但**不是**每条线各花满 10 小时。规则如下：
+
+1. **一周 5 个学习日 + 1 个整合日 + 1 天休息。** 不规定星期几，你自己固定下来即可（例如周一到周五学习、周六整合、周日休息）。
+2. **学习日的分配：** 3 天做编程线的“下一个 Day”，2 天做网页线的“下一个 Day”。例如：周一 T、周二 W、周三 T、周四 W、周五 T。
+3. **整合日（2–3 小时）：** 完成当周遇到的“本周作业 / 小项目”，复盘错题，写进笔记，提交 Git。
+4. **只按“下一个 Day”推进，不按日历追进度。** 如果某天只学了一半，下一次从中断的步骤继续，不跳到新的 Day。
+5. **网页线做完 W4 之后，** 五个学习日全部给编程线，直到 T8 结束。
+6. **两条线开始互相用上的地方：** T7（DOM）、T8（fetch）会用到 W3、W3B、W4 的 CSS——这是两条线交汇的地方，把 T7 的待办应用和 T8 的用户目录都用你自己写的 CSS 美化。
+
+---
+
+### 0.4 每一次学习的固定流程（60–120 分钟）
+
+照着做，不需要每次重新思考“今天怎么学”：
+
+1. **3 分钟：打开进度文件。** 在 `Programming Learn/PROGRESS.md`（第一次使用时按下方模板创建）找到“下一步”那一行。
+2. **5 分钟：闭卷回忆。** 不看资料，在纸上写出上一次学习的 3 个要点；写不出的，回到上一次的“自测问题”重做一题。
+3. **主体时间：按当天 Day 的步骤做。** 每一步都亲手输入，不复制粘贴。遇到报错先按「错误日志模板」记录，再查。
+4. **5 分钟：提交。** `git add` → `git commit -m "feat(wN-dayM): 做了什么"`。
+5. **2 分钟：更新进度文件。** 勾选完成的 Day，写下“下一步”。
+
+`PROGRESS.md` 模板（只需创建一次）：
+
+```md
+# 学习进度
+
+## 下一步
+- 编程线：T3 Day 5
+- 网页线：W3 Day 2
+
+## 本周（第 __ 周，日期 ____ ~ ____）
+- [ ] 学习日 1：
+- [ ] 学习日 2：
+- [ ] 学习日 3：
+- [ ] 学习日 4：
+- [ ] 学习日 5：
+- [ ] 整合日：
+- 本周实际学习小时数：
+
+## 完成记录
+- 2026-10-__：T3 Day 5 ✅
+```
+
+---
+
+### 0.5 回归协议：中断之后怎么回来
+
+学习中断非常常见，按下面的规则回来，不要带着愧疚“硬冲新内容”：
+
+| 中断时长 | 回来后第一次学习做什么 |
+|---|---|
+| 少于 7 天 | 正常继续，只做 0.4 第 2 步的闭卷回忆 |
+| 7–27 天 | 先用一次学习时间做“最近完成的一个 Day 7 周测”（闭卷），≥ 70% 正确再继续；不足则重做该周的 Day 6 小项目 |
+| 28 天以上 | 先用 2–3 次学习时间：① 重做最近两周的 Day 7 周测；② 不看旧代码重写最近一个小项目的核心函数；③ 都通过后继续。不通过的部分回到对应 Day 重学，不需要整周重来 |
+
+**2026-10-15 的你适用“28 天以上”：**
+- 编程线：重做 T2 Day 7 和 T3 的第 1–4 天练习中各挑 2 题（闭卷），然后继续 T3 Day 5。
+- 网页线：从 4 月起就没碰 CSS，先闭卷写一个带 Flexbox 导航和卡片的页面（30 分钟），再重做 W3 Day 1 的 `flex-playground` 观察练习，然后继续 W3 Day 2。
+
+---
+
+### 0.6 最低维持周
+
+忙的时候不要“全部暂停”。只要每周还能拿出 **3 小时**，就进入维持模式：
+
+- 不学新内容。
+- 做：上一周的闭卷周测 1 次 + 一个小练习（从当周练习资源里选）+ 更新 `PROGRESS.md`。
+- 维持模式最多连续 3 周；第 4 周仍无法恢复正常节奏时，在月度复盘里正式把计划顺延，而不是继续“欠着”。
+
+---
+
+### 0.7 月度复盘（每月第一个整合日，30 分钟）
+
+在 `PROGRESS.md` 末尾追加：
+
+```md
+## 月度复盘 2026-__
+- 本月完成的单元：
+- 本月实际总小时数：
+- 平均每周小时数：
+- 按这个速度，阶段 __ 预计完成日期：
+- 最卡的一件事：
+- 下个月唯一要改进的习惯：
+```
+
+用“平均每周小时数”重新估算完成日期。速度慢不是失败，只是让日程如实反映现实。
+
+---
+
+### 0.8 W53 以后为什么不写到“逐日”
+
+W1–W52 已全部写到逐日步骤，W53–W156 保持“每两周一个主题”的粒度，这是有意的：按你的节奏，W53 大约在两年后。到那时 Next.js、Supabase、AI 工具大概率又会变化，现在写死的逐日步骤到时候多半已经过时。
+
+做法是：**每完成 12 周，就把接下来 12 周展开成逐日计划**（可以让 Claude 按本文件的格式生成，然后你按 1.5 节的“AI 不是权威”原则核对官方文档）。展开时必须包含：每日步骤、练习资源链接、验收清单、自测问题。
+
+---
+
+### 0.9 2026-10 版本更新了什么
+
+| 类别 | 变化 |
+|---|---|
+| 执行方式 | 新增本部分：合并两份文档的顺序、双轨周、回归协议、维持周、月度复盘 |
+| 新增单元 | W3B（定位、层叠与现代 CSS）、T4B（解构、展开、Map/Set、Intl）、W32B（HTTP 与浏览器网络）、SQL 副线（W15–W38 每周 30 分钟） |
+| 逐日展开 | W21–W52 由“学习内容列表”改为逐日步骤 + 练习资源 + 验收清单 |
+| 技术更新 | Next.js 16.4（Cache Components 默认开启、`updateTag`、proxy.ts）、Tailwind CSS v4、Supabase 新密钥与 `getClaims()`、TypeScript 7、Node 24 LTS、Stripe Managed Payments |
+| 安全修正 | Drizzle 绕过 RLS 的问题与数据访问架构；Server Actions 必须做授权；数据访问层（DAL） |
+| AI 规则 | 按“任务类型”而非“工具名称”分级；AGENTS.md 作为规则单一来源；OpenSpec；更安全的回滚方式 |
+| 勘误 | 修正原文中关于 proxy.ts、`@next/agent`、RSC 序列化、`getSession()` 等错误 |
 
 ---
 
@@ -213,18 +362,19 @@
 | 层级 | 选型 | 为什么选它 | 替代方案 |
 |------|------|-----------|---------|
 | **编程语言** | TypeScript（strict mode） | 前后端统一语言，极大降低心智负担。类型系统在重构时提供安全网。2026 年 AI 代码生成对 TypeScript 的支持最好——类型信息让 AI 生成的代码更准确、更少 bug。 | JavaScript（失去类型安全，AI 生成代码质量下降） |
-| **全栈框架** | Next.js 16（App Router） | Server Components 实现服务端渲染零客户端 JS；`use cache` API 简化缓存策略；Turbopack 提供极速开发体验；`proxy.ts` 支持 WebSocket 代理。2025 年发布，2026 年 3 月最新版本 16.2，生态成熟稳定。与 Vercel 深度集成，部署零配置。 | Remix（优秀但生态较小）、SvelteKit（语法优雅但生态和 AI 支持不及 Next.js） |
-| **样式** | Tailwind CSS + shadcn/ui | Tailwind 提供原子化 CSS，开发速度快且产物体积小。**shadcn/ui 是预样式化的、可复制粘贴的组件集合**（基于 Radix UI / Base UI 构建），不是 headless 组件库——你直接把组件代码复制到项目中，拥有完全控制权，可以随意修改。这种模式对独立开发者极其友好：开箱即用的美观 UI，同时保持完全的定制自由。 | Chakra UI（运行时 CSS-in-JS，性能略差）、MUI（组件丰富但过于"Material"风格，定制成本高） |
-| **数据库** | Supabase（PostgreSQL） | 一站式后端即服务：内置 Auth（邮箱/OAuth/Magic Link）、Row Level Security（行级权限控制）、Storage（文件存储）、Realtime（实时订阅）、Edge Functions（Deno 无服务器函数）。免费层慷慨（500 MB 数据库、1 GB 存储、50K 月活用户）。底层是标准 PostgreSQL，不锁定。 | Neon（纯 Serverless PostgreSQL，支持 scale-to-zero，适合需要极致冷启动成本控制的场景，但缺少 Auth/Storage 等集成功能） |
-| **ORM** | Drizzle ORM | 类型安全、轻量级，TypeScript 开发体验极佳。SQL-like 语法对理解数据库操作更透明。Schema 即代码，迁移工具（drizzle-kit）简洁好用。Bundle size 远小于 Prisma。 | Prisma（功能更丰富但 bundle 较大、冷启动较慢，Serverless 环境下表现不如 Drizzle） |
-| **支付** | Stripe 或 Lemon Squeezy | **Lemon Squeezy** 作为 Merchant of Record（MoR）自动处理全球税务/VAT 申报，对独立开发者极其友好——你不需要理解各国税法。**Stripe** 更灵活、生态更大，但税务需自行处理（或搭配 Stripe Tax）。建议初期用 Lemon Squeezy 快速上线，规模扩大后视需要迁移到 Stripe。 | Paddle（也是 MoR 模式，但定价较高、面向中大型 SaaS） |
+| **全栈框架** | Next.js 16（App Router） | Server Components 让服务器直接渲染、减少客户端 JS；**Cache Components**（`'use cache'` + `<Suspense>`）让“哪些内容缓存、哪些按请求渲染”变成显式声明——16.4 起新项目默认开启，Next.js 17 将成为默认；Turbopack 是默认构建工具；`proxy.ts`（原 `middleware.ts` 改名）处理请求前的重定向和 Cookie 刷新；`create-next-app` 自带 `AGENTS.md`，让 AI 工具读取与版本匹配的文档。截至 2026-10 最新版本 16.4（10 月 6 日发布）。与 Vercel 深度集成，部署零配置。 | React Router v7 框架模式（原 Remix）、TanStack Start、SvelteKit（语法优雅但生态和 AI 支持不及 Next.js） |
+| **样式** | Tailwind CSS + shadcn/ui | Tailwind（**v4**，配置写在 CSS 文件中的 `@theme`，不再使用 `tailwind.config.js`）提供原子化 CSS，开发速度快且产物体积小。**shadcn/ui 是预样式化的、可复制粘贴的组件集合**（基于 Radix UI / Base UI 构建），不是 headless 组件库——你直接把组件代码复制到项目中，拥有完全控制权，可以随意修改。这种模式对独立开发者极其友好：开箱即用的美观 UI，同时保持完全的定制自由。 | Chakra UI（运行时 CSS-in-JS，性能略差）、MUI（组件丰富但过于"Material"风格，定制成本高） |
+| **数据库** | Supabase（PostgreSQL） | 一站式后端即服务：内置 Auth（邮箱/OAuth/Magic Link）、Row Level Security（行级权限控制）、Storage（文件存储）、Realtime（实时订阅）、Edge Functions（Deno 无服务器函数）。免费层慷慨（500 MB 数据库、1 GB 存储、50K 月活用户；注意：最多 2 个活跃项目，7 天无活动会自动暂停）。底层是标准 PostgreSQL，不锁定。本地开发用 Supabase CLI（需要 OrbStack 等容器运行时）。**2026 更新：** 使用新的 publishable / secret 密钥；服务器端用 `getClaims()` 验证登录。 | Neon（纯 Serverless PostgreSQL，支持 scale-to-zero，适合需要极致冷启动成本控制的场景，但缺少 Auth/Storage 等集成功能） |
+| **ORM** | Drizzle ORM | 类型安全、轻量级，TypeScript 开发体验极佳。SQL-like 语法对理解数据库操作更透明。Schema 即代码，迁移工具（drizzle-kit）简洁好用。Bundle size 远小于 Prisma。**重要：** Drizzle 以 `postgres` 角色直连数据库，**不受 RLS 约束**——授权必须写在数据访问层（第 40 周 Day 1）。 | Prisma（功能更丰富但 bundle 较大、冷启动较慢，Serverless 环境下表现不如 Drizzle） |
+| **支付** | Stripe（学习与开发）；上线时在 Stripe / Stripe Managed Payments / Lemon Squeezy / Paddle 中选择 | **2026-10 更新：** 学习阶段统一用 **Stripe 测试模式**：文档最完善，Stripe CLI 可以把 Webhook 转发到本地，测试时钟能模拟续费失败。Stripe 直接收款时税务由你负责（可配合 Stripe Tax）。**Stripe Managed Payments** 是 Stripe 自己的 Merchant of Record（代收税）方案，2026 年 2 月进入公开预览，沿用 Stripe Checkout，并为 Lemon Squeezy 商户提供迁移路径。**Lemon Squeezy** 已被 Stripe 收购，目前仍在运营。上线前（第 52 周 Day 2）按可用性和费率做最终选择。 | Paddle（MoR，定价较高、面向中大型 SaaS） |
 | **部署** | Vercel | Next.js 官方部署平台，零配置。全球边缘网络、自动 HTTPS、Preview Deploys（每个 PR 自动生成预览链接）、Analytics。免费层足以支撑早期产品。 | Railway（适合需要持久化进程的场景）、Cloudflare Pages（边缘计算强但 Next.js 兼容性有限制） |
 
 #### 开发工具链
 
 | 层级 | 选型 | 为什么选它 | 替代方案 |
 |------|------|-----------|---------|
-| **AI 开发工具** | Cursor IDE + Claude（Claude Max） | 读者现有工具链。Cursor 的 Agent/Composer 模式 + Claude 的长上下文和代码理解能力是 2026 年独立开发者的最佳 AI 编码组合。 | VS Code + GitHub Copilot（可用但集成深度不如 Cursor） |
+| **AI 开发工具** | Cursor + Claude（Claude Code）+ Codex | 读者现有工具链。三者都提供 Agent（能直接读写项目文件的编码代理）。项目约定统一写在 `AGENTS.md`（3.2 节），各工具共用；规格驱动开发使用你已安装的 OpenSpec。使用规则按任务类型分级（1.5 节）。 | VS Code + GitHub Copilot |
+| **运行环境** | Node.js 24 LTS + fnm + pnpm | Node 20 已于 2026-04 停止维护；24 是当前 LTS（26 计划于 2026-10 下旬进入 LTS）。用 fnm 管理版本、项目根目录放 `.node-version`。安装步骤见 TS 教程 2.1.1。 | nvm、mise |
 | **版本控制** | Git + GitHub | 行业标准。GitHub 提供免费的私有仓库、Actions（CI/CD）、Issues（需求管理）、Projects（看板）。与 Vercel 深度集成，push 即部署。 | — |
 
 #### 运营工具链
@@ -248,7 +398,7 @@ A: 两者都是优秀的 TypeScript ORM。Drizzle 的优势在于：(1) 更接�
 
 **Q: Supabase 的免费层够用吗？真正做产品时会不会不够？**
 
-A: 免费层（500 MB 数据库、1 GB 存储、50K 月活用户）对 MVP 和早期产品绰绰有余。当你的产品增长到需要升级时，Supabase Pro 计划每月 $25——如果你的产品已经有付费用户，这个成本可以忽略。关键是不要在产品尚未验证时就为基础设施付费。
+A: 免费层（500 MB 数据库、1 GB 存储、50K 月活用户）对 MVP 和早期产品绰绰有余。两点要注意：免费项目 7 天无活动会自动暂停（学习期间用本地 Supabase 开发就不受影响）；每日备份、图片变换等功能需要付费计划——产品有了付费用户后应升级。当你的产品增长到需要升级时，Supabase Pro 计划每月 $25——如果你的产品已经有付费用户，这个成本可以忽略。关键是不要在产品尚未验证时就为基础设施付费。
 
 **Q: 为什么不推荐 GraphQL？**
 
@@ -268,7 +418,7 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 
 **Docker / Kubernetes**
 
-这些是容器化和编排工具，用于管理自建服务器上的应用部署。使用 Vercel 部署时完全不需要——Vercel 在幕后为你处理了所有容器化、扩缩容、负载均衡。学习 Docker/K8s 对你的 SaaS 产品没有直接帮助，而且学习成本高昂。
+这些是容器化和编排工具，用于管理自建服务器上的应用部署。使用 Vercel 部署时完全不需要——Vercel 在幕后为你处理了所有容器化、扩缩容、负载均衡。**唯一例外：** Supabase 的本地开发环境运行在容器中，所以第 39 周会安装 OrbStack（Docker 兼容），但你只需要会 `supabase start` / `supabase stop`，不需要学习编写 Dockerfile 或 K8s。
 
 **Prometheus / Grafana**
 
@@ -303,7 +453,7 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
   │
   ├── Drizzle ORM (类型安全的数据库访问层)
   │
-  ├── Lemon Squeezy / Stripe (支付 + 订阅管理)
+  ├── Stripe（学习期测试模式；上线时可选 Managed Payments 等 MoR）(支付 + 订阅管理)
   │
   ├── Inngest / Trigger.dev (异步任务 + 定时任务)
   │
@@ -327,7 +477,7 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 
 | 阶段 | 周数 | 名称 | 核心目标 | 关键里程碑 | AI 使用级别 |
 |------|------|------|---------|-----------|------------|
-| **Phase 0** | 第 1-8 周 | 🌱 预备期 | 从零基础到能写交互式网页 | ✅ 3 页 HTML 站点 + CSS 样式<br>✅ 待办应用（JS + DOM + localStorage）<br>✅ 天气应用（fetch + API）<br>✅ GitHub 仓库 + Vercel 部署 | **Level 0**：AI 只做老师 |
+| **Phase 0** | 第 1-8 周（+ 新增 3B；JS 部分由 TS 教程 T1–T8 承担） | 🌱 预备期 | 从零基础到能写交互式网页 | ✅ 多页 HTML/CSS 站点 + 着陆页<br>✅ 浏览器待办应用（TS 教程 T7）<br>✅ 用户目录应用（TS 教程 T8）<br>✅ GitHub 仓库 + Vercel 部署 | **Level 1**：AI 只做老师 |
 | **Phase 1** | 第 9-32 周 | 🧱 地基 | 打牢 TypeScript、React 核心能力 | ✅ 作品集网站上线（Vercel 部署）<br>✅ 3 个 React 实战小项目完成<br>✅ 掌握 Git 专业工作流 | **Level 1**：AI 作为教师 |
 | **Phase 2** | 第 33-52 周 | ⚡ 全栈实战 | 掌握全栈开发闭环，上线第一个 SaaS MVP | ✅ 第一个 SaaS MVP 上线并接受真实反馈<br>✅ 完整实现认证→数据库→支付沙盒/生产闭环<br>✅ 至少 3 个真实试用用户，或 1 次真实付款/明确付费承诺 | **Level 2**：AI 作为初级助手 |
 | **Phase 3** | 第 53-104 周 | 🚀 产品化 + 深度补课 | 系统补足 CS 基础，强化产品化能力，启动第二个产品 | ✅ 第一个产品持续迭代、用户增长<br>✅ 第二个 SaaS 产品或重大版本上线<br>✅ 掌握测试、性能优化、安全基础 | **Level 3**：AI 作为高级搭档 |
@@ -341,7 +491,7 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 
 **为什么需要这个阶段：** 如果你从未亲手写过一行 HTML，直接进入 TypeScript 和 React 会非常吃力。Phase 0 用 8 周时间从「什么是网页」开始，逐步建立 Web 开发的基本能力。每天有具体的任务拆解，每周有明确的交付作业。
 
-**AI 使用规则（Level 0）：** AI 只做老师，不做代工。可以问概念、请 Claude 出题和批改，但每一行代码必须亲手敲出来。禁止复制粘贴 AI 生成的代码。
+**AI 使用规则（Level 1）：** AI 只做老师，不做代工。可以问概念、请 Claude 出题和批改，但每一行代码必须亲手敲出来。禁止复制粘贴 AI 生成的代码。
 
 **阶段产出：**
 
@@ -382,10 +532,11 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 | 模块 | 周数 | 核心内容 |
 |------|------|---------|
 | 开发环境升级 + Git 进阶 | 第 9-10 周 | pnpm、SSH、终端效率、Conventional Commits、分支策略、GitHub PR |
-| TypeScript 基础 | 第 11-14 周 | 基础类型、接口、联合类型、泛型、strict mode 配置、类型体操入门 |
+| TypeScript 基础 | 第 11-14 周（由 TS 教程 T9–T12 承担） | 基础类型、接口、联合类型、泛型、strict mode 配置、类型体操入门 |
 | React 核心 | 第 15-20 周 | JSX、组件、Props、State、Hooks（useState/useEffect/useContext/useReducer）、自定义 Hooks、React Router |
 | Tailwind + shadcn/ui + 设计基础 | 第 21-24 周 | 原子化 CSS、响应式设计、shadcn/ui 组件使用与定制、设计基础 |
-| 项目实战 + 作品集 | 第 25-32 周 | 实战项目、测试入门、作品集网站设计构建部署 |
+| 项目实战 + 作品集 | 第 25-32 周 | 实战项目、组件测试 + CI、无障碍、部署 |
+| SQL 副线 | 第 15-38 周，每周 30 分钟 | SQLBolt → pgexercises → 自建表练习 |
 
 **阶段结束时的能力检查清单：**
 
@@ -414,9 +565,10 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 
 | 模块 | 周数 | 核心内容 |
 |------|------|---------|
-| Next.js 16 核心 | 第 33-38 周 | App Router、Server/Client Components、`use cache`、API Routes、Server Actions |
-| 数据库 + ORM + Auth | 第 39-44 周 | Supabase 设置、Drizzle ORM、Schema 设计、认证、RLS、基础文件存储 |
-| 产品验证 + 支付 | 第 45-46 周 | MVP 功能定义、线框图、Lemon Squeezy/Stripe、订阅 Webhook |
+| HTTP 基础（新增） | 第 32B 周 | 请求/响应、状态码、Cookie、CORS、缓存 |
+| Next.js 16 核心 | 第 33-38 周 | App Router、Server/Client Components、Cache Components（`'use cache'` + Suspense）、服务器函数、API 路由、proxy.ts |
+| 数据库 + ORM + Auth | 第 39-43 周 | 本地 Supabase、SQL 综合、Drizzle 与数据访问架构、Schema 设计、认证（getClaims）、RLS、Storage |
+| 产品验证 + 支付 | 第 44-46 周 | 产品发现、线框图、Stripe 测试模式、订阅 Webhook |
 | MVP 构建 | 第 47-50 周 | 项目搭建、核心功能实现、Landing Page、用户引导流程 |
 | 上线 + 反馈 | 第 51-52 周 | Production Checklist、错误监控（Sentry）、Beta 测试、首次公开发布 |
 
@@ -506,393 +658,193 @@ A: GraphQL 解决的核心问题是"多个前端（Web/Mobile/Smart TV）需要�
 
 ---
 
-### 1.5 AI 使用分级规则
+### 1.5 AI 使用分级规则（2026-10 重写版）
 
-> **为什么需要分级？** AI 编码工具（Cursor + Claude）是 2026 年独立开发者最强大的杠杆，但过早依赖会导致"代码文盲"——你能让 AI 生成可运行的代码，却无法理解它为什么工作、出了问题也不知道如何修复。分级使用确保你在每个阶段既充分利用 AI，又不跳过关键的理解和能力构建。
+> **为什么需要分级？** AI 编码工具是 2026 年独立开发者最强的杠杆，但过早依赖会导致“代码文盲”：能让 AI 生成可运行的代码，却不知道它为什么能运行，出问题也不会修。分级的目的，是让你在每个阶段既用上 AI，又不跳过必须亲手建立的能力。
+>
+> **类比：** 计算器之于小学生。先建立数感，再用计算器放大能力。
 
-> **类比：** 计算器是数学计算的强大工具，但如果一个小学生从一开始就用计算器做所有算术，他将永远无法建立数感。AI 编码工具之于编程，就像计算器之于算术——你需要先建立基础能力，然后才能有效地使用工具来放大你的能力。
-
----
-
-#### Level 1：AI 作为教师（Phase 0-1，第 1-32 周）
-
-**核心原则：** AI 帮你理解概念，但你必须亲手写每一行项目代码。
-
-**理念：** 这个阶段的目标是建立基础编码能力的肌肉记忆。就像学钢琴不能让别人替你按琴键一样，学编程不能让 AI 替你写代码。但 AI 是一个无限耐心、随时在线的导师，善用它来加速理解。
-
-**允许使用的 AI 功能：**
-
-- Claude 对话（解释概念、回答问题）
-- Cursor 的代码高亮解释（选中代码 → 解释）
-- 错误信息分析（让 AI 解释错误，但自己修复）
-
-**禁止使用的 AI 功能：**
-
-- Cursor Agent / Composer 模式
-- Tab 自动补全生成整行/整块代码
-- 任何形式的"帮我写这个组件/函数"
-
-**DO vs DON'T 详细对照：**
-
-| ✅ DO（推荐做法） | ❌ DON'T（禁止做法） |
-|-------------------|---------------------|
-| 遇到不懂的概念时，让 Claude 用类比来解释。例如："请用餐厅点餐的比喻来解释 React 的 useState。" | 让 AI 直接生成项目代码，然后复制粘贴。即使代码能运行，你也跳过了最关键的学习过程。 |
-| 代码报错时，把错误信息发给 Claude，让它解释错误原因和修复方向——然后 **自己动手修复**。 | 让 AI 直接修复你的代码。你需要的是理解错误原因，而不是一个能运行的结果。 |
-| 让 Claude 为你生成练习题来巩固当天学的知识。例如："给我 5 道关于 TypeScript 泛型的练习题，由易到难。" | 使用 Cursor 的 Agent 模式或 Composer 来生成组件、页面或任何项目代码。 |
-
-**Level 1 的典型一天：**
-
-```
-1. 阅读 React 官方文档中关于 useEffect 的章节 (30 分钟)
-2. 不理解 cleanup function 的概念，问 Claude：
-   "React useEffect 的 cleanup function 什么时候执行？
-    请举一个没有 cleanup 会导致 bug 的真实例子。" (10 分钟)
-3. 在自己的 Todo App 项目中实现一个需要 useEffect 的功能 (60 分钟)
-4. 遇到报错 "Cannot update a component while rendering a different component"
-   → 把报错发给 Claude，理解原因 (10 分钟)
-   → 自己修复代码 (20 分钟)
-5. 提交代码到 GitHub，Vercel 自动部署 (5 分钟)
-```
-
-**自我检测：** 如果关掉 AI，你写不出当前项目中的任何一个组件，说明你对 AI 的依赖超出了 Level 1 的范围。回到"不用 AI 写代码"的纪律，直到你能独立完成。
+> **2026-10 重写说明：** 旧版按“工具名称”划线（例如“允许 Cursor Agent，但禁止 Claude Code CLI”），而这两者其实是同一类工具——都是能直接读写你项目文件的**编码代理（Agent）**，Codex 也一样。新版按“**让 AI 做什么任务**”划线，换工具也不用改规则。
 
 ---
 
-#### Level 2：AI 作为初级助手（Phase 2，第 33-52 周）
+#### 先认识三类 AI 用法
 
-**核心原则：** AI 处理机械性的脚手架工作，你专注于业务逻辑和架构决策。
-
-**理念：** 全栈开发涉及大量重复性的结构搭建工作（路由文件、数据库 Schema 初始结构、API 端点骨架）。让 AI 处理这些"已知模式"的工作是合理的效率提升。但业务逻辑——决定产品行为的核心代码——必须由你自己编写和理解。
-
-**核心区分：什么算"脚手架"，什么算"业务逻辑"？**
-
-| 类别 | 脚手架（AI 可以做） | 业务逻辑（你必须自己写） |
-|------|-------------------|----------------------|
-| 路由 | 生成文件结构和 layout 骨架 | 页面内的数据获取和渲染逻辑 |
-| 数据库 | Schema 初稿 | 复杂查询、数据验证规则 |
-| API | 端点文件骨架 | 请求处理、权限检查、错误处理 |
-| UI | shadcn/ui 组件安装命令 | 组件间的状态传递和交互逻辑 |
-| 配置 | ESLint/Prettier/tsconfig 配置 | — |
-
-**允许使用的 AI 功能：**
-
-- Level 1 的所有功能
-- Cursor 的 Tab 补全（用于补全已知模式，如 import 语句）
-- 有限的 Agent 使用（仅用于生成文件结构和配置文件）
-- `.cursor/rules/` 规则创建
-
-**禁止使用的 AI 功能：**
-
-- 让 Agent 实现完整的业务功能
-- 不经审查就接受 AI 生成的数据库查询
-- 让 AI 生成安全相关代码（认证、权限、支付）而不理解每一行
-
-**DO vs DON'T 详细对照：**
-
-| ✅ DO（推荐做法） | ❌ DON'T（禁止做法） |
-|-------------------|---------------------|
-| 用 Cursor 生成 Next.js 路由文件结构和基础 layout 骨架。例如：让 AI 生成 `app/(dashboard)/settings/page.tsx` 的初始结构。 | 让 AI 生成完整的用户注册/登录流程代码。你需要理解认证流程的每一步：密码哈希、Session 管理、Token 刷新。 |
-| 让 AI 根据你的描述生成 Drizzle ORM 的数据库 Schema 初稿，然后你逐行审查和调整。 | 让 AI 生成支付集成（Stripe/Lemon Squeezy）的 Webhook 处理代码而不理解 Webhook 的工作原理。 |
-| 创建 `.cursor/rules/` 文件来规范 AI 的代码风格和项目约定。例如：要求 AI 生成的组件必须使用特定的命名规范和文件结构。 | 在不理解 SQL 查询原理的情况下让 AI 生成所有数据库查询。你至少需要能手写基础的 SELECT/INSERT/UPDATE/JOIN。 |
-
-**Level 2 的 .cursor/rules/ 入门示例：**
-
-在 Phase 2 开始时，创建你的第一个 Cursor 规则文件。这是一个基础示例，后续阶段会逐步完善：
-
-```markdown
-# .cursor/rules/project-conventions.md
-
-## 代码风格
-- 所有组件使用命名导出（不用 default export）
-- 文件名使用 kebab-case（例如：user-profile.tsx）
-- 类型定义使用 interface 而非 type（除非需要联合类型）
-
-## 项目结构
-- 组件放在 app/_components/ 下
-- 数据库 Schema 放在 db/schema/ 下
-- Server Actions 放在 app/_actions/ 下
-```
-
-**自我检测：** 随机选择项目中的任何一个 API 端点，你能否在白板上画出完整的数据流（请求 → 验证 → 数据库操作 → 响应）？如果不能，说明你让 AI 做了太多业务逻辑的工作。
+| 类别 | 例子 | AI 能否修改你的文件 |
+|---|---|---|
+| **对话（Chat）** | 在 Claude 网页或 App 里提问；在 Cursor 侧边栏只问不改 | 否 |
+| **补全（Tab / Inline）** | Cursor Tab 自动补全、行内生成 | 是（逐行） |
+| **代理（Agent）** | Cursor Agent 模式、Claude Code、Codex、任何会自己执行命令和改文件的工具 | 是（整块、多文件） |
 
 ---
 
-#### Level 3：AI 作为高级搭档（Phase 3，第 53-104 周）
+#### Level 1：AI 作为教师（W1–W32，Phase 0–1）
 
-**核心原则：** 全面使用 AI 工具，但以 TDD（测试驱动开发）作为质量门禁。
+**核心原则：** AI 帮你理解，所有项目代码由你亲手输入。
 
-**理念：** 到这个阶段，你已经有了足够的基础来理解和审查 AI 生成的代码。现在的目标是最大化生产力，同时通过测试来确保代码质量。核心工作流变为：人定义需求 → AI 写测试 → AI 写实现 → 人审查 → 合并。
+**设置（第一次学习前做一次）：**
 
-**允许使用的 AI 功能：**
+1. 在 Cursor 中关闭 Tab 自动补全：`Cmd + Shift + P` → 输入 `Cursor Settings` → 打开设置 → 在 Tab 相关设置中关闭（不同版本位置略有差异，搜索 “Tab” 即可）。
+2. 不使用 Agent 模式；侧边栏只用来提问。
 
-- Level 2 的所有功能
-- Cursor Agent + Composer 模式完整使用
-- Claude Code CLI 用于后台重构任务
-- AI 生成完整功能代码（需通过 TDD 门禁）
+| 任务 | Level 1 |
+|---|---|
+| 解释概念、类比、出题、批改你的答案 | ✅ |
+| 解释报错原因（修复由你完成） | ✅ |
+| **对照审查**：你独立完成后，让 AI 在对话中写它的版本，你来比较 | ✅（W15 起每周至少 1 次，见下文） |
+| 生成项目代码、组件、页面、样式 | ❌ |
+| Tab 补全整行代码 | ❌ |
+| 任何 Agent 修改你的文件 | ❌ |
 
-**新增约束：TDD 门禁（非可选）**
+**新增：AI 对照审查练习（W15 起每周 1 次，约 20 分钟）。** 编码代理普及之后，“审查 AI 写的代码”已经是核心能力，要比“让 AI 写”更早练：
 
-从 Phase 3 开始，所有非 trivial 的功能开发必须遵循以下流程：
+1. 选本周你**已经独立完成**的一个函数或组件。
+2. 在 Claude 对话中发送：
 
-```
-1. 人类编写 spec.md（功能需求文档）
-   - 功能描述
-   - 输入/输出定义
-   - 边界情况
-   - 安全考量
+   ```text
+   这是一个需求：[粘贴本周作业里该功能的需求描述]。
+   请用 TypeScript 写出你的实现，只发在对话里。
+   ```
 
-2. AI 根据 spec.md 生成测试用例
-   - 单元测试（Vitest）
-   - 集成测试（如涉及数据库/API）
-   - E2E 测试（如涉及用户流程）
+3. 把 AI 的版本和你的版本并排比较，在笔记中写下：① 3 处不同；② AI 版本里你认为**更好**的 1 处，以及原因；③ AI 版本里的 1 个问题（边界没处理、类型不诚实、命名差、过度设计等）。如果找不到问题，就再追问一次：“这段代码在什么输入下会出错？”
+4. **不要把 AI 的代码粘贴进项目。** 如果想采纳某个思路，关掉对话，自己重写。
 
-3. 人类审查并补充测试用例
-   - 确认边界情况是否覆盖
-   - 确认异常路径是否覆盖
-   - 补充 AI 遗漏的场景
-
-4. AI 实现功能代码，使所有测试通过
-
-5. 人类进行 Code Review
-   - 安全审查
-   - 性能审查
-   - 架构一致性审查
-
-6. 合并代码
-```
-
-**关键规则：** 如果 AI 生成的实现不能通过测试，**不允许修改测试来适配实现**——必须修改实现。测试是需求的代码化表达，修改测试等于修改需求。
-
-**DO vs DON'T 详细对照：**
-
-| ✅ DO（推荐做法） | ❌ DON'T（禁止做法） |
-|-------------------|---------------------|
-| 使用 Cursor Agent + Composer 模式实现完整功能。工作流：先写需求描述，让 AI 生成测试用例，审查测试后让 AI 实现功能。 | 不审查就合并 AI 生成的代码。即使有测试通过，你仍然需要理解代码逻辑、检查安全隐患、确认架构合理性。 |
-| 使用 Claude Code CLI 在后台处理重构任务。例如：让 AI 把所有 `fetch` 调用迁移为统一的 API 客户端封装。 | 让 AI 处理涉及用户数据安全的核心逻辑（权限控制、数据加密、支付处理）而不进行逐行审查。 |
-| 用 AI 生成单元测试和集成测试，然后人工审查测试用例是否覆盖了边界情况和异常路径。 | 完全跳过手动测试。自动化测试很重要，但在关键路径（注册→付费→使用核心功能）上，你必须定期自己走一遍完整流程。 |
-
-**Level 3 的典型工作流示例：**
-
-假设你要为 SaaS 产品添加"团队邀请"功能：
-
-```
-Step 1: 你编写 spec.md
-───────────────────
-## 功能：团队邀请
-- 管理员可以通过邮箱邀请新成员
-- 被邀请者收到邮件，点击链接加入团队
-- 邀请链接 72 小时过期
-- 同一邮箱不能被重复邀请
-- 团队成员数不超过定价方案上限
-
-Step 2: 让 AI 生成测试
-───────────────────
-AI 生成 15 个测试用例，涵盖正常流程和边界情况。
-
-Step 3: 你审查测试，发现 AI 遗漏了：
-───────────────────
-- 被邀请者已有其他团队的账号的情况
-- 邀请者在邀请发出后被移除管理员权限的情况
-→ 补充这两个测试用例
-
-Step 4: AI 实现功能，所有测试通过
-Step 5: 你 Review 代码，确认安全和性能
-Step 6: 合并
-```
-
-**自我检测：** 你能否在不运行代码的情况下，仅通过阅读 AI 生成的代码来预判它的行为和潜在问题？如果可以，你已具备 Level 3 的审查能力。
+**自我检测：** 关掉所有 AI，你能否写出当前项目里任意一个组件？不能，就继续停留在 Level 1。
 
 ---
 
-#### Level 4：AI 作为自主团队（Phase 4，第 105-156 周）
+#### Level 2：AI 作为初级助手（W33–W52，Phase 2）
 
-**核心原则：** 将整个功能模块委托给 AI，你的角色是架构师和审查者。
+**核心原则：** AI 做“已知模式”的体力活，你负责业务逻辑、安全和架构决定。
 
-**理念：** 这是终极形态。你不再逐行编写或审查代码，而是通过 spec 文档定义需求、通过测试验证正确性、通过架构约束确保一致性。多个 AI Agent 可以并行工作在不同的功能模块上。你的核心价值在于：理解用户需求、设计系统架构、做出优先级决策。
+| 任务 | Level 2 |
+|---|---|
+| Level 1 全部 | ✅ |
+| Tab 补全（import、重复的样板代码） | ✅ |
+| Agent 生成：文件骨架、路由目录、配置文件（ESLint / tsconfig / drizzle.config）、表结构**初稿**、测试文件骨架 | ✅ 必须在单独分支上，见下方“安全回滚” |
+| Agent 解释现有代码、做代码审查并给出意见 | ✅ |
+| 业务逻辑（产品的核心规则） | ❌ 你写 |
+| 认证、授权检查、RLS 策略、支付 Webhook、金额计算 | ❌ 你写，AI 只能审查 |
+| 不逐行阅读就合并 AI 的修改 | ❌ |
 
-**允许使用的 AI 功能：**
+**AGENTS.md：给所有 AI 工具的同一份说明。** 从 W33 开始，每个项目根目录放一个 `AGENTS.md`（Next.js 16.2 起，`create-next-app` 会自动生成并指向 `node_modules/next/dist/docs/` 里与版本匹配的文档）。Codex 和 Cursor Agent 会直接读取它；Claude Code 读取 `CLAUDE.md`，只需在 `CLAUDE.md` 里写一行 `@AGENTS.md` 即可共用。项目约定只写在 `AGENTS.md` 一处，`.cursor/rules/*.mdc` 只放 Cursor 特有的、按目录生效的规则（模板见第三部分）。
 
-- 所有 AI 功能
-- 多 Agent 并行开发
-- AI 驱动的代码审查
-- AI 生成的架构提案（人类审批）
-
-**关键约束：不可逆操作必须人工审批**
-
-以下操作无论 AI 自主性多高，都必须经过人工确认：
-
-- 数据库 Schema 迁移（生产环境）
-- 支付逻辑变更
-- 用户数据删除或修改
-- 权限模型变更
-- 第三方 API Key 更新
-- 域名 / DNS 变更
-
-**DO vs DON'T 详细对照：**
-
-| ✅ DO（推荐做法） | ❌ DON'T（禁止做法） |
-|-------------------|---------------------|
-| 编写详细的 `spec.md` 文件，包含功能描述、数据模型、API 接口、边界情况、性能要求，然后将整个功能委托给 Cursor Agent 实现。 | 委托不可逆操作（数据库迁移、支付逻辑变更、用户数据删除）而不设置人工审批门禁。 |
-| 使用多 Agent 编排：一个 Agent 写前端组件，另一个写后端 API，第三个写测试——通过 CI/CD 集成验证整体一致性。 | 放弃理解系统架构。即使你不再逐行写代码，你必须始终能画出系统架构图、解释数据流、定位性能瓶颈。 |
-| 建立完善的 `.cursor/rules/` 规则库，确保 AI 在项目约定范围内工作：命名规范、错误处理模式、日志格式、安全检查清单等。 | 在没有监控和告警的情况下让 AI 自动部署到生产环境。AI 的自主性越高，可观测性就越重要。 |
-
-**多 Agent 协作工作流：**
-
-```
-架构师（你）
-  │
-  ├── 撰写 spec.md（功能规格文档）
-  ├── 定义架构约束（.cursor/rules/）
-  └── 设置 CI/CD 门禁（测试覆盖率 > 80%）
-       │
-       ├── Agent A：前端实现
-       │     ├── 读取 spec.md 中的 UI 需求
-       │     ├── 实现组件 + 页面
-       │     └── 提交 PR → CI 自动运行测试
-       │
-       ├── Agent B：后端 API 实现
-       │     ├── 读取 spec.md 中的 API 需求
-       │     ├── 实现 Server Actions + API Routes
-       │     └── 提交 PR → CI 自动运行测试
-       │
-       ├── Agent C：测试编写
-       │     ├── 根据 spec.md 生成测试套件
-       │     └── 验证 Agent A 和 B 的实现
-       │
-       └── 你：审查 PR → 合并 → 自动部署
-```
-
-**Level 4 的 spec.md 模板：**
-
-```markdown
-# Feature: [功能名称]
-
-## 概述
-[1-2 句话描述功能]
-
-## 用户故事
-- 作为 [角色]，我想要 [功能]，以便 [价值]
-
-## 数据模型
-[表结构或 Schema 变更]
-
-## API 接口
-[端点、请求/响应格式]
-
-## UI 设计
-[页面描述或 Figma 链接]
-
-## 边界情况
-[列出所有需要处理的异常情况]
-
-## 性能要求
-[响应时间、并发量等]
-
-## 安全考量
-[权限、数据校验、XSS/CSRF 等]
-
-## 不可逆操作
-[需要人工审批的操作列表]
-```
-
-**自我检测：** 如果 AI 工具全部不可用，你能否在白板上设计出当前产品的完整系统架构，并向另一位开发者讲清楚每个模块的职责和交互方式？如果可以，你具备了 Level 4 架构师的核心能力。
+**自我检测：** 随机挑一个 Server Action，你能否在白板上画出“请求 → 认证 → 授权 → 校验 → 数据库 → 返回”的完整流程？不能，说明 AI 做了太多业务逻辑。
 
 ---
 
-#### AI 使用级别速查表
+#### Level 3：AI 作为高级搭档（W53–W104，Phase 3）
+
+**核心原则：** 全面使用 Agent，但以测试和规格作为质量门禁。
+
+工作流（用你已安装的 OpenSpec 落地，命令见项目中的 `.cursor/commands/opsx-*.md`）：
+
+```
+1. 你写需求 → OpenSpec propose（生成 proposal / tasks / spec）→ 你逐条修改确认
+2. Agent 根据 spec 先写测试（Vitest / Playwright）
+3. 你审查测试：补边界、补异常、补安全场景
+4. Agent 实现，直到测试全部通过（不允许修改测试来迁就实现）
+5. 你做代码审查：安全 → 数据正确性 → 性能 → 可读性
+6. 合并；OpenSpec archive 归档本次变更
+```
+
+| 任务 | Level 3 |
+|---|---|
+| Level 2 全部 | ✅ |
+| Agent 实现完整功能（通过上述门禁） | ✅ |
+| Agent 做跨文件重构 | ✅ 先确保有测试覆盖 |
+| 安全相关代码（认证、授权、RLS、支付） | ⚠️ AI 可以写，但你必须逐行审查，并且有专门的测试 |
+
+**自我检测：** 不运行代码，只读 AI 写的实现，你能否预测它在边界输入下的行为？
+
+---
+
+#### Level 4：AI 作为自主团队（W105–W156，Phase 4）
+
+**核心原则：** 把整个模块委托给 AI，你是架构师和审查者。
+
+- 多个 Agent 并行时，每个 Agent 使用独立的 **git worktree**（`git worktree add ../myapp-feature-x -b feature-x`），互不干扰，分别提 PR。
+- CI 必须运行：类型检查、lint、单元测试、E2E 测试。
+- **不可逆操作永远人工审批：** 生产数据库迁移、支付逻辑变更、删除/修改用户数据、权限模型变更、密钥更换、域名/DNS 变更。
+
+---
+
+#### 级别速查表
 
 | 维度 | Level 1 教师 | Level 2 初级助手 | Level 3 高级搭档 | Level 4 自主团队 |
-|------|-------------|-----------------|-----------------|-----------------|
-| **对应阶段** | Phase 0-1（1-32 周） | Phase 2（33-52 周） | Phase 3（53-104 周） | Phase 4（105-156 周） |
-| **AI 写代码** | ❌ 禁止 | ⚠️ 仅脚手架 | ✅ 完整功能 | ✅ 整个模块 |
-| **Cursor Agent** | ❌ 不使用 | ⚠️ 有限使用 | ✅ 主力工具 | ✅ 多 Agent 并行 |
-| **Claude Code CLI** | ❌ 不使用 | ❌ 不使用 | ✅ 后台重构 | ✅ 并行任务 |
-| **人类角色** | 编码者 | 编码者 + 审查者 | 审查者 + 测试定义者 | 架构师 + 审查者 |
-| **质量门禁** | 人工逐行编写 | 人工编写业务逻辑 | TDD（测试先行） | Spec + CI/CD 自动化 |
-| **核心技能锻炼** | 编码基础 | 全栈架构理解 | 需求分析 + Code Review | 系统设计 + 产品决策 |
-| **.cursor/rules/** | 不使用 | 开始创建基础规则 | 完善项目级规则 | 全面的规则库 |
-| **犯错成本** | 低（练手项目） | 中（真实产品但用户少） | 中高（有真实用户） | 高（规模化产品） |
+|---|---|---|---|---|
+| **对应周** | W1–W32 | W33–W52 | W53–W104 | W105–W156 |
+| **AI 写项目代码** | ❌ | ⚠️ 仅骨架/配置/样板 | ✅ 通过测试门禁 | ✅ 整个模块 |
+| **Agent（任何品牌）** | ❌ | ⚠️ 单独分支、逐行审查 | ✅ 主力 | ✅ 多个并行（worktree） |
+| **你的角色** | 编码者 | 编码者 + 审查者 | 审查者 + 测试定义者 | 架构师 + 审查者 |
+| **质量门禁** | 手写 | 你写业务逻辑 | 测试先行 + OpenSpec | Spec + CI |
+| **规则文件** | 不需要 | AGENTS.md 起步 | 完善 AGENTS.md + .mdc | 完整规则库 |
 
 ---
 
-#### 级别升级条件
+#### 级别升级条件（不要只看周数）
 
-不要机械地按周数升级 AI 使用级别。以下是每个级别的 **最低升级前提**：
+**Level 1 → Level 2：**
 
-**Level 1 → Level 2 升级条件：**
-
-- [ ] 能不借助 AI 手写完整的 React 组件（含 state、effect、event handler）
+- [ ] 能不借助 AI 手写完整的 React 组件（含 state、effect、事件处理）
 - [ ] 能不借助 AI 解决 TypeScript 类型错误
-- [ ] 能独立阅读和理解 React/Next.js 官方文档
-- [ ] 已完成 Phase 1 的 3 个实战项目
+- [ ] 能独立阅读 React / Next.js 官方文档
+- [ ] 已完成 Phase 1 作品集项目
+- [ ] 至少完成 10 次“AI 对照审查练习”，并且每次都找出了 AI 代码中的至少 1 个问题
 
-**Level 2 → Level 3 升级条件：**
+**Level 2 → Level 3：**
 
-- [ ] 能在白板上画出自己 SaaS 产品的完整架构图
-- [ ] 能手写基础的 SQL 查询（SELECT/INSERT/UPDATE/JOIN）
-- [ ] 理解 OAuth 认证流程的每一步
-- [ ] 第一个 SaaS 产品已上线并有真实用户
+- [ ] 能画出自己 SaaS 的完整架构图
+- [ ] 能手写 SELECT / INSERT / UPDATE / JOIN / GROUP BY
+- [ ] 能逐步解释 OAuth 授权码流程，以及你的 Server Action 如何做授权
+- [ ] 第一个 SaaS 已上线并有真实用户
 
-**Level 3 → Level 4 升级条件：**
+**Level 3 → Level 4：**
 
-- [ ] 能在不运行代码的情况下审查 AI 生成的代码
-- [ ] 掌握 TDD 工作流（至少实践 3 个月）
-- [ ] 能写出清晰的 spec.md，让 AI 准确理解需求
-- [ ] 理解安全基础（OWASP Top 10），能审查安全相关代码
+- [ ] 能在不运行代码的情况下审查 AI 代码
+- [ ] 实践测试先行至少 3 个月
+- [ ] 能写出让 AI 一次就理解的 spec
+- [ ] 能逐项说明 OWASP Top 10 在你产品中的防护措施
 
-如果你到了对应的周数但尚未满足升级条件，**不要强行升级**。在当前级别多停留几周，直到你确信自己准备好了。过早升级 AI 使用级别是本蓝图中最常见的错误——它会在后期以"无法调试问题""无法理解自己的代码"的形式反噬。
+到了周数但条件没满足：**不要升级**。过早升级是本蓝图最常见的错误。
 
 ---
 
 #### 跨级别通用准则
 
-无论你处于哪个 AI 使用级别，以下准则始终适用：
+**1. 永远不要提交你不理解的代码。** “能运行”不等于“可以提交”。
 
-**1. 永远不要提交你不理解的代码。**
+**2. AI 不是权威。** AI 的训练数据有截止时间，对新版本 API 经常给出旧写法（例如把 Next.js 16 的 `proxy.ts` 写成 `middleware.ts`、把 Supabase 的 `getClaims()` 写成 `getSession()`）。与官方文档冲突时，以官方文档为准。
 
-如果 AI 生成了一段你看不懂的代码，先让它解释清楚，理解后再决定是否采用。"能运行"不等于"可以提交"。你是代码的最终责任人。
+**3. 保持手写能力。** 即使到了 Level 4，每月也花 2–3 小时不用 AI 写代码。
 
-**2. AI 不是权威。**
-
-AI 会自信地给出错误答案。对于关键决策（安全、支付、数据处理），始终交叉验证官方文档。特别注意：AI 对最新 API 变更的了解可能滞后。当 AI 给出的 API 调用方式与官方文档不一致时，以官方文档为准。
-
-**3. 保持手写代码的能力。**
-
-即使到了 Level 4，也建议每月花 2-3 小时手写一些代码（不借助 AI），保持基础编码能力不退化。可以做的事情：
-
-- 解决一道 LeetCode Easy 题目（纯手写）
-- 用纯 HTML/CSS/JS 做一个小动画
-- 不用 AI 实现一个简单的 React hook
-
-**4. 版本控制是安全网。**
-
-让 AI 做任何改动之前，确保当前代码已提交。这样你随时可以回退到 AI 改动之前的状态。具体操作：
+**4. 安全回滚：让 AI 在分支上工作。** 旧版写的 `git reset --hard HEAD` **不会删除 AI 新建的文件**（未跟踪文件），回滚并不干净。正确做法：
 
 ```bash
-# AI 改动前
-git add -A && git commit -m "checkpoint before AI changes"
+# AI 开始工作前：确保工作区干净，然后开一个新分支
+git status                      # 应显示 nothing to commit
+git switch -c ai/add-invite-dialog
 
-# AI 改动后，如果结果不满意
-git reset --hard HEAD
+# ……让 AI 修改……
+
+# 满意：检查差异后合并
+git diff main --stat
+git switch main && git merge ai/add-invite-dialog
+
+# 不满意：整个分支丢弃（包括 AI 新建的文件）
+git switch main
+git branch -D ai/add-invite-dialog
 ```
 
-**5. 先理解需求，再交给 AI。**
+如果忘了开分支，AI 已经改了文件：`git stash push -u -m "ai attempt"` 会把修改**和新建文件**一起收起来；确认不要后再 `git stash drop`。
 
-如果你自己都不清楚要做什么，AI 只会更高效地把你带到错误的方向。在让 AI 开始工作之前，确保你能用一句话回答："这个功能要实现什么？用户为什么需要它？"
+**5. 先理解需求，再交给 AI。** 交给 AI 之前，你能用一句话说清“这个功能做什么、用户为什么需要它”。
 
-**6. 记录 AI 的失败模式。**
-
-当 AI 犯错时（一定会犯错），记录下来：
-
-- 什么场景下犯的错？
-- 错误的根本原因是什么？
-- 下次如何在 prompt 或 .cursor/rules 中避免？
-
-这些记录是你的"AI 协作经验库"，它的价值会随时间指数增长。
+**6. 记录 AI 的失败模式。** 在笔记里维护“AI 错误清单”：场景、错误、根因、下次如何在 AGENTS.md 或提示中避免。
 
 ---
 
-> **下一部分预告：** 第二部分将进入 156 周详细计划，从 Phase 0 的网页基础开始，经过 TypeScript、React、Next.js 和全栈实战，最终完成你的第一个部署上线的 SaaS MVP。
+> **下一部分预告：** 第二部分是逐周计划。执行顺序以第零部分为准。
 ---
 
 ## 第二部分：156 周详细计划
@@ -929,7 +881,7 @@ git reset --hard HEAD
 1. **Cursor IDE**：已安装并能正常打开。如果没有，访问 https://cursor.sh 下载安装。
 2. **Chrome 浏览器**：已安装。如果没有，访问 https://www.google.com/chrome/ 下载。这将是你的主力开发浏览器，因为它的 DevTools 是最成熟的。
 3. **终端（Terminal）**：在 macOS 中打开「终端」应用（在 Launchpad → 其他 中可以找到），或直接按 `Cmd + Space` 搜索 "Terminal"。确认你能输入 `ls` 和 `cd ~` 这两个命令并看到输出。
-4. **Node.js**：打开终端输入 `node --version`。如果显示版本号（如 `v20.x.x`），说明已安装。如果报错，访问 https://nodejs.org 下载 LTS 版本安装。Node.js 在第 5 周 JavaScript 学习时会用到。
+4. **Node.js**：打开终端输入 `node --version`。需要 **v24.x**（当前 LTS）。没有安装或版本低于 v22，按 TS 教程「2.1.1 用版本管理器安装 Node」操作。
 5. **创建学习目录**：在终端中执行 `mkdir ~/learn-web && cd ~/learn-web`，这将是你整个 Phase 0 的工作目录。
 
 ---
@@ -980,7 +932,7 @@ git reset --hard HEAD
 - MDN HTML 元素参考（全部标签速查表）：https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element
 - W3Schools HTML Tutorial（交互式练习，可以在线运行代码）：https://www.w3schools.com/html/
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：让 Claude 解释某个标签的含义和用法（如「`<section>` 和 `<div>` 有什么区别？各自什么时候用？」）
 - ✅ 可以：让 Claude 检查你的 HTML 有没有语法错误或遗漏（把代码贴给它：「帮我检查这段 HTML 有没有问题」）
@@ -997,7 +949,7 @@ git reset --hard HEAD
 
 ---
 
-#### 第 2 周：CSS 基础 — 让页面变美
+#### 第 2 周：CSS 基础 — 让页面变美（已完成）
 
 **本周目标：** 掌握 CSS 的基本语法、选择器和盒模型，能够为 HTML 页面添加颜色、字体、间距和简单的装饰效果。
 
@@ -1040,7 +992,7 @@ git reset --hard HEAD
 - Google Fonts（免费字体库）：https://fonts.google.com/
 - Coolors（配色方案生成器）：https://coolors.co/
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「`margin` 和 `padding` 的区别是什么？帮我用文字画一个示意图解释」
 - ✅ 可以：把你写的 CSS 贴给 Claude，问「为什么这个元素的背景色没有生效？」
@@ -1056,6 +1008,8 @@ git reset --hard HEAD
 ---
 
 #### 第 3 周：CSS Flexbox 布局
+
+> **进度：** Day 1 已完成（2026-04-20）。按 0.5「回归协议」复习后从 **Day 2** 继续。本周完成后进入新增的 **第 3B 周**，再进入第 4 周。
 
 **本周目标：** 掌握 Flexbox 布局模型，能够用 Flexbox 实现常见的页面布局模式，并初步理解响应式设计。
 
@@ -1090,7 +1044,7 @@ git reset --hard HEAD
 - CSS-Tricks: A Complete Guide to Flexbox（最经典的 Flexbox 参考图文）：https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 - MDN — 响应式设计基础：https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Responsive_Design
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「我想让三个元素在一行内，左边一个靠左，右边两个靠右，应该怎么用 Flexbox 思路？」（Claude 提示思路，你自己实现）
 - ✅ 可以：「我的 media query 没有生效，CSS 代码是这样的 [...], 帮我看看哪里有问题」
@@ -1101,6 +1055,208 @@ git reset --hard HEAD
 
 1. `justify-content` 和 `align-items` 分别控制哪个轴的对齐？如果 `flex-direction` 从 `row` 变成 `column`，这两个属性控制的轴会发生什么变化？
 2. 解释 `flex: 1 1 300px` 三个值分别代表什么意思。在一个宽度为 900px 的容器中放 4 个 `flex: 1 1 300px` 的元素，会发生什么？（提示：考虑 `flex-wrap`）
+
+---
+
+#### 第 3B 周（2026-10 新增）：定位、层叠与现代 CSS 必备
+
+> **为什么新增：** 原 Phase 0 没有讲 `position` 和 `z-index`，而吸顶导航、下拉菜单、弹窗、卡片角标、悬浮按钮全都依赖它们；后面的 Tailwind（`relative`、`absolute`、`z-10`）和 shadcn/ui 组件也会频繁出现。另外补上几项 2026 年已普遍可用、写真实页面一定会用到的现代 CSS：`:focus-visible`、`object-fit`、`aspect-ratio`、`clamp()`、`prefers-reduced-motion`、暗色模式、`:has()`。
+>
+> **位置：** W3 完成后、W4 之前。工作目录 `learn-web/Phase0-Week3B/`。每天 1–1.5 小时，Day 6 约 2 小时。
+>
+> **AI 使用（Level 1）：** 可以问“为什么 z-index 不生效”，不可以让 AI 写 CSS。
+
+**本周目标：** 掌握 5 种定位方式和层叠上下文；能独立做出吸顶导航、角标、纯 CSS 下拉菜单、模态遮罩；让页面在键盘操作、不同屏幕、暗色模式和“减少动画”设置下都表现良好。
+
+##### Day 1：`position` 的五个值（1.5h）
+
+1. 新建 `positioning.html` 和 `positioning.css`。在 `<body>` 里放一个 `<div class="parent">`，里面放 3 个 `<div class="box">`（编号 1、2、3），给它们不同背景色、`width: 120px; height: 80px;`。父元素设 `padding: 24px; border: 2px dashed #999;`。
+2. **static（默认）：** 什么都不写，观察三个盒子正常从上到下排列。给盒子 2 加 `top: 40px;`——没有任何变化。记住：`top/right/bottom/left` 对 static 无效。
+3. **relative：** 给盒子 2 加 `position: relative; top: 40px; left: 40px;`。观察：盒子 2 移动了，但它**原来的位置仍然空着**，盒子 3 没有上移。相对定位 = 相对自己原来的位置偏移，不影响别人。
+4. **absolute：** 把盒子 2 改为 `position: absolute; top: 0; right: 0;`。观察：盒子 2 跑到了**整个页面**的右上角，盒子 3 上移填补了空位。绝对定位会脱离正常流。
+5. 现在给 `.parent` 加 `position: relative;`。观察：盒子 2 回到了**父元素**的右上角。规则：**absolute 元素相对于“最近的、position 不是 static 的祖先”定位**；找不到就相对于页面。这就是常见写法“父 relative、子 absolute”的原因。
+6. **fixed：** 新建一个 `<button class="back-to-top">↑</button>` 放在 body 末尾，设 `position: fixed; right: 24px; bottom: 24px;`。在页面里加足够多的段落让页面能滚动，滚动时按钮始终停在屏幕右下角。fixed 相对于浏览器窗口（视口）定位。
+7. **sticky：** 在页面顶部加一个 `<header>`，设 `position: sticky; top: 0; background: white;`。滚动页面：header 正常随内容出现，滚到顶部时“粘住”。sticky 只有在设置了 `top`（或其他方向）时才生效。
+8. 在 DevTools 中选中每个盒子，在 Styles 面板中逐个勾掉/勾上 `position`，观察变化。
+9. 在笔记中填写下表（自己总结，不要抄）：
+
+| 值 | 是否脱离正常流 | 相对谁定位 | 典型用途 |
+|---|---|---|---|
+| static | | | |
+| relative | | | |
+| absolute | | | |
+| fixed | | | |
+| sticky | | | |
+
+##### Day 2：`z-index` 与层叠上下文（1.5h）
+
+1. 在 `positioning.html` 中做两张互相重叠的卡片：`.card-a` 和 `.card-b`，都设 `position: absolute;`，让 B 的位置覆盖 A 的一半。默认情况下，HTML 中**后写的**元素在上面。
+2. 给 `.card-a` 加 `z-index: 10;`，A 跑到上面。再给 B 加 `z-index: 20;`，B 回到上面。
+3. 去掉 A 的 `position`，只保留 `z-index: 999;`——A 回到下面。规则：**`z-index` 只对定位元素（非 static）和 flex/grid 子项生效。** 这是“z-index 不生效”的第一大原因。
+4. **复现第二大原因——层叠上下文。** 结构如下：
+
+   ```html
+   <div class="layer-parent" style="position: relative; z-index: 1;">
+     <div class="tooltip" style="position: absolute; z-index: 9999;">我想在最上面</div>
+   </div>
+   <div class="other" style="position: relative; z-index: 2;">我盖住了 tooltip</div>
+   ```
+
+   让两者位置重叠，观察 z-index 9999 的 tooltip 仍然被 z-index 2 的元素盖住。原因：`.layer-parent` 创建了一个“层叠上下文”，tooltip 的 9999 只在这个上下文**内部**比较；对外，整个 `.layer-parent` 只有 1。
+5. 修复方法有两种，都试一次：① 去掉 `.layer-parent` 的 `z-index`；② 把 tooltip 移出 `.layer-parent`。
+6. 记住会创建层叠上下文的常见情况：`position` + `z-index`（非 auto）、`opacity` 小于 1、`transform`、`filter`、`position: fixed/sticky`。
+7. 给你的项目定一套 z-index 刻度，写成 CSS 变量，以后只用这几个值：
+
+   ```css
+   :root {
+     --z-dropdown: 10;
+     --z-sticky: 20;
+     --z-overlay: 30;
+     --z-modal: 40;
+     --z-toast: 50;
+   }
+   ```
+
+##### Day 3：常见定位组件——角标、下拉菜单、模态遮罩（1.5h）
+
+1. **卡片角标：** 拿 W2 的食谱卡片，给 `.card` 加 `position: relative;`，在卡片内加 `<span class="badge">新</span>`，设 `position: absolute; top: 12px; right: 12px;`、圆角背景。
+2. **纯 CSS 下拉菜单：** 在导航中做一个“更多”菜单：
+
+   ```html
+   <div class="dropdown">
+     <button class="dropdown-toggle" type="button">更多 ▾</button>
+     <ul class="dropdown-menu">
+       <li><a href="pricing.html">定价</a></li>
+       <li><a href="contact.html">联系</a></li>
+     </ul>
+   </div>
+   ```
+
+   CSS 要点（自己写完整）：`.dropdown { position: relative; }`；`.dropdown-menu { position: absolute; top: 100%; left: 0; z-index: var(--z-dropdown); display: none; }`；`.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { display: block; }`。
+3. 用键盘测试：按 Tab 聚焦到“更多”按钮，菜单应该出现（这是 `:focus-within` 的作用）；继续 Tab 进入菜单项。只写 `:hover` 的菜单，键盘用户永远打不开。
+4. **模态遮罩（静态版，JS 交互留给 T7）：**
+
+   ```html
+   <div class="overlay">
+     <div class="modal" role="dialog" aria-labelledby="modal-title">
+       <h2 id="modal-title">订阅成功</h2>
+       <p>感谢订阅！</p>
+     </div>
+   </div>
+   ```
+
+   `.overlay { position: fixed; inset: 0; background: rgb(0 0 0 / 0.5); display: grid; place-items: center; z-index: var(--z-overlay); }`。`inset: 0` 等于 `top/right/bottom/left` 全为 0。`display: grid; place-items: center;` 是最短的居中写法。
+5. 加一个类 `.is-hidden { display: none; }`，先把遮罩隐藏。T7 学完事件后，回来用 JS 切换这个类。
+6. 了解（不要求写）：浏览器原生的 `<dialog>` 元素和 `popover` 属性已经可以实现弹窗和下拉菜单，并且自带键盘和无障碍支持。以后用 shadcn/ui 时你不会手写这些，但理解底层原理能让你会调试它们。
+
+##### Day 4：图片与尺寸——`object-fit`、`aspect-ratio`、`clamp()`（1.5h）
+
+1. 拿 W4 将要用到的画廊思路先练习：放 4 张尺寸各不相同的图片（`https://picsum.photos/600/400`、`/400/600`、`/800/300`、`/500/500`），每张放进 `.thumb` 容器，容器 `width: 200px; height: 200px;`，图片 `width: 100%; height: 100%;`。观察：图片被拉伸变形。
+2. 给图片加 `object-fit: cover;`——图片保持比例裁剪填满。再试 `object-fit: contain;`——完整显示、留白。记下各自适合的场景（头像/缩略图用 cover；产品图、logo 用 contain）。
+3. 删掉容器的固定 `height`，改用 `aspect-ratio: 4 / 3;`。缩放窗口：宽度变了，高度自动保持 4:3。视频、卡片封面常用 `16 / 9`。
+4. **流式字号 `clamp()`：** 给 `h1` 写 `font-size: clamp(1.75rem, 1rem + 3vw, 3rem);`。三个值依次是：最小值、理想值（随视口变化）、最大值。把窗口从 375px 拉到 1440px，标题平滑变大，不需要任何 media query。
+5. 同样思路用于间距：`padding-block: clamp(2rem, 5vw, 6rem);`。`padding-block` 是“上下 padding”的逻辑属性写法（`padding-inline` 是左右）。
+6. 打开 DevTools 设备模式，在 375 / 768 / 1440 三个宽度下截图对比。
+
+##### Day 5：可访问性与用户偏好（1.5h）
+
+1. **`:focus-visible`：** 很多人为了“好看”写 `button:focus { outline: none; }`，导致键盘用户看不到焦点在哪。正确做法：
+
+   ```css
+   :focus-visible {
+     outline: 3px solid var(--color-primary);
+     outline-offset: 2px;
+   }
+   ```
+
+   `:focus-visible` 只在键盘导航时显示焦点框，鼠标点击时不显示。用 Tab 键走一遍你的站点，确认每个链接和按钮都有清晰的焦点框。
+2. **减少动画：** 系统设置里可以开启“减少动态效果”（macOS：系统设置 → 辅助功能 → 显示 → 减少动态效果）。为这类用户关闭你的动画：
+
+   ```css
+   @media (prefers-reduced-motion: reduce) {
+     *, *::before, *::after {
+       animation-duration: 0.01ms !important;
+       transition-duration: 0.01ms !important;
+       scroll-behavior: auto !important;
+     }
+   }
+   ```
+
+   打开系统设置的开关，悬停卡片确认动画消失，再关掉开关。
+3. **暗色模式：** 利用 W4 Day 5 将学的 CSS 变量（如果还没学，先写下面这段，W4 时再整理）：
+
+   ```css
+   :root {
+     color-scheme: light dark;
+     --color-bg: #ffffff;
+     --color-text: #1e293b;
+   }
+
+   @media (prefers-color-scheme: dark) {
+     :root {
+       --color-bg: #0f172a;
+       --color-text: #e2e8f0;
+     }
+   }
+
+   body {
+     background: var(--color-bg);
+     color: var(--color-text);
+   }
+   ```
+
+   在 macOS 的“外观”中切换浅色/深色，页面跟着变化。`color-scheme` 让滚动条、表单控件也跟着变成深色。
+4. **颜色对比度：** 在 DevTools 中选中一段文字，在 Styles 面板点击颜色色块，查看 “Contrast ratio”。正文至少 4.5:1；不达标就调深文字或调浅背景。浅色、深色两种模式都要检查。
+
+##### Day 6：综合实战——把 W3 站点升级（2h）
+
+在 W3 的五页站点上完成：
+
+1. header 改为 `position: sticky`，并加 `z-index: var(--z-sticky)` 和轻微阴影。
+2. 导航加入 Day 3 的“更多”下拉菜单，鼠标和键盘都能打开。
+3. 食谱卡片加角标，图片统一用 `aspect-ratio` + `object-fit: cover`。
+4. 定价页的“推荐”方案卡片加一个绝对定位的“最受欢迎”标签，压在卡片上边框上（提示：`top: 0; transform: translateY(-50%);`）。
+5. 加“回到顶部”的 fixed 按钮（`<a href="#top">`，给 header 加 `id="top"`）。
+6. 标题使用 `clamp()` 字号。
+7. 全站支持暗色模式、`:focus-visible`、`prefers-reduced-motion`。
+8. 选学：用 `:has()` 做一个效果——卡片里有 `.badge` 的卡片边框变成主色：`.card:has(.badge) { border-color: var(--color-primary); }`。
+
+##### Day 7：复习 + 自测（1h）
+
+1. 闭卷画出 5 种 position 的对比表。
+2. 闭卷写出“父 relative、子 absolute、右上角角标”的完整 CSS。
+3. 做 [web.dev：Z-index 与层叠上下文](https://web.dev/learn/css/z-index) 页面末尾的小测验。
+4. 用 Lighthouse 跑一次 Accessibility，目标 ≥ 90。
+
+**本周作业：** 升级后的 W3 站点（Day 6 全部 8 项中至少完成 1–7 项）。
+
+**验收清单：**
+
+- [ ] 能解释 absolute 相对谁定位，以及为什么父元素要写 `position: relative`
+- [ ] 能复现并修复一次“z-index 不生效”（两种原因各一次）
+- [ ] 下拉菜单可用键盘打开
+- [ ] 所有图片无变形
+- [ ] 暗色模式、焦点框、减少动画三项都通过手动测试
+- [ ] Lighthouse Accessibility ≥ 90
+
+**常见踩坑：**
+
+- 写了 `z-index` 不生效 → 先检查是否有 `position`；再检查祖先是否创建了层叠上下文。
+- sticky 不生效 → 是否写了 `top`？祖先是否有 `overflow: hidden`（会让 sticky 失效）？
+- absolute 元素跑到了页面角落 → 忘了给父元素加 `position: relative`。
+- fixed 元素挡住了内容 → 给页面底部留出相应的 `padding-bottom`。
+
+**本周练习资源（按顺序，不需要另找）：**
+
+| 天 | 资源 | 做什么 |
+|---|---|---|
+| Day 1 | [MDN：position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position) | 页面中的每个示例都在页面里的实时编辑器改一改 |
+| Day 2 | [web.dev：Z-index and stacking contexts](https://web.dev/learn/css/z-index) | 读完全文并做末尾测验 |
+| Day 2 | [Josh Comeau：What The Heck, z-index??](https://www.joshwcomeau.com/css/stacking-contexts/) | 交互式讲解，把每个可拖动的示例都操作一遍 |
+| Day 3 | [web.dev：Popover and dialog](https://web.dev/learn/css/popover-and-dialog) | 了解原生弹窗，只读不做 |
+| Day 4 | [web.dev：Sizing Units](https://web.dev/learn/css/sizing)、[web.dev：Functions](https://web.dev/learn/css/functions) | Functions 只读 `clamp()`、`min()`、`max()` 部分 |
+| Day 5 | [web.dev：Focus](https://web.dev/learn/css/focus)、[MDN：prefers-reduced-motion](https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media/prefers-reduced-motion) | 按页面里的说明在自己电脑上测试 |
+| Day 6 | [Frontend Mentor 免费挑战](https://www.frontendmentor.io/challenges) | 选学：筛选 Newbie + Free，挑一个带导航或卡片的设计，用本周技能实现 |
 
 ---
 
@@ -1140,7 +1296,7 @@ git reset --hard HEAD
 - Realtime Colors（实时预览配色方案的工具）：https://www.realtimecolors.com/
 - Dribbble（设计灵感参考）：https://dribbble.com/search/landing-page
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「Grid 和 Flexbox 什么时候该用哪个？帮我举 5 个对比场景」
 - ✅ 可以：「我的 Grid 布局在手机上变成了横向滚动，代码如下 [...], 帮我分析原因」
@@ -1156,6 +1312,8 @@ git reset --hard HEAD
 ---
 
 #### 第 5 周：JavaScript 从零开始
+
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 1–6 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
 
 **本周目标：** 理解 JavaScript 基本语法，掌握变量、数据类型、条件判断、循环、函数、数组和对象，能在终端和浏览器控制台中用 JS 解决编程问题。
 
@@ -1195,7 +1353,7 @@ git reset --hard HEAD
 - MDN JavaScript 指南：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide
 - freeCodeCamp JavaScript 课程（免费互动练习）：https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「`let` 和 `const` 有什么区别？什么时候用哪个？」
 - ✅ 可以：「我写了一个 reverseString 函数但结果不对，代码如下 [...], 帮我指出 bug 在哪里」（注意：让 Claude **指出 bug 位置**，不要给你修好的代码）
@@ -1211,6 +1369,8 @@ git reset --hard HEAD
 ---
 
 #### 第 6 周：DOM 操作 — 让页面动起来
+
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 7 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
 
 **本周目标：** 掌握 JavaScript 操作网页（DOM）的能力，能够响应用户点击、动态增删页面内容，用 localStorage 持久化数据，完成一个交互式待办应用。
 
@@ -1246,7 +1406,7 @@ git reset --hard HEAD
 - MDN — 事件参考：https://developer.mozilla.org/zh-CN/docs/Web/Events
 - MDN — Web Storage API：https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「`querySelector` 和 `getElementById` 有什么区别？推荐用哪个？」
 - ✅ 可以：「我的事件监听器没有触发，代码如下 [...], 帮我看看为什么」
@@ -1262,6 +1422,8 @@ git reset --hard HEAD
 ---
 
 #### 第 7 周：JS 进阶 — 异步 + API
+
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 4B、5、8 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
 
 **本周目标：** 掌握 JavaScript 高级数组方法、ES6+ 语法特性、异步编程（async/await）和外部 API 调用，独立完成一个天气查询应用。
 
@@ -1297,7 +1459,7 @@ git reset --hard HEAD
 - MDN — Fetch API：https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API
 - JavaScript.info — Async/Await：https://javascript.info/async-await
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「Open-Meteo 的 weathercode 各代表什么天气？给我一个映射列表」
 - ✅ 可以：「我的 fetch 返回 undefined，代码如下 [...], 是不是漏了 await？」
@@ -1312,6 +1474,12 @@ git reset --hard HEAD
 ---
 
 #### 第 8 周：Git + 部署 + Phase 0 收官
+
+> **2026-10 执行说明：** 在 TS 教程第 8 周完成后进行。你已经在两个仓库中日常使用 Git 和 Conventional Commits，所以按下面的“跳过清单”精简：
+>
+> - **可以跳过：** 本周中“安装 Git、`git init`、第一次 commit”这类你每天都在做的步骤。
+> - **必须做：** ① 把 W4 着陆页、TS 教程 T7 的待办应用、T8 的用户目录应用部署上线（Vercel 或 GitHub Pages）；② `.gitignore` 检查（`node_modules`、`.env*`、`.DS_Store`）；③ 完成本周末尾的 Phase 0 自检清单。
+> - 本周作业中提到的“To-Do App、Weather App”分别对应 TS 教程 T7 的浏览器待办应用和 T8 的用户目录应用（天气应用在 T12 完成）。
 
 **本周目标：** 学会用 Git 管理代码版本、将项目推送到 GitHub、部署到互联网，完成 Phase 0 全面回顾和收官。
 
@@ -1345,7 +1513,7 @@ git reset --hard HEAD
 - GitHub Docs 快速入门：https://docs.github.com/zh/get-started
 - Vercel 文档：https://vercel.com/docs
 
-**AI 使用指南（Level 0）：**
+**AI 使用指南（Level 1）：**
 
 - ✅ 可以：「git push 报错 rejected，信息如下 [...], 怎么解决？」
 - ✅ 可以：「帮我检查这个 README 是否清晰」
@@ -1419,6 +1587,8 @@ git reset --hard HEAD
 
 #### 第 9 周：开发环境升级 + pnpm + SSH
 
+> **2026-10 执行说明：** Node 和 pnpm 你已在 TS 教程中按 2.1.1 安装，Day 1 只需做 pnpm 原理理解和对比实验。Day 2 的 SSH 密钥请按更新后的步骤设置密码短语。
+
 **本周目标：** 将 Phase 0 中搭建的基础开发环境升级为专业级配置——更快的包管理器、免密 SSH 认证、高效的终端和编辑器工作流。
 
 **每日任务拆解：**
@@ -1426,7 +1596,7 @@ git reset --hard HEAD
 | 天 | 时间 | 任务 | 具体要求 |
 |----|------|------|---------|
 | Day 1 | 1.5h | 安装 pnpm + 理解包管理器差异 | ① 在终端执行 `npm install -g pnpm`，安装完成后验证：`pnpm --version`，看到版本号即成功。② 理解 pnpm 相比 npm 的优势：**磁盘效率**——npm 为每个项目复制一份依赖到 `node_modules`，而 pnpm 使用内容寻址存储（content-addressable store），所有项目共享同一份依赖文件，通过硬链接引用，节省大量磁盘空间；**速度**——由于不需要重复下载和复制，安装速度显著提升；**严格性**——pnpm 默认不允许项目访问未在 `package.json` 中声明的依赖（phantom dependencies），避免了「在我电脑能跑，换台电脑就报错」的问题。③ 对比实验：新建两个空目录 `test-npm` 和 `test-pnpm`，分别用 `npm init -y && npm install lodash` 和 `pnpm init && pnpm add lodash`，对比 `node_modules` 目录结构的差异——npm 的 `node_modules` 是扁平的（里面有很多你没有安装的包），pnpm 的 `node_modules` 只有你声明的依赖。④ 从今天起，所有新项目使用 `pnpm` 代替 `npm`：`pnpm init` 代替 `npm init`，`pnpm add` 代替 `npm install`，`pnpm remove` 代替 `npm uninstall`。 |
-| Day 2 | 1.5h | SSH Key 配置 + GitHub 免密认证 | ① 你在 Phase 0 中可能已经设置过 SSH，但现在要确保它正确配置并理解原理。检查是否已有 SSH Key：`ls -la ~/.ssh/`，如果看到 `id_ed25519` 和 `id_ed25519.pub`（或 `id_rsa`），说明已有密钥。② 如果没有密钥，生成新的：`ssh-keygen -t ed25519 -C "你的GitHub邮箱"`，连按三次回车接受默认设置（存储路径和空密码短语）。`ed25519` 比旧的 `rsa` 更安全更快。③ 复制公钥：`pbcopy < ~/.ssh/id_ed25519.pub`（macOS 上 `pbcopy` 会把内容复制到剪贴板）。④ 添加到 GitHub：打开 GitHub → Settings → SSH and GPG keys → New SSH key → 粘贴公钥 → Add SSH key。⑤ 测试连接：`ssh -T git@github.com`，看到 `Hi 你的用户名! You've successfully authenticated` 即成功。⑥ 理解 SSH 认证原理：你的电脑有一对密钥——私钥（`id_ed25519`，绝对不能泄露）和公钥（`id_ed25519.pub`，可以给任何人）。把公钥放在 GitHub 上，每次连接时 GitHub 用公钥验证你的身份，无需输入密码。⑦ 将现有仓库从 HTTPS 切换到 SSH：进入你的 Phase 0 项目目录，执行 `git remote -v` 查看当前远程地址（如果以 `https://` 开头就需要切换），然后 `git remote set-url origin git@github.com:你的用户名/仓库名.git`。对所有 Phase 0 仓库执行此操作。 |
+| Day 2 | 1.5h | SSH Key 配置 + GitHub 免密认证 | ① 你在 Phase 0 中可能已经设置过 SSH，但现在要确保它正确配置并理解原理。检查是否已有 SSH Key：`ls -la ~/.ssh/`，如果看到 `id_ed25519` 和 `id_ed25519.pub`（或 `id_rsa`），说明已有密钥。② 如果没有密钥，生成新的：`ssh-keygen -t ed25519 -C "你的GitHub邮箱"`，按回车接受默认存储路径；提示输入 passphrase（密码短语）时，**设置一个你记得住的密码短语**——电脑丢失时，没有它私钥无法被直接使用。然后执行 `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` 把它存进 macOS 钥匙串，并在 `~/.ssh/config` 中写入 `Host github.com`、`  AddKeysToAgent yes`、`  UseKeychain yes`、`  IdentityFile ~/.ssh/id_ed25519` 四行，以后不用每次输入。`ed25519` 比旧的 `rsa` 更安全更快。③ 复制公钥：`pbcopy < ~/.ssh/id_ed25519.pub`（macOS 上 `pbcopy` 会把内容复制到剪贴板）。④ 添加到 GitHub：打开 GitHub → Settings → SSH and GPG keys → New SSH key → 粘贴公钥 → Add SSH key。⑤ 测试连接：`ssh -T git@github.com`，看到 `Hi 你的用户名! You've successfully authenticated` 即成功。⑥ 理解 SSH 认证原理：你的电脑有一对密钥——私钥（`id_ed25519`，绝对不能泄露）和公钥（`id_ed25519.pub`，可以给任何人）。把公钥放在 GitHub 上，每次连接时 GitHub 用公钥验证你的身份，无需输入密码。⑦ 将现有仓库从 HTTPS 切换到 SSH：进入你的 Phase 0 项目目录，执行 `git remote -v` 查看当前远程地址（如果以 `https://` 开头就需要切换），然后 `git remote set-url origin git@github.com:你的用户名/仓库名.git`。对所有 Phase 0 仓库执行此操作。 |
 | Day 3 | 1.5h | 终端效率提升 | ① 学习常用终端快捷键（这些在任何 shell 中都通用）：`Ctrl + C`（终止当前命令）、`Ctrl + L`（清屏，等同于 `clear`）、`Ctrl + R`（反向搜索历史命令——输入关键词就能找到以前执行过的命令，非常实用）、`Tab`（自动补全文件名和目录名，按两次 Tab 显示所有匹配项）、`Ctrl + A`（光标跳到行首）、`Ctrl + E`（光标跳到行尾）、`Ctrl + W`（删除光标前一个单词）。每个快捷键都实际操作 3-5 次形成肌肉记忆。② 配置 shell 别名（alias）：编辑 `~/.zshrc` 文件（`open ~/.zshrc` 或在 Cursor 中打开），添加常用别名——`alias gs="git status"`、`alias ga="git add ."`、`alias gc="git commit -m"`、`alias gp="git push"`、`alias gl="git log --oneline --graph --all"`、`alias ll="ls -la"`。保存后执行 `source ~/.zshrc` 使其生效。③ （可选但推荐）安装 Starship 提示符：访问 https://starship.rs ，执行安装命令 `curl -sS https://starship.rs/install.sh \| sh`，然后在 `~/.zshrc` 末尾添加 `eval "$(starship init zsh)"`，重启终端。Starship 会在提示符中显示当前 Git 分支、Node.js 版本等信息，非常方便。④ 验证别名生效：进入一个 Git 仓库，输入 `gs` 应该等同于 `git status`，输入 `gl` 应该看到带分支图的 Git 日志。 |
 | Day 4 | 1.5h | Cursor IDE 深度使用 | ① 掌握核心快捷键（在 Phase 0 中你可能只用了保存和打开文件，现在要提速）：`Cmd + P`（Quick Open，快速打开文件——输入文件名的任何部分就能模糊搜索）、`Cmd + Shift + P`（Command Palette，搜索并执行任何命令）、`Cmd + B`（切换侧边栏显示/隐藏）、`Cmd + /`（注释/取消注释当前行或选中区域）、`Cmd + D`（选中当前单词，再按一次选中下一个相同单词——用于批量修改）、`Cmd + Shift + K`（删除整行）、`Option + ↑/↓`（上移/下移当前行）、`Cmd + Shift + F`（全项目搜索）。② 练习多光标编辑：打开一个 HTML 文件，按住 `Option` 点击多个位置放置多个光标，同时输入内容。或者用 `Cmd + D` 逐个选中同名变量然后同时修改。③ 探索 `settings.json`：`Cmd + Shift + P` → 输入 "Open User Settings (JSON)"。熟悉常用设置：`"editor.tabSize": 2`（缩进 2 空格）、`"editor.formatOnSave": true`（保存时自动格式化）、`"files.autoSave": "afterDelay"`（自动保存）。④ 安装推荐扩展（如尚未安装）：Prettier（代码格式化）、Error Lens（行内显示错误）、GitLens（增强 Git 功能）。⑤ 在 Cursor 的集成终端（`Ctrl + ~` 打开）中练习刚才学的别名和快捷键——从此你不需要在独立终端和编辑器之间切换了。 |
 | Day 5 | 1.5h | 项目脚手架最佳实践 | ① 学习通用项目目录结构约定：`src/`（源代码）、`dist/` 或 `build/`（编译输出，不提交到 Git）、`tests/`（测试文件）、`docs/`（文档）。理解为什么需要约定——团队协作时统一结构能极大降低理解成本。② 深入理解 `package.json`：执行 `pnpm init` 创建一个新项目，然后逐字段解读——`name`（项目名，全小写，可用连字符）、`version`（语义化版本 SemVer：`主版本.次版本.修订版本`）、`description`（一句话描述）、`main`（入口文件）、`scripts`（自定义命令，如 `"build": "tsc"` 后可用 `pnpm run build` 执行）、`dependencies`（运行时依赖）、`devDependencies`（开发时依赖，如 TypeScript、测试框架）。③ 理解 `pnpm add` vs `pnpm add -D`：前者添加到 `dependencies`，后者添加到 `devDependencies`。④ 创建一个干净的项目启动模板目录 `project-starter/`，包含：`src/index.js`（入口文件，内容为一行 `console.log`）、`package.json`（通过 `pnpm init` 生成并补充 `scripts` 字段）、合理的目录结构 `src/`、`tests/`。⑤ 在 `package.json` 的 `scripts` 中添加 `"start": "node src/index.js"`，验证 `pnpm start` 能正常运行。 |
@@ -1523,6 +1693,8 @@ git reset --hard HEAD
 
 #### 第 11 周：TypeScript 基础 I — 类型系统入门
 
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 9 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
+
 **本周目标：** 安装 TypeScript 编译器，理解类型系统的核心价值，掌握基础类型注解、接口和类型别名，让 TypeScript 帮你在运行代码前发现错误。
 
 **每日任务拆解：**
@@ -1575,6 +1747,8 @@ git reset --hard HEAD
 ---
 
 #### 第 12 周：TypeScript 基础 II — 联合类型与类型收窄
+
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 10 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
 
 **本周目标：** 掌握联合类型、字面量类型、类型收窄和可辨识联合——这些是 TypeScript 类型系统中最实用的日常工具，让你用类型精确建模业务逻辑。
 
@@ -1629,6 +1803,8 @@ git reset --hard HEAD
 
 #### 第 13 周：TypeScript 中级 — 泛型
 
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 11 周 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
+
 **本周目标：** 理解泛型的核心概念——「类型的参数化」，学会编写类型安全的通用函数，掌握 TypeScript 内置工具类型，并开始挑战 type-challenges。
 
 **每日任务拆解：**
@@ -1681,6 +1857,8 @@ git reset --hard HEAD
 ---
 
 #### 第 14 周：TypeScript 实战 + tsconfig 配置
+
+> **⏭️ 跳过本周（2026-10）：** 本周内容由《TypeScript 0→1》教程 第 12 周 + 毕业项目 替代，执行顺序见第零部分。正文保留作参考。完成 TS 教程对应周次后，用本周末尾的“自测问题”检查自己，答不出的再回来看正文。
 
 **本周目标：** 将前几周的 TypeScript 知识应用到真实项目中——理解 `tsconfig.json` 配置、掌握模块系统、重构 Phase 0 天气应用、构建一个 CLI 工具。
 
@@ -1778,6 +1956,41 @@ git reset --hard HEAD
 
 ---
 
+#### SQL 副线（2026-10 新增）：第 15–38 周，每周 30 分钟
+
+> **为什么：** 原计划第 39 周才开始学 SQL，只给 1 周，然后立刻进入 ORM、认证、RLS、支付，负担过重。从第 15 周开始，每周在**整合日**额外花 30 分钟做 SQL 练习，到第 39 周时你已经做过约 150 道题，模块 E 就能把精力放在 Supabase 和架构上。
+>
+> **怎么做：** 全部在浏览器中完成，不需要安装任何东西。每次把你写的 SQL 保存到 `Programming Learn/sql-practice/第N周.sql`（文件开头写日期），提交到 Git。**先自己写，做不出来再看提示；不要让 AI 写答案。**
+
+| 周 | 练习 | 链接 |
+|---|---|---|
+| W15 | SQLBolt 简介 + 第 1 课：SELECT | [Introduction](https://sqlbolt.com/lesson/introduction) · [Lesson 1](https://sqlbolt.com/lesson/select_queries_introduction) |
+| W16 | 第 2–3 课：WHERE 条件 | [Lesson 2](https://sqlbolt.com/lesson/select_queries_with_constraints) · [Lesson 3](https://sqlbolt.com/lesson/select_queries_with_constraints_pt_2) |
+| W17 | 第 4 课 + 复习：排序、去重、分页 | [Lesson 4](https://sqlbolt.com/lesson/filtering_sorting_query_results) · [Review](https://sqlbolt.com/lesson/select_queries_review) |
+| W18 | 第 6 课：JOIN | [Lesson 6](https://sqlbolt.com/lesson/select_queries_with_joins) |
+| W19 | 第 7–8 课：OUTER JOIN、NULL | [Lesson 7](https://sqlbolt.com/lesson/select_queries_with_outer_joins) · [Lesson 8](https://sqlbolt.com/lesson/select_queries_with_nulls) |
+| W20 | 第 9 课：表达式 | [Lesson 9](https://sqlbolt.com/lesson/select_queries_with_expressions) |
+| W21 | 第 10–11 课：聚合与 GROUP BY / HAVING | [Lesson 10](https://sqlbolt.com/lesson/select_queries_with_aggregates) · [Lesson 11](https://sqlbolt.com/lesson/select_queries_with_aggregates_pt_2) |
+| W22 | 第 12 课：查询的执行顺序（抄写并背下顺序：FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT） | [Lesson 12](https://sqlbolt.com/lesson/select_queries_order_of_execution) |
+| W23 | 第 13–15 课：INSERT、UPDATE、DELETE | [Lesson 13](https://sqlbolt.com/lesson/inserting_rows) · [Lesson 14](https://sqlbolt.com/lesson/updating_rows) · [Lesson 15](https://sqlbolt.com/lesson/deleting_rows) |
+| W24 | 第 16–18 课：建表、改表、删表 | [Lesson 16](https://sqlbolt.com/lesson/creating_tables) · [Lesson 17](https://sqlbolt.com/lesson/altering_tables) · [Lesson 18](https://sqlbolt.com/lesson/dropping_tables) |
+| W25 | 子查询；并集、交集、差集 | [Subqueries](https://sqlbolt.com/topic/subqueries) · [Set operations](https://sqlbolt.com/topic/set_operations) |
+| W26 | pgexercises：Basic 前一半（换成真正的 PostgreSQL 题库） | [Basic](https://pgexercises.com/questions/basic/) |
+| W27 | pgexercises：Basic 后一半 | 同上 |
+| W28 | pgexercises：Joins and Subqueries 前一半 | [Joins](https://pgexercises.com/questions/joins/) |
+| W29 | pgexercises：Joins and Subqueries 后一半 | 同上 |
+| W30 | pgexercises：Modifying data 全部 | [Updates](https://pgexercises.com/questions/updates/) |
+| W31 | pgexercises：Aggregates 第 1–8 题 | [Aggregates](https://pgexercises.com/questions/aggregates/) |
+| W32 | pgexercises：Aggregates 第 9–16 题 | 同上 |
+| W33 | pgexercises：Aggregates 剩余（含窗口函数，做不出的标记，第 39 周再做） | 同上 |
+| W34 | pgexercises：Date 选 6 题 | [Date](https://pgexercises.com/questions/date/) |
+| W35 | pgexercises：String 选 6 题 | [String](https://pgexercises.com/questions/string/) |
+| W36 | 自建表：在 DB Fiddle 选择 PostgreSQL，为“图书馆”建 3 张表（books、members、loans），插入数据 | [DB Fiddle](https://www.db-fiddle.com/) |
+| W37 | 对 W36 的表写 10 条查询：每位会员借过的书、逾期未还、最受欢迎的 5 本书、从未被借过的书…… | 同上 |
+| W38 | 闭卷测验：不看任何资料，在 DB Fiddle 中 30 分钟内写出 5 条查询（含 JOIN、GROUP BY + HAVING、子查询、UPDATE、LEFT JOIN 找“没有”的记录） | 同上 |
+
+---
+
 #### 第 15 周：React 基础 I — JSX + 组件 + Props
 
 **本周目标：** 理解 React 的核心思想（UI = f(data)），学会用 JSX 编写组件，掌握 Props 数据传递和组件组合模式。
@@ -1830,6 +2043,19 @@ git reset --hard HEAD
 
 1. 为什么 React 组件名必须以大写字母开头？如果你写 `<myComponent />`（小写），React 会怎么处理？
 2. `<Card><p>Hello</p></Card>` 中，`<p>Hello</p>` 是通过什么机制传递给 `Card` 组件的？`Card` 内部如何接收和渲染它？
+
+
+**第 15 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Your First Component](https://react.dev/learn/your-first-component) | 读完并完成页面末尾全部 Challenges |
+| [Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx) | 同上 |
+| [JavaScript in JSX with Curly Braces](https://react.dev/learn/javascript-in-jsx-with-curly-braces) | 同上 |
+| [Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component) | 同上（注意参数解构，复习 T4B） |
+| [Tutorial: Tic-Tac-Toe](https://react.dev/learn/tutorial-tic-tac-toe) | 选学：周末完整做一遍官方井字棋教程 |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
 
 ---
 
@@ -1886,6 +2112,19 @@ git reset --hard HEAD
 1. `useState` 返回的数组中两个元素分别是什么？为什么不能直接修改第一个元素（如 `count = 5`）而必须用第二个元素（`setCount(5)`）？
 2. 什么是「状态提升」？请用温度转换器为例，画出数据流方向：当用户在摄氏度输入框中输入时，数据如何从子组件流到父组件，再流回另一个子组件？
 
+
+**第 16 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Responding to Events](https://react.dev/learn/responding-to-events) | 完成 Challenges |
+| [State: A Component's Memory](https://react.dev/learn/state-a-components-memory) | 完成 Challenges |
+| [State as a Snapshot](https://react.dev/learn/state-as-a-snapshot) | 完成 Challenges；回看 TS 教程 T5 Day 1B“捕获的旧值” |
+| [Queueing a Series of State Updates](https://react.dev/learn/queueing-a-series-of-state-updates) | 完成 Challenges |
+| [Updating Objects in State](https://react.dev/learn/updating-objects-in-state) / [Updating Arrays in State](https://react.dev/learn/updating-arrays-in-state) | 完成 Challenges（复习 T4B 的不可变更新） |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
+
 ---
 
 #### 第 17 周：React 基础 III — 列表渲染 + useEffect
@@ -1938,6 +2177,19 @@ git reset --hard HEAD
 
 1. 为什么 `.map()` 渲染列表时推荐用数据的唯一 ID 作为 `key`，而不是数组下标（index）？请描述一个因使用 index 作为 key 而导致 UI bug 的具体场景。
 2. `useEffect(() => { fetchData(); }, [])` 和 `useEffect(() => { fetchData(); })` 有什么区别？后者在什么场景下会导致严重问题？
+
+
+**第 17 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Conditional Rendering](https://react.dev/learn/conditional-rendering) | 完成 Challenges |
+| [Rendering Lists](https://react.dev/learn/rendering-lists) | 完成 Challenges |
+| [Keeping Components Pure](https://react.dev/learn/keeping-components-pure) | 完成 Challenges |
+| [Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects) | 完成 Challenges |
+| [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) | 完成 Challenges |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
 
 ---
 
@@ -1993,6 +2245,19 @@ git reset --hard HEAD
 1. 什么是 Prop Drilling？它有什么问题？useContext 是如何解决这个问题的？请画出使用 Context 前后的数据流对比。
 2. 在 `cartReducer` 中，为什么 `ADD_ITEM` 不能直接 `state.items.push(newItem); return state;`？正确的不可变更新应该怎么写？
 
+
+**第 18 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure) | 完成 Challenges |
+| [Sharing State Between Components](https://react.dev/learn/sharing-state-between-components) | 完成 Challenges |
+| [Extracting State Logic into a Reducer](https://react.dev/learn/extracting-state-logic-into-a-reducer) | 完成 Challenges |
+| [Passing Data Deeply with Context](https://react.dev/learn/passing-data-deeply-with-context) | 完成 Challenges |
+| [Scaling Up with Reducer and Context](https://react.dev/learn/scaling-up-with-reducer-and-context) | 读完，对照你的购物车实现 |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
+
 ---
 
 #### 第 19 周：React Hooks 进阶 + 自定义 Hooks
@@ -2044,6 +2309,18 @@ git reset --hard HEAD
 
 1. 自定义 Hook 的命名规则是什么？如果不以 `use` 开头会怎样？（提示：React 的 lint 规则会如何反应？）
 2. `useFetch` 中为什么需要处理竞态条件？请描述一个具体的竞态场景：用户快速切换两个不同 URL 的请求，如果不处理会发生什么？
+
+
+**第 19 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Referencing Values with Refs](https://react.dev/learn/referencing-values-with-refs) | 完成 Challenges |
+| [Lifecycle of Reactive Effects](https://react.dev/learn/lifecycle-of-reactive-effects) | 完成 Challenges |
+| [Removing Effect Dependencies](https://react.dev/learn/removing-effect-dependencies) | 完成 Challenges |
+| [Reusing Logic with Custom Hooks](https://react.dev/learn/reusing-logic-with-custom-hooks) | 完成 Challenges，对照你的 3 个自定义 Hook |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
 
 ---
 
@@ -2100,6 +2377,18 @@ git reset --hard HEAD
 1. React Hook Form 为什么说它比手写受控组件的表单性能更好？提示：想想每次输入时有多少组件会重新渲染。
 2. `<Route path="/users/:id">` 中的 `:id` 是什么？在组件中如何获取它的值？如果用户访问 `/users/abc`（非数字），你的代码应该如何处理？
 
+
+**第 20 周练习资源（按顺序做，不需要另找）：**
+
+| 资源 | 做什么 |
+|---|---|
+| [React Hook Form：Get Started](https://react-hook-form.com/get-started) | Day 1–2：跟着示例在你的项目中实现一次 |
+| [Zod 文档](https://zod.dev/) | Day 2–3：读 Basic usage、Strings、Objects 三节 |
+| [React Router：Declarative 模式安装](https://reactrouter.com/start/declarative/installation) | Day 4–5：按 Declarative 模式的 Installation、Routing、Navigating 三页操作 |
+| [Thinking in React](https://react.dev/learn/thinking-in-react) | Day 7：用它的 5 个步骤复盘你的多页应用 |
+
+每周额外做一次 1.5 节的「AI 对照审查练习」（约 20 分钟）。
+
 ---
 
 ### 模块 B 前半段回顾
@@ -2129,479 +2418,1218 @@ git reset --hard HEAD
 
 ### 模块 B 后半段：Tailwind + 设计基础 + shadcn/ui（第 21-24 周）
 
-> 你已经掌握了 React 核心。接下来的模块将让你的应用「好看」起来——Tailwind CSS 解决样式效率问题，设计基础解决审美问题，shadcn/ui 提供生产级组件。
+> 你已经掌握了 React 核心。接下来四周让你的应用“好看且一致”：Tailwind CSS 解决样式效率，设计基础解决审美，shadcn/ui 提供生产级组件。
+>
+> **2026-10 更新：** 本模块按 **Tailwind CSS v4** 重写。v4 的配置写在 CSS 文件里（`@import "tailwindcss"` + `@theme`），**不再有 `tailwind.config.js`**。网上大量 2024 年以前的教程仍是 v3 写法，看到 `tailwind.config.js`、`@tailwind base;` 时要意识到它们已过时。另外，原文说“重构 Pokémon 浏览器”，但之前的周次里并没有做过这个项目——现在改为第 21 周从零搭建，第 22–23 周继续完善。
+>
+> **AI 使用：Level 1。** 不让 AI 生成 className 字符串；遇到“这个效果用什么类”，先查文档，查不到再问 AI 要“思路和类名”，自己输入。
 
 ---
 
-#### 第 21 周：Tailwind CSS 基础
+#### 第 21 周：Tailwind CSS v4 基础 + 搭建 Pokémon 浏览器
 
-**主题：** 掌握 Tailwind CSS 的核心理念和常用工具类，告别手写 CSS 文件
+**本周目标：** 在 Vite + React + TS 项目中安装 Tailwind v4；理解 utility-first；用工具类完成一个响应式、带搜索和暗色模式的 Pokémon 列表应用。
 
-**学习内容：**
-- 原子化 CSS（Utility-First CSS）的哲学：为什么 `className="flex items-center gap-4 p-6"` 比写 `.card-container { display: flex; ... }` 更高效
-- 在 Vite + React 项目中安装和配置 Tailwind CSS
-- 核心工具类分类：
-  - 间距（Spacing）：`p-4`、`m-2`、`px-6`、`my-8`、`gap-4`
-  - 排版（Typography）：`text-lg`、`font-bold`、`leading-relaxed`、`text-gray-700`
-  - 颜色（Colors）：`bg-blue-500`、`text-white`、`border-gray-200`
-  - Flexbox：`flex`、`items-center`、`justify-between`、`flex-col`
-  - Grid：`grid`、`grid-cols-3`、`col-span-2`
-  - 尺寸：`w-full`、`h-screen`、`max-w-md`、`min-h-0`
-  - 边框和圆角：`border`、`rounded-lg`、`shadow-md`
-- 响应式设计：`sm:`、`md:`、`lg:`、`xl:` 断点前缀——移动优先（Mobile First）
-- 暗色模式：`dark:` 前缀，配合 `class` 策略或 `media` 策略
-- Tailwind 的"限制即自由"：设计系统的间距、颜色是预定义的，这反而让 UI 更一致
+**开始前准备（10 分钟）：** 在 Cursor 扩展商店安装 **Tailwind CSS IntelliSense**（作者 Tailwind Labs）。它会在你输入类名时提示，并在悬停时显示对应的 CSS。注意：这是“查文档式”提示，不是 AI 补全，Level 1 允许使用。
 
-**本周产出物：**
-- 用 Tailwind CSS 完全重构 Pokémon 浏览器的 UI（删除所有自定义 CSS 文件）
-- 应用具备响应式设计：在手机、平板、桌面三种尺寸下都美观可用
-- 实现基础暗色模式切换
+##### Day 1：创建项目并安装 Tailwind v4（1.5h）
 
-**推荐资源：**
-- Tailwind CSS 官方文档：https://tailwindcss.com/docs
-- Tailwind CSS Playground（在线实验）：https://play.tailwindcss.com/
-- Tailwind CSS Cheat Sheet：https://nerdcave.com/tailwind-cheat-sheet
+1. 在 `Programming Learn` 目录执行：
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释某个 Tailwind 类名对应的 CSS 属性（例如："`leading-relaxed` 对应什么 CSS？为什么调整行高能改善可读性？"）
-- ✅ 可以：让 Claude 建议实现某个布局的 Tailwind 思路（讨论方向，但代码自己写）
-- ❌ 禁止：让 AI 直接生成 Tailwind 的 className 字符串。你需要自己查文档、记住常用类名
-- ❌ 禁止：在不理解 Flexbox/Grid 原理的情况下使用 Tailwind 的 flex/grid 类。如果你对 CSS 布局不熟悉，先花 1 小时复习 Flexbox 和 Grid 的概念
+   ```bash
+   pnpm create vite@latest pokedex -- --template react-ts
+   cd pokedex
+   pnpm install
+   ```
+
+2. 安装 Tailwind 和它的 Vite 插件：
+
+   ```bash
+   pnpm add tailwindcss @tailwindcss/vite
+   ```
+
+3. 打开 `vite.config.ts`，改成：
+
+   ```ts
+   import { defineConfig } from "vite";
+   import react from "@vitejs/plugin-react";
+   import tailwindcss from "@tailwindcss/vite";
+
+   export default defineConfig({
+     plugins: [react(), tailwindcss()],
+   });
+   ```
+
+4. 把 `src/index.css` 的全部内容替换成一行：
+
+   ```css
+   @import "tailwindcss";
+   ```
+
+5. 删除 `src/App.css`，以及 `App.tsx` 里对它的 import。把 `App.tsx` 改为：
+
+   ```tsx
+   export default function App() {
+     return (
+       <main className="min-h-screen bg-slate-50 p-8">
+         <h1 className="text-3xl font-bold text-slate-900">Pokédex</h1>
+         <p className="mt-2 text-slate-600">Tailwind v4 已生效</p>
+       </main>
+     );
+   }
+   ```
+
+6. `pnpm dev`，打开终端显示的地址。看到浅灰背景、粗体大标题，说明安装成功。如果没有样式：检查 `main.tsx` 是否 import 了 `./index.css`。
+7. 在 DevTools 中选中 `<h1>`，查看 Styles 面板：`text-3xl` 对应 `font-size: var(--text-3xl)`。v4 把所有设计值都做成了 CSS 变量，在 `:root` 上可以看到它们。
+8. `git init`，`.gitignore` 确认包含 `node_modules` 和 `dist`，提交 `chore: init vite react ts with tailwind v4`。
+
+##### Day 2：utility-first 思维——把你熟悉的 CSS 翻译成工具类（1.5h）
+
+1. 打开 [Tailwind 文档：Styling with utility classes](https://tailwindcss.com/docs/styling-with-utility-classes)，读前三节（约 20 分钟）。
+2. 记住间距刻度：`p-1` = `0.25rem`（4px），`p-4` = `1rem`（16px），`p-6` = `1.5rem`，每一级是 0.25rem 的倍数。`px-` 左右、`py-` 上下、`mt-` 上边距、`gap-` 间隙。
+3. 在笔记里填一张“我会的 CSS → Tailwind”对照表，**每行先自己猜，再用 IntelliSense 悬停验证**：
+
+   | 你在 W2–W3B 写过的 CSS | Tailwind 类 |
+   |---|---|
+   | `display: flex; align-items: center; justify-content: space-between;` | |
+   | `padding: 16px 24px;` | |
+   | `border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.08);` | |
+   | `font-size: 1.25rem; font-weight: 600;` | |
+   | `position: absolute; top: 12px; right: 12px;` | |
+   | `display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;` | |
+   | `max-width: 64rem; margin: 0 auto;` | |
+   | `width: 100%; aspect-ratio: 1 / 1; object-fit: contain;` | |
+
+4. 新建 `src/components/PokemonCard.tsx`，**只用 Tailwind 类**做一张静态卡片：白底、圆角、阴影、内边距；上方一张图片（先写死 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png`），下方编号 `#025` 和名字 `pikachu`（首字母大写用 `capitalize` 类）。
+5. 卡片右上角放一个绝对定位的小标签“电”（复习 W3B：父 `relative`，子 `absolute top-3 right-3`）。
+6. 在 [Tailwind Play](https://play.tailwindcss.com/) 里把同一张卡片再写一遍，不看你刚写的代码。比较两次的差异。
+
+##### Day 3：获取数据并用 Grid 展示列表（1.5h）
+
+1. 阅读 [PokéAPI 文档](https://pokeapi.co/docs/v2) 的 “Resource Lists/Pagination” 一节。在浏览器打开 `https://pokeapi.co/api/v2/pokemon?limit=151`，观察 JSON 结构：`{ count, next, previous, results: [{ name, url }] }`。
+2. 新建 `src/api/pokemon.ts`，定义类型并写获取函数。用 T10 学过的“外部数据从 `unknown` 开始”，或用 W20 学过的 Zod 校验：
+
+   ```ts
+   import { z } from "zod";
+
+   const listSchema = z.object({
+     results: z.array(z.object({ name: z.string(), url: z.string() })),
+   });
+
+   export interface PokemonSummary {
+     id: number;
+     name: string;
+     imageUrl: string;
+   }
+
+   function idFromUrl(url: string): number {
+     const parts = url.split("/").filter(Boolean);
+     return Number(parts[parts.length - 1]);
+   }
+
+   export async function fetchPokemonList(limit = 151): Promise<PokemonSummary[]> {
+     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
+     if (!response.ok) {
+       throw new Error(`请求失败：${response.status}`);
+     }
+     const data = listSchema.parse(await response.json());
+     return data.results.map(({ name, url }) => {
+       const id = idFromUrl(url);
+       return {
+         id,
+         name,
+         imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+       };
+     });
+   }
+   ```
+
+   这段代码你需要**亲手输入并能逐行解释**；不理解的行先查文档。如果项目里还没有 Zod，执行 `pnpm add zod`。
+3. 在 `App.tsx` 用 W17 学过的 `useEffect` + 三态（loading / error / success）加载列表。用 T10 的可辨识联合表示状态。
+4. 让 `PokemonCard` 接收 `PokemonSummary` 作为 props（用参数解构）。
+5. 列表容器：`<ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">`。
+6. 加载中时显示 8 个灰色占位块：`<li className="h-40 animate-pulse rounded-xl bg-slate-200" />`。
+7. 断网测试：DevTools → Network → 选择 “Offline”，刷新，确认显示错误信息和“重试”按钮。
+
+##### Day 4：响应式与页面骨架（1.5h）
+
+1. 读 [Tailwind 文档：Responsive design](https://tailwindcss.com/docs/responsive-design)。关键：**不带前缀的类作用于所有宽度，`sm:` 表示“宽度 ≥ 40rem（640px）时”**。所以先写手机样式，再用前缀覆盖大屏。
+2. 默认断点：`sm` 40rem、`md` 48rem、`lg` 64rem、`xl` 80rem、`2xl` 96rem。
+3. 做页面骨架：顶部 `header`（sticky，`sticky top-0 z-20 bg-white/80 backdrop-blur`），中间 `main`（`mx-auto max-w-6xl px-4 py-6`），底部 `footer`。
+4. header 内：左边 logo 文字，右边一个搜索框。手机上搜索框在 logo 下方整行（`flex-col`），`sm:` 以上同一行（`sm:flex-row sm:items-center sm:justify-between`）。
+5. 在 375 / 768 / 1440 三个宽度下截图，确认：无横向滚动条、列数分别是 2 / 3 / 4、搜索框可用。
+
+##### Day 5：交互状态与搜索（1.5h）
+
+1. 读 [Tailwind 文档：Hover, focus, and other states](https://tailwindcss.com/docs/hover-focus-and-other-states) 的前四节。
+2. 卡片悬停效果：`transition hover:-translate-y-1 hover:shadow-lg`。加 `motion-reduce:transition-none motion-reduce:hover:translate-y-0`，对应 W3B 学过的“减少动画”。
+3. 把卡片整体变成链接（`<a>` 或 W20 的 `<Link>`），加键盘焦点样式：`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500`。用 Tab 键测试。
+4. 搜索：用 `useState` 保存关键字，用 `filter` 按名字筛选（忽略大小写和首尾空格）。
+5. 没有匹配结果时显示空状态：一个居中的图标（可以用 emoji）、一句“没有找到 xxx”、一个“清空搜索”按钮。
+6. 搜索框样式：`rounded-lg border border-slate-300 px-3 py-2 focus:border-sky-500 focus:ring-2 focus:ring-sky-200 focus:outline-none`。
+
+##### Day 6：暗色模式（1.5h）
+
+1. 读 [Tailwind 文档：Dark mode](https://tailwindcss.com/docs/dark-mode)。v4 默认按系统设置（`prefers-color-scheme`）切换。
+2. 先试默认方式：给 `main` 加 `dark:bg-slate-900`，卡片加 `dark:bg-slate-800 dark:text-slate-100`。在 macOS“外观”中切换，确认生效。
+3. 改为手动切换：在 `src/index.css` 中 `@import` 下一行加：
+
+   ```css
+   @custom-variant dark (&:where(.dark, .dark *));
+   ```
+
+   现在 `dark:` 只在祖先元素有 `.dark` 类时生效。
+4. 写一个切换按钮：点击时在 `document.documentElement` 上 `classList.toggle("dark")`，并把选择保存到 `localStorage`（复用 W19 的 `useLocalStorage`）。
+5. 页面加载时读取保存的选择；如果没有保存过，就跟随 `window.matchMedia("(prefers-color-scheme: dark)").matches`。
+6. 检查所有文字在两种模式下的对比度（DevTools 颜色面板，≥ 4.5:1）。
+
+##### Day 7：复习与自测（1h）
+
+1. 闭卷：写出一张卡片的 className（白底、16px 内边距、12px 圆角、轻阴影、悬停时上浮）。
+2. 闭卷：写出“手机 1 列、平板 2 列、桌面 4 列”的 grid 类。
+3. 回答本周自测问题。
+4. 提交并推送到 GitHub。
+
+**本周作业：** Pokémon 浏览器 v1。
+
+**验收清单：**
+
+- [ ] 项目中没有自写的 `.css` 文件（`index.css` 只有 `@import` 和 `@custom-variant`）
+- [ ] 151 只宝可梦以响应式网格显示，加载中有骨架，失败有重试
+- [ ] 搜索可用，无结果时有空状态
+- [ ] 键盘可以聚焦每张卡片，焦点清晰可见
+- [ ] 暗色模式可手动切换并记住选择
+- [ ] 外部数据经过 Zod 或手写守卫校验
+
+**常见踩坑：**
+
+- 类名完全无效 → 是否在 `index.css` 写了 `@import "tailwindcss";`，`vite.config.ts` 是否注册了 `tailwindcss()` 插件。
+- 照着旧教程写了 `tailwind.config.js` 却没效果 → v4 默认不读取它，配置写在 CSS 里（下周学 `@theme`）。
+- 图片高度跳动 → 给图片容器加 `aspect-square`。
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Tailwind：Installation（Vite）](https://tailwindcss.com/docs/installation/using-vite) | Day 1 对照 |
+| [Tailwind：Styling with utility classes](https://tailwindcss.com/docs/styling-with-utility-classes) | Day 2 |
+| [Tailwind：Responsive design](https://tailwindcss.com/docs/responsive-design) | Day 4 |
+| [Tailwind：Hover, focus, and other states](https://tailwindcss.com/docs/hover-focus-and-other-states) | Day 5 |
+| [Tailwind：Dark mode](https://tailwindcss.com/docs/dark-mode) | Day 6 |
+| [Tailwind Play](https://play.tailwindcss.com/) | 每天把一个小组件在这里闭卷重写一次 |
+| [Frontend Mentor 免费挑战](https://www.frontendmentor.io/challenges) | 选学：选一个 Newbie 级别的卡片类设计，用 Tailwind 实现 |
+
+**AI 使用（Level 1）：**
+
+- ✅ 问：“`leading-relaxed` 对应什么 CSS？为什么调整行高能改善可读性？”
+- ✅ 做“AI 对照审查练习”（见 1.5 节）：拿你写好的 `fetchPokemonList`，让 AI 写它的版本，比较错误处理差异。
+- ❌ 让 AI 生成 className 字符串或整个组件。
 
 **自测问题：**
-- Tailwind 的"移动优先"（Mobile First）策略意味着什么？`md:flex` 在什么屏幕尺寸下生效？
-- 给定设计稿：一个卡片组件，白色背景、16px 内边距、8px 圆角、轻微阴影，你能不查文档写出 Tailwind 的 `className` 吗？
+
+1. Tailwind 的“移动优先”是什么意思？`md:flex` 在什么宽度下生效？
+2. Tailwind v4 和 v3 在“配置写在哪里”上有什么不同？
 
 ---
 
-#### 第 22 周：Tailwind CSS 进阶 + 动画
+#### 第 22 周：Tailwind 进阶——主题、动画、条件样式
 
-**主题：** 掌握 Tailwind 的高级特性——状态变体、动画、主题定制和条件样式
+**本周目标：** 用 `@theme` 定义自己的设计令牌；掌握 `group` / `peer`、过渡与关键帧动画、容器查询；用 `cn()` 安全地拼接条件类名；给 Pokémon 浏览器加详情页和收藏功能。
 
-**学习内容：**
-- 状态变体：
-  - `hover:`、`focus:`、`active:`——交互状态
-  - `group` 和 `group-hover:`——父元素悬停时改变子元素样式
-  - `peer` 和 `peer-checked:`——兄弟元素状态联动（常用于自定义复选框）
-- 动画和过渡：
-  - `transition`、`duration-300`、`ease-in-out`——CSS 过渡效果
-  - `animate-spin`、`animate-pulse`、`animate-bounce`——内置动画
-  - 自定义动画：通过 `tailwind.config` 扩展 `keyframes` 和 `animation`
-- 主题定制（`tailwind.config.js`/`tailwind.config.ts`）：
-  - 扩展颜色：添加品牌色
-  - 扩展字体：添加自定义字体
-  - 扩展间距和断点
-- 容器查询（Container Queries）：根据父容器尺寸而非视口尺寸来调整样式
-- `clsx` / `cn()` 工具函数：条件拼接 className
-  - 安装 `clsx` 和 `tailwind-merge`
-  - 实现 `cn()` 函数：`cn = (...inputs) => twMerge(clsx(inputs))`
+##### Day 1：用 `@theme` 定义设计令牌（1.5h）
 
-**本周产出物：**
-- 为 Pokémon 浏览器添加丰富的交互效果：
-  - 卡片悬停时的缩放和阴影动画
-  - 收藏按钮的"心跳"动画
-  - 页面切换的淡入效果
-  - 完善的暗色模式切换（带平滑过渡动画）
-- 项目中使用 `cn()` 工具函数处理条件样式
+1. 读 [Tailwind 文档：Theme variables](https://tailwindcss.com/docs/theme) 的前半部分。
+2. 在 `src/index.css` 中加入你自己的品牌色和字体：
 
-**推荐资源：**
-- Tailwind CSS — Hover, Focus, and Other States：https://tailwindcss.com/docs/hover-focus-and-other-states
-- Tailwind CSS — Animation：https://tailwindcss.com/docs/animation
-- Tailwind CSS — Customizing Your Theme：https://tailwindcss.com/docs/theme
+   ```css
+   @import "tailwindcss";
+   @custom-variant dark (&:where(.dark, .dark *));
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释 `group` 和 `peer` 选择器的工作原理
-- ✅ 可以：让 Claude 解释如何在 `tailwind.config` 中扩展主题
-- ❌ 禁止：让 AI 生成 Tailwind 配置文件。主题定制反映你的设计决策，需要自己配置
-- ❌ 禁止：让 AI 帮你写动画的 `className` 组合。你需要自己查文档，尝试不同的过渡参数
+   @theme {
+     --color-brand-50: oklch(0.97 0.02 250);
+     --color-brand-500: oklch(0.62 0.17 250);
+     --color-brand-700: oklch(0.48 0.16 250);
+     --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+   }
+   ```
+
+3. 现在可以直接使用 `bg-brand-500`、`text-brand-700`、`font-display`。规则：`--color-xxx` 生成颜色类，`--font-xxx` 生成字体类，`--spacing`、`--radius-xxx`、`--shadow-xxx` 同理。
+4. `oklch()` 是现代颜色写法：三个值分别是亮度（0–1）、彩度、色相角度。调整第一个值就能得到同一色相的深浅系列，比十六进制更容易保持一致。在 [oklch.com](https://oklch.com/) 上拖动滑块，挑一个你喜欢的品牌色，替换上面的值。
+5. 把全站的 `sky-500` 等临时颜色换成你的 `brand-*`。
+6. 在 DevTools 的 `:root` 里找到 `--color-brand-500`，修改它的值，观察全站一起变化。
+
+##### Day 2：详情页与动态类名的大坑（1.5h）
+
+1. 用 W20 的 React Router 增加路由 `/pokemon/:name`。详情页请求 `https://pokeapi.co/api/v2/pokemon/{name}`，显示图片、身高、体重、属性（types）。用 Zod 只校验你用到的字段。
+2. 每个属性显示一个彩色标签。**先故意写错一次：**
+
+   ```tsx
+   // ❌ 不会生效
+   <span className={`bg-${color}-500`}>{type}</span>
+   ```
+
+   观察颜色没有出现。原因：Tailwind 在构建时**扫描源代码中的完整类名字符串**，`bg-${color}-500` 不是完整字符串，它扫描不到，也就不会生成对应的 CSS。
+3. 正确写法：用映射表写出完整类名：
+
+   ```ts
+   const typeStyles: Record<string, string> = {
+     fire: "bg-orange-500 text-white",
+     water: "bg-sky-500 text-white",
+     grass: "bg-green-500 text-white",
+     electric: "bg-yellow-400 text-slate-900",
+   };
+   const fallback = "bg-slate-400 text-white";
+   ```
+
+   使用：`typeStyles[type] ?? fallback`。
+4. 把这个“动态类名必须写完整”的规则记进笔记，这是 Tailwind 新手最常见的 bug。
+
+##### Day 3：`cn()`——安全地拼接条件类名（1.5h）
+
+1. 安装：`pnpm add clsx tailwind-merge`。
+2. 新建 `src/lib/utils.ts`：
+
+   ```ts
+   import { clsx, type ClassValue } from "clsx";
+   import { twMerge } from "tailwind-merge";
+
+   export function cn(...inputs: ClassValue[]): string {
+     return twMerge(clsx(inputs));
+   }
+   ```
+
+   这里的 `...inputs` 是 T4B 学过的剩余参数。
+3. 理解两者分工：`clsx` 负责“条件拼接”，`cn("p-4", isActive && "bg-brand-500")`；`tailwind-merge` 负责“冲突时保留后者”，`cn("p-4", "p-2")` 得到 `"p-2"`，而不是两个都保留导致结果不确定。
+4. 写一个 `Button` 组件：`variant: "primary" | "ghost"`、`size: "sm" | "md"`，外部还能传 `className` 覆盖。用 `cn()` 组合。
+5. 写 3 个 Vitest 测试验证 `cn` 的行为（如果项目还没装 Vitest，按 TS 教程第 6 周 Day 5 安装）。
+
+##### Day 4：`group`、`peer` 与收藏按钮（1.5h）
+
+1. **group：** 父元素加 `group`，子元素用 `group-hover:` 响应父元素的悬停。例：卡片悬停时图片放大 `group-hover:scale-110`，名字变色 `group-hover:text-brand-700`。
+2. **peer：** 兄弟元素联动。做一个自定义开关：
+
+   ```tsx
+   <label className="inline-flex cursor-pointer items-center gap-2">
+     <input type="checkbox" className="peer sr-only" />
+     <span className="h-6 w-11 rounded-full bg-slate-300 transition peer-checked:bg-brand-500 peer-focus-visible:ring-2 peer-focus-visible:ring-brand-500" />
+     <span>只看收藏</span>
+   </label>
+   ```
+
+   `sr-only` 让原生复选框在视觉上隐藏，但屏幕阅读器和键盘仍能使用。
+3. 收藏功能：卡片右上角一个心形按钮，点击切换收藏，收藏列表存在 `localStorage`（保存 ID 数组；读取时转成 `Set`，复习 T4B）。注意按钮在链接卡片内部时，要在点击处理里调用 `event.preventDefault()` 和 `event.stopPropagation()`，避免同时触发跳转。
+4. 打开“只看收藏”开关时，列表只显示收藏的宝可梦。
+
+##### Day 5：过渡与自定义动画（1.5h）
+
+1. 读 [Tailwind 文档：animation](https://tailwindcss.com/docs/animation)。内置 `animate-spin`、`animate-pulse`、`animate-bounce`、`animate-ping`。
+2. 在 `@theme` 中定义自己的“心跳”动画：
+
+   ```css
+   @theme {
+     --animate-heartbeat: heartbeat 0.4s ease-in-out;
+
+     @keyframes heartbeat {
+       0%, 100% { transform: scale(1); }
+       50% { transform: scale(1.3); }
+     }
+   }
+   ```
+
+   点击收藏时，给心形图标加上 `animate-heartbeat`（动画结束后可以通过 `onAnimationEnd` 移除）。
+3. 页面淡入：定义 `--animate-fade-in` 和对应 `@keyframes`（`opacity` 0 → 1，`translateY` 8px → 0），用在详情页根元素。
+4. 给所有动画加 `motion-reduce:animate-none`。
+
+##### Day 6：容器查询与重复样式的处理（1.5h）
+
+1. 读 [Tailwind 文档：Responsive design 中的 Container queries 一节](https://tailwindcss.com/docs/responsive-design)。v4 已内置，无需插件。
+2. 问题：同一个卡片组件放在宽的主区域和窄的侧栏里，需要不同布局，但视口宽度一样。解决：父元素加 `@container`，子元素用 `@sm:flex-row` 这类前缀，按**容器**宽度变化。
+3. 做一个“横向卡片”变体：容器窄时图片在上、文字在下；容器 ≥ `@md` 时图片在左、文字在右。把它放在两个不同宽度的容器里验证。
+4. 当同一组类名重复了 3 次以上：**首选抽成 React 组件**（例如 `<Tag>`）；只有在没法用组件的地方（如 Markdown 渲染出的 HTML）才考虑在 CSS 中用 `@utility` 或 `@layer components`。读 [Tailwind 文档：Adding custom styles](https://tailwindcss.com/docs/adding-custom-styles) 了解这两种方式。
+
+##### Day 7：复习与自测（1h）
+
+1. 闭卷写出 `cn()` 函数和一个使用它的 `Badge` 组件。
+2. 闭卷解释为什么 `` `bg-${color}-500` `` 无效。
+3. 提交、推送；在 README 加一张截图。
+
+**本周作业：** Pokémon 浏览器 v2——详情页、属性标签、收藏 + “只看收藏”、心跳动画、页面淡入、品牌色主题。
+
+**验收清单：**
+
+- [ ] 品牌色、字体通过 `@theme` 定义，全站没有零散的十六进制颜色
+- [ ] 属性标签颜色正确（没有使用拼接类名）
+- [ ] `cn()` 有测试
+- [ ] 收藏在刷新后保留；点击心形不会触发跳转
+- [ ] 所有动画在“减少动态效果”开启时停止
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Tailwind：Theme variables](https://tailwindcss.com/docs/theme) | Day 1、Day 5 |
+| [oklch.com](https://oklch.com/) | Day 1 选色 |
+| [Tailwind：Animation](https://tailwindcss.com/docs/animation) | Day 5 |
+| [Tailwind：Adding custom styles](https://tailwindcss.com/docs/adding-custom-styles) | Day 6 |
+| [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Day 3：读 README 的 “What is it for” |
 
 **自测问题：**
-- `group-hover:` 和直接在子元素上写 `hover:` 有什么区别？给出一个必须用 `group-hover:` 的实际场景。
-- `clsx` 和 `tailwind-merge` 分别解决什么问题？为什么我们需要把它们组合成 `cn()` 函数？
+
+1. `group-hover:` 和直接写 `hover:` 有什么区别？给出一个必须用 `group-hover:` 的场景。
+2. `clsx` 和 `tailwind-merge` 分别解决什么问题？
 
 ---
 
 #### 第 23 周：开发者的设计基础
 
-**主题：** 学习非设计师也能掌握的设计原则——让你的应用从"能用"变成"好用且好看"
+**本周目标：** 掌握不需要美术天赋也能用的设计规则：层级、间距、字体、颜色、对齐、状态设计；用它们重新设计 Pokémon 浏览器，并临摹一个真实产品界面。
 
-**学习内容：**
-- 排版层级（Typography Hierarchy）：
-  - 标题大小递减：H1 > H2 > H3，让用户一眼看出信息结构
-  - 行高（line-height）：正文用 1.5-1.75，标题用 1.1-1.3
-  - 字重（font-weight）：标题 700，正文 400，次要信息 300
-- 间距系统：
-  - 4px/8px 网格系统：所有间距都是 4 的倍数（4、8、12、16、24、32、48...）
-  - 为什么一致的间距让 UI 看起来更"专业"
-- 颜色理论基础：
-  - 主色（Primary）：品牌核心色，用于 CTA 按钮和重要元素
-  - 辅色（Secondary）：辅助信息和次要操作
-  - 强调色（Accent）：高亮、通知
-  - 中性色（Neutral）：灰色系，用于文字、背景、边框
-  - 60-30-10 配色法则
-- 留白（White Space）与视觉层次：
-  - 留白不是"浪费空间"，而是让重要内容突出的手段
-  - 接近法则（Proximity）：相关元素靠近，无关元素远离
-- 布局构图原则：
-  - 视觉动线：Z 形布局、F 形布局
-  - 对齐：左对齐是最安全的选择
-  - 一致性：相同类型的元素用相同的样式
+**本周阅读主线：** [7 Practical Tips for Cheating at Design（Refactoring UI 作者的免费文章）](https://medium.com/refactoring-ui/7-practical-tips-for-cheating-at-design-40c736799886)。如果你愿意付费，《Refactoring UI》整本书是最好的进阶读物，但不是必需的。
 
-**本周产出物：**
-- 阅读《Refactoring UI》核心章节（至少 Spacing、Typography、Color、Hierarchy 四个章节）
-- 用学到的设计原则重新设计 Pokémon 浏览器的 UI：
-  - 建立清晰的排版层级
-  - 应用一致的间距系统
-  - 选择一套协调的配色方案
-  - 确保足够的留白
+##### Day 1：视觉层级（1.5h）
 
-**推荐资源：**
-- 《Refactoring UI》（电子书，强烈推荐购买）：https://www.refactoringui.com/
-- Shift Nudge — Interface Design Course 免费预览课：https://shiftnudge.com/
-- Realtime Colors（实时预览配色方案）：https://www.realtimecolors.com/
+1. 读上面那篇文章（约 20 分钟），把 7 条技巧抄进笔记，每条配一个你自己的例子。
+2. 核心思想：**用颜色深浅和字重区分主次，而不是只靠字号。** 主要文字 `text-slate-900 font-semibold`，次要 `text-slate-600`，辅助 `text-slate-400 text-sm`。
+3. 打开你常用的一个产品（例如 GitHub 仓库页），截图，在截图上标出 3 层信息层级。
+4. 把 Pokémon 详情页的信息分成 3 层（名字 → 属性/编号 → 身高体重等数据），用颜色和字重重新排版。保存“改前/改后”截图。
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 对你的 UI 设计提供反馈（截图或描述你的布局，让它基于设计原则给建议）
-- ✅ 可以：让 Claude 解释设计原则的应用（例如："我的页面看起来很拥挤，是哪些设计原则没有遵守？"）
-- ❌ 禁止：让 AI 直接告诉你具体用哪些颜色值、间距值。你需要自己根据设计原则做决策并实验
-- ❌ 禁止：跳过阅读 Refactoring UI——设计基础无法通过让 AI 回答问题来替代，需要系统性学习
+##### Day 2：间距与字体比例（1.5h）
+
+1. 规则：**所有间距只使用 Tailwind 刻度**（4、8、12、16、24、32、48、64px 对应 `1、2、3、4、6、8、12、16`），不要出现 `p-[13px]` 这类任意值。
+2. 规则：**相关的靠近，不相关的远离。** 组内间距小（`gap-2`），组与组之间大（`gap-8`）。
+3. 字体比例：正文 `text-base`（16px）、小字 `text-sm`、标题依次 `text-xl / text-2xl / text-3xl`。一个页面最多 4 种字号。
+4. 行高：正文 `leading-relaxed`；大标题 `leading-tight`；长段落限制宽度 `max-w-prose`（约 65 个字符）。
+5. 检查整个应用，修正所有不符合以上规则的地方。
+
+##### Day 3：颜色（1.5h）
+
+1. 一个界面需要的颜色：1 个品牌色（按钮、链接、选中态）、1 组中性灰（文字、边框、背景，至少 5 个深浅）、语义色（成功绿、警告黄、错误红）。其余一概不用。
+2. 60-30-10：约 60% 背景/中性色、30% 次要面（卡片、侧栏）、10% 强调色。数一数你的页面中品牌色占了多少面积。
+3. 在 [Realtime Colors](https://www.realtimecolors.com/) 中输入你的品牌色，观察它在完整页面上的效果，调整到满意，导出数值写回 `@theme`。
+4. 灰色不要用纯灰：给中性色带一点品牌色的色相（Tailwind 的 `slate` 偏蓝，`stone` 偏暖），界面会更协调。
+5. 用 DevTools 检查所有文字的对比度，浅色和深色模式都要 ≥ 4.5:1。
+
+##### Day 4：对齐、布局与卡片（1.5h）
+
+1. 规则：**同一列的元素左对齐到同一条线**；数字在表格中右对齐。
+2. 规则：**能用间距和背景色分组，就不要加边框**。卡片之间如果既有阴影又有边框，删掉一个。
+3. 在页面上叠一个 8px 网格检查对齐：在 DevTools Console 中执行
+   `document.body.style.backgroundImage = "linear-gradient(to bottom, rgb(255 0 0 / .08) 1px, transparent 1px)"; document.body.style.backgroundSize = "100% 8px";`
+   观察元素边缘是否落在网格线上。用完刷新页面即可恢复。
+4. 重做首页布局，保存“改前/改后”截图。
+
+##### Day 5：状态设计——空、加载、错误、成功（1.5h）
+
+1. 列出应用中所有异步操作和列表：列表加载、详情加载、收藏、搜索无结果。
+2. 为每一项设计 4 种状态，画在纸上或 [Excalidraw](https://excalidraw.com/) 中。
+3. 加载状态用“骨架屏”（与真实内容同样形状的灰块，`animate-pulse`），不要用整页转圈。
+4. 错误状态：一句人话（“网络好像断了”）+ 一个可操作按钮（“重试”）。不要显示 `TypeError: Failed to fetch`。
+5. 实现所有你设计的状态。
+
+##### Day 6：临摹练习（2h）
+
+1. 选一个你喜欢的成熟产品页面，例如 Linear、Vercel 或 GitHub 的设置页（截一张图）。
+2. 用 Tailwind 在一个新路由 `/study` 中**临摹**它的布局、间距、字号层级（不需要复制它的品牌、图标、文案——用你自己的占位内容）。这是学习练习，不要发布。
+3. 临摹时注意记录：它用了几种字号？间距规律是什么？按钮有几种样式？
+4. 把你学到的 3 条规律写进笔记，并应用到 Pokémon 浏览器。
+
+##### Day 7：复习（1h）
+
+1. 不看笔记，写出你的“设计 10 条规则”。
+2. 请一个朋友看改前/改后截图，问他哪个更好、为什么。
+
+**本周作业：** Pokémon 浏览器 v3（设计改版）+ 一份 `DESIGN.md`，记录你的颜色、字号、间距规则和改前/改后截图。
+
+**验收清单：**
+
+- [ ] 页面最多 4 种字号、所有间距来自刻度
+- [ ] 颜色只有：品牌色 + 中性色 + 语义色
+- [ ] 所有异步操作都有加载、空、错误状态
+- [ ] `DESIGN.md` 完成
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [7 Practical Tips for Cheating at Design](https://medium.com/refactoring-ui/7-practical-tips-for-cheating-at-design-40c736799886) | Day 1 主读物 |
+| [Laws of UX](https://lawsofux.com/) | 选读：每天读 2 条法则，思考它在你的应用里如何体现 |
+| [Realtime Colors](https://www.realtimecolors.com/) | Day 3 |
+| [Excalidraw](https://excalidraw.com/) | Day 5 画状态草图 |
+
+**AI 使用（Level 1）：**
+
+- ✅ 把截图发给 Claude：“按视觉层级、间距、对齐三个维度，指出这个页面的 3 个问题。”然后**你自己**改。
+- ❌ 让 AI 直接给出颜色值和间距值。
 
 **自测问题：**
-- 看一个你常用的 Web 应用的界面（如 Notion、Linear、Vercel Dashboard），你能识别出它的排版层级（至少 3 层）和配色方案吗？
-- "60-30-10 配色法则"是什么？在你的 Pokémon 浏览器中，60%、30%、10% 分别是什么颜色？
+
+1. 看 Notion 或 Linear 的界面，你能指出它的 3 层排版层级吗？
+2. 你的 Pokémon 浏览器中，60-30-10 分别是什么颜色？
 
 ---
 
 #### 第 24 周：shadcn/ui 基础
 
-**主题：** 学习使用 shadcn/ui 快速构建专业 UI——理解它的模式，掌握核心组件
+**本周目标：** 在 Vite 项目中安装 shadcn/ui；读懂组件源码；用 Button、Card、Dialog、表单、Table、DropdownMenu、Sidebar 搭建一个 Dashboard 模板。
 
-**学习内容：**
-- shadcn/ui 是什么（核心理解）：
-  - **不是** 传统的组件库（你不是 `npm install` 一个包然后 import 使用）
-  - **是** 一系列预样式化的、可复制粘贴的组件代码，基于 Radix UI / Base UI 构建
-  - 你运行 CLI 命令把组件代码直接复制到你的项目中，然后你拥有这些代码的完全控制权
-  - 好处：开箱即用的美观 + 完全的可定制性
-- 安装和初始化：`pnpx shadcn@latest init`
-- 添加组件：`pnpx shadcn@latest add button card dialog`
-- 核心组件学习：
-  - `Button`：变体（variant）和尺寸（size）
-  - `Card`：`CardHeader`、`CardContent`、`CardFooter` 的组合
-  - `Dialog`（Modal 对话框）：打开/关闭控制
-  - `Form`：与 React Hook Form + Zod 的集成
-  - `Table`：数据表格展示
-  - `Dropdown Menu`：下拉菜单
-- 理解和修改组件源码：组件代码就在你的 `components/ui/` 目录中，你可以随意修改
-- `cn()` 工具函数在 shadcn/ui 中的应用
+**先理解它是什么：** shadcn/ui **不是**用 `npm install` 安装后 import 的组件库，而是一个 CLI：它把组件**源代码复制到你的项目**（`src/components/ui/`），你拥有并可以修改这些代码。组件底层基于无样式的无障碍组件库（Radix UI 或 Base UI），样式用 Tailwind 写成。
 
-**本周产出物：**
-- 构建一个 Dashboard 布局模板，包含：
-  - 侧边栏导航（使用 shadcn/ui 组件）
-  - 顶部导航栏（包含用户头像下拉菜单）
-  - 数据卡片区域（显示统计数据）
-  - 数据表格（展示列表数据）
-  - "新建"按钮点击后弹出 Dialog 表单
-- Dashboard 具备响应式设计和暗色模式
+##### Day 1：安装（1.5h）
 
-**推荐资源：**
-- shadcn/ui 官方文档：https://ui.shadcn.com/
-- shadcn/ui 安装指南（Vite）：https://ui.shadcn.com/docs/installation/vite
-- shadcn/ui 组件列表：https://ui.shadcn.com/docs/components
+1. 新建项目：
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释 shadcn/ui 组件的内部实现（例如："shadcn/ui 的 Dialog 组件内部是如何实现焦点锁定和 ESC 键关闭的？"）
-- ✅ 可以：让 Claude 帮你理解 Radix UI 的 Headless 组件理念
-- ❌ 禁止：让 AI 帮你组装 shadcn/ui 组件来构建页面。选择哪些组件、如何组合它们——这是你的设计决策
-- ❌ 禁止：不理解组件源码就使用它。花时间阅读 `components/ui/` 中每个你使用的组件的源码
+   ```bash
+   pnpm create vite@latest dashboard-template -- --template react-ts
+   cd dashboard-template
+   pnpm install
+   pnpm add tailwindcss @tailwindcss/vite
+   pnpm add -D @types/node
+   ```
+
+2. `src/index.css` 替换为 `@import "tailwindcss";`。
+3. 配置路径别名 `@/`。在 **`tsconfig.json` 和 `tsconfig.app.json` 两个文件**的 `compilerOptions` 中都加入：
+
+   ```json
+   "paths": {
+     "@/*": ["./src/*"]
+   }
+   ```
+
+   **注意（2026 新坑）：** shadcn 官方文档仍写着同时添加 `"baseUrl": "."`。`baseUrl` 在 TypeScript 6 中已废弃，在 TypeScript 7 中会直接报错。只写 `paths` 就够了（`paths` 会相对于 tsconfig 文件所在目录解析）。如果之后运行 `pnpm exec tsc -b` 报 `baseUrl` 相关错误，删掉它即可。
+4. `vite.config.ts`：
+
+   ```ts
+   import path from "node:path";
+   import { defineConfig } from "vite";
+   import react from "@vitejs/plugin-react";
+   import tailwindcss from "@tailwindcss/vite";
+
+   export default defineConfig({
+     plugins: [react(), tailwindcss()],
+     resolve: {
+       alias: {
+         "@": path.resolve(__dirname, "./src"),
+       },
+     },
+   });
+   ```
+
+5. 初始化：`pnpm dlx shadcn@latest init`。按提示选择（不确定时选默认值）。完成后观察变化：`components.json`（CLI 配置）、`src/lib/utils.ts`（里面就是你上周写的 `cn()`）、`src/index.css` 中多了一大段 CSS 变量（主题颜色）。
+6. 添加第一个组件：`pnpm dlx shadcn@latest add button`，在 `App.tsx` 中 `import { Button } from "@/components/ui/button";` 并渲染。
+7. 提交：`chore: init shadcn ui`。
+
+##### Day 2：读懂一个组件的源码（1.5h）
+
+1. 打开 `src/components/ui/button.tsx`，逐行阅读。重点看 `cva(...)`：它定义了 `variant`（default、destructive、outline、secondary、ghost、link）和 `size` 两组变体。
+2. 在笔记中回答：`buttonVariants` 返回什么？`className` 参数是如何和变体合并的（找到 `cn(...)`）？
+3. **修改源码：** 添加一个新变体 `brand`，使用你的品牌色。保存后在页面上使用 `<Button variant="brand">`。TypeScript 会自动识别新变体——体会“组件代码归你所有”。
+4. 添加 `card`、`badge`、`input`、`label`：`pnpm dlx shadcn@latest add card badge input label`。组合出一张“统计卡片”：标题、大数字、较上月变化的 Badge。
+5. 查看 `src/index.css` 中的 `--primary`、`--background` 等变量，把 `--primary` 改成你的品牌色，观察所有默认按钮一起改变。
+
+##### Day 3：Dialog 与表单（1.5h）
+
+1. `pnpm dlx shadcn@latest add dialog`。做一个“新建项目”按钮，点击弹出对话框。
+2. 用键盘测试：Tab 键在对话框内循环（焦点锁定）；Esc 关闭；关闭后焦点回到触发按钮。这些都是底层无障碍库替你做的——这就是不要自己手写弹窗的原因。
+3. 在对话框中放一个表单：项目名（必填，2–50 字符）、描述（可选）、类型（下拉选择）。用 W20 学过的 React Hook Form + Zod 实现校验。表单组件的组合方式按 shadcn 文档左侧 “Forms” 分类中 React Hook Form 那一页的写法来（文档会随版本更新，以它为准）。
+4. 提交成功后关闭对话框，把新项目加入列表（先存在组件状态里）。
+5. `pnpm dlx shadcn@latest add sonner`，提交成功后弹出提示“已创建”。
+
+##### Day 4：Table 与 DropdownMenu（1.5h）
+
+1. `pnpm dlx shadcn@latest add table dropdown-menu avatar`。
+2. 用 Table 展示项目列表：名称、类型（Badge）、创建时间（用 T4B 的 `Intl.DateTimeFormat`）、操作列。
+3. 操作列放一个“⋯”DropdownMenu：编辑、复制名称、删除。删除前用 `alert-dialog` 二次确认（`pnpm dlx shadcn@latest add alert-dialog`）。
+4. 顶部右侧放用户头像 Avatar，点击弹出 DropdownMenu：个人资料、设置、退出。
+5. 用键盘完整操作一次：Tab 到“⋯”，Enter 打开，方向键选择，Enter 确认。
+
+##### Day 5：Sidebar 布局（1.5h）
+
+1. `pnpm dlx shadcn@latest add sidebar`（会同时添加它依赖的组件）。
+2. 按 [Sidebar 文档](https://ui.shadcn.com/docs/components/sidebar) 的基础示例搭建：左侧导航（概览、项目、设置），右侧内容区。
+3. 加入 W20 的 React Router：点击导航切换路由，当前路由高亮。
+4. 手机宽度下侧栏收起，点击按钮从左侧滑出。测试 375px 宽度。
+
+##### Day 6：暗色模式 + 拼装 Dashboard（2h）
+
+1. 按 [shadcn：Dark mode（Vite）](https://ui.shadcn.com/docs/dark-mode/vite) 添加 `ThemeProvider` 和切换按钮。
+2. 拼装完整 Dashboard：侧栏 + 顶栏（头像菜单、主题切换）+ 4 张统计卡片（`grid sm:grid-cols-2 lg:grid-cols-4`）+ 项目表格 + “新建”对话框。
+3. 在浅色、深色、375px、1440px 四种情况下各截一张图放进 README。
+
+##### Day 7：复习（1h）
+
+1. 闭卷回答：shadcn/ui 与 MUI、Ant Design 的核心区别？
+2. 打开你用过的每个 `components/ui/*.tsx`，用一句话写出它的作用。
+3. 提交、推送，把仓库设为 GitHub 模板仓库（Settings → Template repository），以后新项目可以直接复制。
+
+**本周作业：** Dashboard 模板（侧栏、顶栏、统计卡片、数据表格、新建对话框、暗色模式、响应式）。
+
+**验收清单：**
+
+- [ ] 至少使用 10 个 shadcn/ui 组件，且能解释每一个
+- [ ] 自定义了一个 Button 变体
+- [ ] 全部交互可用键盘完成
+- [ ] tsconfig 中没有 `baseUrl`，`pnpm build` 成功
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [shadcn/ui：Vite 安装](https://ui.shadcn.com/docs/installation/vite) | Day 1（记得跳过 `baseUrl`） |
+| [shadcn/ui：组件列表](https://ui.shadcn.com/docs/components) | Day 2–5 按需查 |
+| [shadcn/ui：Theming](https://ui.shadcn.com/docs/theming) | Day 2 第 5 步 |
+| [shadcn/ui：Dark mode（Vite）](https://ui.shadcn.com/docs/dark-mode/vite) | Day 6 |
+| [WAI-ARIA 设计模式](https://www.w3.org/WAI/ARIA/apg/patterns/) | 选读 Dialog、Menu Button 两个模式，理解键盘交互规范 |
+
+**AI 使用（Level 1）：**
+
+- ✅ “shadcn/ui 的 Dialog 是如何实现焦点锁定和 Esc 关闭的？”
+- ❌ 让 AI 选择组件、组合页面。
 
 **自测问题：**
-- shadcn/ui 和 MUI（Material UI）或 Ant Design 等传统组件库的核心区别是什么？为什么 shadcn/ui 的"复制粘贴"模式对独立开发者更友好？
-- 如果你想修改 shadcn/ui 的 Button 组件，添加一个新的 `variant`（比如 "gradient" 渐变按钮），你会在哪里修改？需要修改哪些部分？
+
+1. 如果要给 Button 加一个 `gradient` 变体，你要改哪个文件的哪一部分？
+2. 为什么 Dialog 关闭后焦点应该回到触发按钮？
 
 ---
 
 ### 模块 C：第一个作品集项目（第 25-32 周）
 
-> 本模块是 Phase 1 的收官阶段。你将运用前面所有技能——TypeScript、React、Tailwind CSS、shadcn/ui、Git、设计原则——构建一个完整的、可展示的作品集项目。这个项目将成为你简历上的第一个作品，也是你向 Phase 2 全栈开发过渡的信心来源。
+> 本模块是 Phase 1 的收官：用 TypeScript、React、Tailwind、shadcn/ui、Git、设计原则构建一个完整的、部署上线的作品集项目。
+>
+> **2026-10 更新：** 原文是“每两周一组学习内容”，现在改为逐日步骤；部署提前到第 26 周（“部署从第一天开始”）；测试与 CI 提前到第 29 周就接入 GitHub Actions；修正了原文中“复用第 12 周 useLocalStorage”“应用第 17 周设计原则”等周次引用错误（应为第 19 周和第 23 周）。
+>
+> **AI 使用：Level 1。** 本模块的所有项目代码必须手写。这是你升级到 Level 2 之前最后、也最重要的一次“完全独立构建”。
+
+**选题（第 25 周 Day 1 决定，之后不再更换）：**
+
+| 项目 | 核心数据 | 适合展示的能力 |
+|---|---|---|
+| 个人财务追踪器 | 收支记录（金额、分类、日期、备注） | 金额计算（用“分”）、按月统计、图表 |
+| 习惯追踪器 | 习惯、每日打卡记录 | 日期处理、连续天数算法、日历视图 |
+| 食谱管理器 | 食谱、食材、标签 | 嵌套数据、标签筛选、购物清单生成 |
+| 书签管理器 | 书签、标签、收藏夹 | 搜索、多标签筛选、导入导出 |
+
+拿不定主意就选**个人财务追踪器**：它和你以后做 SaaS 时要处理的金额、统计、权限最接近。
 
 ---
 
-#### 第 25-26 周：项目规划 + 核心架构
+#### 第 25 周：项目规划
 
-**主题：** 选择项目方向，完成设计规划，搭建项目骨架
+**本周目标：** 在写任何代码之前，把“做什么、不做什么、数据长什么样、页面有哪些”写清楚。
 
-**学习内容：**
-- 选择一个适合作品集展示的项目（以下是建议，你也可以自选）：
-  - 个人财务追踪器（Personal Finance Tracker）：记录收支、按分类统计、可视化趋势
-  - 习惯追踪器（Habit Tracker）：每日打卡、连续天数统计、数据可视化
-  - 食谱管理器（Recipe Manager）：添加/搜索/分类食谱、食材清单生成
-  - 书签管理器（Bookmark Manager）：保存/分类/搜索网页书签、标签系统
-- 项目规划流程：
-  - 用纸笔或 Excalidraw 画线框图（Wireframes）：所有页面的粗略布局
-  - 定义数据模型：用 TypeScript 接口描述核心数据结构
-  - 确定功能范围：列出 MVP 必须有的功能 vs "有了更好"的功能
-  - 页面规划：确定有哪些页面、页面间如何导航
-- 技术选型确认：Vite + React + TypeScript + Tailwind CSS + shadcn/ui + React Router + React Hook Form + Zod
-- 搭建项目骨架：
-  - 初始化项目，配置所有工具
-  - 创建页面路由结构
-  - 搭建布局组件（Layout、Header、Sidebar 等）
-  - 所有页面用占位内容（Placeholder）填充
+##### Day 1：选题与用户故事（1.5h）
 
-**本周产出物（覆盖 2 周）：**
-- GitHub 仓库创建完成，README 中包含项目描述和线框图
-- 所有页面已创建，带有占位内容，路由导航可用
-- 数据模型（TypeScript 接口）已定义
-- 项目可在浏览器中运行并导航
+1. 从上表选一个项目。用一段话写下：这个应用给谁用、解决什么问题、为什么你自己也会用。
+2. 写 8–12 条用户故事，格式：“作为 ___，我想要 ___，以便 ___。”例：“作为一个想控制开支的人，我想按月看到每个分类的支出，以便知道钱花在了哪里。”
+3. 新建 GitHub 仓库（例如 `money-tracker`），先只放一个 `docs/PLAN.md`，把上面两项写进去。
 
-**推荐资源：**
-- Excalidraw（免费白板工具，适合画线框图）：https://excalidraw.com/
-- Dribbble（UI 设计灵感）：https://dribbble.com/
-- Mobbin（真实 App 的 UI 参考）：https://mobbin.com/
+##### Day 2：功能取舍（1.5h）
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 帮你头脑风暴项目功能点（例如："一个习惯追踪器的 MVP 应该包含哪些核心功能？哪些功能可以放到后续版本？"）
-- ✅ 可以：让 Claude 审查你的数据模型设计是否合理
-- ❌ 禁止：让 AI 帮你画线框图或做设计决策。这是你的产品，你需要自己想清楚用户需要什么
-- ❌ 禁止：让 AI 帮你搭建项目骨架代码。`create vite`、安装依赖、配置路由——每一步自己来
+1. 把所有想到的功能列出来（越多越好，先不筛选）。
+2. 用 MoSCoW 分类：Must（没有它应用就不成立）、Should（重要但可以晚点做）、Could（锦上添花）、Won't（这次明确不做）。
+3. 规则：**Must 最多 5 项。** 超过就继续砍。
+4. 必须包含在 Must 中的通用能力：增删改查、搜索或筛选、一种统计视图、数据导入导出（JSON）。
+5. 写进 `docs/PLAN.md`。
+
+##### Day 3：数据模型（1.5h）
+
+1. 在 `docs/PLAN.md` 中用 TypeScript 写出核心类型。以财务追踪器为例：
+
+   ```ts
+   type Category = "food" | "transport" | "housing" | "fun" | "income" | "other";
+
+   interface Transaction {
+     id: string;            // crypto.randomUUID()
+     type: "expense" | "income";
+     amountInCents: number; // 金额用分（T4B）
+     category: Category;
+     note: string;
+     occurredOn: string;    // "2026-11-03"（日期，不含时间）
+     createdAt: string;     // ISO 时间戳
+   }
+   ```
+
+2. 为每个字段写一条规则（例如“金额必须是正整数”“note 最多 200 字”）。这些规则第 27 周会写成 Zod schema。
+3. 手写 10 条样例数据，覆盖边界：0 条备注、超长备注、跨月、收入和支出都有。
+4. 思考并写下：哪些数据是“保存的”，哪些是“算出来的”（例如月度合计不应该保存，而应该每次计算）。
+
+##### Day 4：线框图（1.5h）
+
+1. 打开 [Excalidraw](https://excalidraw.com/)，为每个页面画线框图：列表页、新建/编辑（对话框还是独立页面？）、统计页、设置页（导入导出）。
+2. 每个页面画手机版和桌面版两张。
+3. 每个列表画出空状态。
+4. 导出 PNG 放进 `docs/wireframes/`，在 `PLAN.md` 中引用。
+
+##### Day 5：页面与路由表（1h）
+
+1. 写出路由表：
+
+   | 路径 | 页面 | 主要组件 |
+   |---|---|---|
+   | `/` | 列表 | 搜索框、筛选、交易表格、新建按钮 |
+   | `/stats` | 统计 | 月份选择、分类合计、简单图表 |
+   | `/settings` | 设置 | 导出、导入、清空数据 |
+   | `*` | 404 | 返回首页链接 |
+
+2. 画出组件树（哪些组件在哪个页面，哪些共用）。
+3. 决定状态放在哪里：交易数据放在一个顶层 Context + `useReducer`（复习 W18），筛选条件放在 URL 查询参数（第 27 周 Day 4 讲原因）。
+
+##### Day 6：搭建项目骨架（2h）
+
+1. 以第 24 周的 Dashboard 模板为基础创建项目（在 GitHub 上点 “Use this template”，或复制目录后重新 `git init`）。
+2. 确认已安装：React Router、React Hook Form、Zod、`@hookform/resolvers`、Vitest（第 29 周会补充测试库）。
+3. 建立目录：
+
+   ```text
+   src/
+     app/            # 路由与布局
+     components/     # 通用组件（含 shadcn 的 ui/）
+     features/
+       transactions/ # 该功能的组件、hooks、逻辑
+     lib/            # 工具函数（cn、格式化）
+     storage/        # localStorage 读写
+   ```
+
+4. 每个页面先放一个标题作为占位，路由能切换。
+5. `pnpm build` 成功后提交。
+
+##### Day 7：复习与 README v0（1h）
+
+1. 写 `README.md`：一句话介绍、功能列表（Must）、技术栈、本地运行步骤。
+2. 自测：你的 Must 功能有几项？如果必须再砍一半，你留哪些？
+
+**本周作业：** `docs/PLAN.md`（用户故事、MoSCoW、数据模型、线框图、路由表）+ 可运行的空骨架。
+
+**验收清单：**
+
+- [ ] Must ≤ 5 项
+- [ ] 数据模型有字段规则和 10 条样例数据
+- [ ] 每个页面有手机和桌面线框图
+- [ ] 骨架可运行、可构建
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [React：Thinking in React](https://react.dev/learn/thinking-in-react) | Day 5：按它的 5 个步骤拆你的页面 |
+| [Excalidraw](https://excalidraw.com/) | Day 4 |
+| [Mobbin](https://mobbin.com/) | 选用：参考真实 App 的同类页面（需注册） |
 
 **自测问题：**
-- 你选择这个项目方向的原因是什么？它能展示你的哪些技能？
-- 你的 MVP 功能列表中有多少个功能？如果必须砍掉一半，你会留下哪些？为什么？
+
+1. 你选择这个项目的原因是什么？它能展示你的哪些技能？
+2. 哪些数据应该保存，哪些应该计算？举两个例子。
 
 ---
 
-#### 第 27-28 周：核心功能实现
+#### 第 26 周：布局、数据层与第一次部署
 
-**主题：** 用 localStorage 实现完整的 CRUD 功能，让应用"真正能用"
+**本周目标：** 完成应用外壳和 localStorage 数据层（带校验和测试），并且**本周就部署到 Vercel**。
 
-**学习内容：**
-- CRUD 功能实现：
-  - **Create**：通过表单创建新数据（React Hook Form + Zod 验证）
-  - **Read**：从 localStorage 读取并展示数据列表和详情
-  - **Update**：编辑已有数据（表单预填充、更新提交）
-  - **Delete**：删除数据（带确认对话框）
-- localStorage 封装：
-  - 封装通用的 `useLocalStorage` Hook（复用第 12 周的实现）
-  - 处理 JSON 序列化/反序列化
-  - 处理 localStorage 满或不可用的边界情况
-- 交互功能（至少实现 3 个）：
-  - 搜索/筛选功能
-  - 排序功能（按日期、名称、金额等）
-  - 分类/标签系统
-  - 数据统计或可视化（如用 CSS 实现简单的柱状图）
-  - 导入/导出数据（JSON 格式）
-- 应用第 17 周学习的设计原则，确保 UI 美观专业
+##### Day 1：应用外壳（1.5h）
 
-**本周产出物（覆盖 2 周）：**
-- 应用的所有 CRUD 功能完全可用
-- 数据持久化到 localStorage，刷新页面不丢失
-- 至少 3 个交互功能已实现
-- UI 符合设计原则：一致的间距、清晰的排版层级、协调的配色
+1. 用 shadcn Sidebar（或简单的顶部导航）完成布局：Logo、导航（列表、统计、设置）、主题切换。
+2. 当前路由高亮。
+3. 手机宽度下导航可折叠。
+4. 404 页面。
 
-**推荐资源：**
-- MDN — Web Storage API：https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
-- React 官方文档 — Thinking in React：https://react.dev/learn/thinking-in-react
+##### Day 2：数据层——带校验的 localStorage（1.5h）
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：遇到 localStorage 的边界情况（如存储限额、隐私模式限制）时让 Claude 解释
-- ✅ 可以：让 Claude 审查你的代码结构是否合理（组件拆分、Hook 设计）
-- ❌ 禁止：让 AI 实现任何 CRUD 逻辑。增删改查是最基础的开发能力，必须自己完成
-- ❌ 禁止：让 AI 帮你实现搜索、排序等交互功能。这些涉及数组操作和状态管理，是核心练习
+1. 新建 `src/storage/transactions.ts`。用 Zod 写 `transactionSchema`，规则来自第 25 周 Day 3。
+2. 实现：
 
-**自测问题：**
-- 如果用户在两个浏览器标签页中同时打开你的应用，在 A 标签页中添加一条数据后，B 标签页的数据会自动更新吗？为什么？如何解决？
-- 你的应用中哪些状态是"UI 状态"（如弹窗的开关），哪些是"业务数据"（如用户创建的记录）？它们分别应该存在哪里？
+   ```ts
+   const STORAGE_KEY = "money-tracker:v1:transactions";
 
----
+   export function loadTransactions(): Transaction[] {
+     const raw = localStorage.getItem(STORAGE_KEY);
+     if (raw === null) return [];
+     try {
+       const parsed: unknown = JSON.parse(raw);
+       const result = z.array(transactionSchema).safeParse(parsed);
+       return result.success ? result.data : [];
+     } catch {
+       return [];
+     }
+   }
 
-#### 第 29 周：测试入门
+   export function saveTransactions(items: Transaction[]): void {
+     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+   }
+   ```
 
-**主题：** 理解为什么测试很重要，学会用 Vitest + React Testing Library 编写基础测试
+3. 思考并在注释中写下：为什么 key 里带 `v1`？（以后数据结构变化时可以做迁移。）为什么读取时要校验？（用户可能手动改过 localStorage，或旧版本写入的数据结构不同。）
+4. 额外处理：`localStorage` 在某些隐私模式下写入会抛错——给 `saveTransactions` 包一层 `try/catch`，失败时返回一个错误结果让 UI 提示用户。
 
-**学习内容：**
-- 为什么测试很重要：
-  - 测试是"未来的你"的安全网——重构代码时，测试告诉你有没有破坏已有功能
-  - 测试是活的文档——阅读测试用例就知道代码应该如何工作
-  - 在独立开发者场景下，没有 QA 团队帮你找 bug，自动化测试是唯一的质量保证
-- Vitest 设置：
-  - 安装 Vitest 和相关依赖
-  - 配置 `vitest.config.ts`
-  - 第一个单元测试：测试一个纯函数
-- React Testing Library 基础：
-  - 安装 `@testing-library/react` 和 `@testing-library/jest-dom`
-  - 核心理念："测试用户能看到的行为，而不是内部实现细节"
-  - `render()`：渲染组件
-  - `screen.getByText()`、`screen.getByRole()`：查询元素
-  - `userEvent.click()`、`userEvent.type()`：模拟用户操作
-  - `expect(...).toBeInTheDocument()`：断言
-- 为作品集项目编写测试：
-  - 测试 3-5 个核心函数（数据处理、筛选、排序逻辑）
-  - 测试 1-2 个核心组件（渲染是否正确、用户交互是否符合预期）
+##### Day 3：数据层测试（1.5h）
 
-**本周产出物：**
-- Vitest 配置完成，`pnpm test` 能成功运行
-- 至少 5 个通过的测试用例，覆盖核心业务逻辑
-- 至少 1 个组件级别的测试（渲染 + 用户交互）
-- 所有测试通过：终端显示绿色的 ✓
+1. 安装测试环境：`pnpm add -D vitest jsdom`。
+2. 在 `vite.config.ts` 顶部加 `/// <reference types="vitest/config" />`，并在配置对象中加入 `test: { environment: "jsdom" }`。在 `package.json` 加 `"test": "vitest"`、`"test:run": "vitest run"`。
+3. 写 `src/storage/transactions.test.ts`，至少 6 个测试：空存储返回 `[]`；保存后读取得到相同数据；损坏的 JSON 返回 `[]`；结构不对的数据返回 `[]`；金额为负数的数据被拒绝；写入失败时返回错误结果（用 `vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new Error("quota"); })` 模拟）。
+4. 每个测试开始前清空：`beforeEach(() => localStorage.clear())`。
+5. `pnpm test:run` 全绿后提交。
 
-**推荐资源：**
-- Vitest 官方文档：https://vitest.dev/guide/
-- React Testing Library 官方文档：https://testing-library.com/docs/react-testing-library/intro/
-- Kent C. Dodds — Common Mistakes with React Testing Library：https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
+##### Day 4：状态管理（1.5h）
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释测试的核心理念（例如："什么是单元测试、集成测试、端到端测试？它们各自覆盖什么范围？"）
-- ✅ 可以：让 Claude 解释 React Testing Library 的查询优先级（为什么 `getByRole` 比 `getByTestId` 更好）
-- ❌ 禁止：让 AI 帮你写测试用例。思考"这个函数/组件应该测试什么场景"是测试能力的核心
-- ❌ 禁止：为了让测试通过而修改业务逻辑（应该修改测试的 expect 或修复业务代码中的 bug）
+1. 用 Context + `useReducer` 管理交易列表。action 类型用可辨识联合：
 
-**自测问题：**
-- React Testing Library 的核心原则是"The more your tests resemble the way your software is used, the more confidence they can give you"（测试越像用户的真实使用方式，测试给你的信心就越大）。这句话如何指导你选择用 `getByRole` 而不是 `getByTestId` 来查询元素？
-- 给定一个接受 `items: string[]` 并渲染列表的组件，你会写哪些测试用例？（提示：空数组、单个元素、多个元素、特殊字符）
+   ```ts
+   type Action =
+     | { type: "added"; transaction: Transaction }
+     | { type: "updated"; transaction: Transaction }
+     | { type: "deleted"; id: string }
+     | { type: "replacedAll"; transactions: Transaction[] };
+   ```
 
----
+2. reducer 是纯函数，所有分支都返回新数组（T4B 的不可变更新），并用 `never` 做穷尽检查（T10）。
+3. 为 reducer 写 4 个测试（每种 action 一个）。
+4. 在 Provider 中：初始化时 `loadTransactions()`；状态变化时 `saveTransactions()`（用 `useEffect`）。
 
-#### 第 30 周：响应式设计 + 无障碍访问
+##### Day 5：列表页显示样例数据（1.5h）
 
-**主题：** 让你的应用在手机上也好用，让所有人（包括使用辅助技术的用户）都能使用
+1. 在设置页加一个“载入样例数据”按钮（开发期间使用），把第 25 周的 10 条样例 dispatch 进去。
+2. 列表页用 shadcn Table 展示：日期、分类（Badge）、备注、金额（支出红色、收入绿色，用 `Intl.NumberFormat`）。
+3. 按日期倒序。
+4. 空状态：插图或图标 + “还没有记录” + “新建第一条”按钮。
 
-**学习内容：**
-- 响应式设计实战：
-  - 用 Chrome DevTools 的设备模拟模式测试不同屏幕尺寸
-  - 移动端优先布局策略：先设计手机版，再逐步适配大屏
-  - 常见响应式模式：堆叠布局（stack）、侧边栏折叠、导航栏变汉堡菜单
-  - 触摸友好的设计：按钮最小 44×44px 点击区域、适当的间距
-- 基础无障碍访问（Accessibility / a11y）：
-  - 语义化 HTML：用 `<nav>`、`<main>`、`<article>`、`<button>` 而不是全用 `<div>`
-  - ARIA 标签：`aria-label`、`aria-describedby`、`aria-expanded`——为屏幕阅读器提供信息
-  - 键盘导航：确保所有交互元素都能通过 Tab 键到达、Enter/Space 激活
-  - 颜色对比度：文字和背景的对比度至少达到 WCAG AA 标准（4.5:1）
-  - 图片 alt 文字：每张有意义的图片都需要 `alt` 属性
-- Lighthouse 审计：
-  - 在 Chrome DevTools 中运行 Lighthouse
-  - 理解 Accessibility、Performance、Best Practices、SEO 四个维度的评分
+##### Day 6：第一次部署到 Vercel（1.5h）
 
-**本周产出物：**
-- 应用在移动端（375px 宽度）和桌面端（1440px 宽度）都有良好的布局
-- 所有页面通过键盘可完整操作（Tab 导航 + Enter 激活）
-- Lighthouse Accessibility 评分 > 80 分
-- 修复 Lighthouse 指出的所有中等和高优先级问题
+1. 推送到 GitHub。
+2. 打开 [vercel.com](https://vercel.com/)，用 GitHub 登录 → Add New → Project → 选择仓库 → Framework 会自动识别为 Vite → Deploy。
+3. 部署成功后打开链接。然后**直接在地址栏访问 `/stats` 并刷新**：你会看到 404。原因：这是单页应用（SPA），服务器上只有 `index.html`，`/stats` 这个文件不存在。
+4. 修复：在项目根目录新建 `vercel.json`：
 
-**推荐资源：**
-- MDN — Responsive Design：https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design
-- WebAIM — Introduction to Web Accessibility：https://webaim.org/intro/
-- Chrome Lighthouse 文档：https://developer.chrome.com/docs/lighthouse/
+   ```json
+   {
+     "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+   }
+   ```
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释 ARIA 属性的作用和正确用法（例如："`aria-expanded` 应该用在哪些元素上？值应该设置为什么？"）
-- ✅ 可以：让 Claude 帮你分析 Lighthouse 报告中看不懂的问题
-- ❌ 禁止：让 AI 帮你修复 Lighthouse 指出的问题。每个问题都是一个学习机会——自己查文档找解决方案
-- ❌ 禁止：让 AI 帮你实现响应式布局。你需要自己实验不同的 Tailwind 断点组合
+   提交并推送，Vercel 自动重新部署。再刷新 `/stats`，正常显示。
+5. 在 Vercel 项目设置中确认：每次 push 到 `main` 自动部署；每个 Pull Request 自动生成预览链接。
+6. 把线上地址写进 README。
 
-**自测问题：**
-- 为什么 `<button>` 比 `<div onClick={...}>` 更适合做可点击的元素？两者在键盘导航和屏幕阅读器中的行为有什么区别？
-- 什么是 WCAG AA 标准？你如何检查文字和背景的颜色对比度是否达标？
+##### Day 7：复习（1h）
+
+1. 自测：为什么 SPA 需要 rewrite？Next.js 应用需要吗？（提示：Next.js 有服务器路由，第 33 周会学。）
+2. 跑一次 Lighthouse，记录四项分数作为基线。
+
+**本周作业：** 可在线访问的应用外壳 + 经过测试的数据层 + 能显示数据的列表页。
+
+**验收清单：**
+
+- [ ] 线上地址任意路由刷新不 404
+- [ ] 数据层 ≥ 6 个测试、reducer ≥ 4 个测试，全部通过
+- [ ] 损坏的 localStorage 数据不会让应用崩溃
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Vitest：Getting Started](https://vitest.dev/guide/) | Day 3 |
+| [Vitest：Mocking](https://vitest.dev/guide/mocking) | Day 3 第 3 步的 `vi.spyOn` |
+| [React：Scaling Up with Reducer and Context](https://react.dev/learn/scaling-up-with-reducer-and-context) | Day 4，做页面末尾的挑战 |
+| [Vercel：Vite 部署](https://vercel.com/docs/frameworks/frontend/vite) | Day 6 |
 
 ---
 
-#### 第 31 周：部署 + 打磨
+#### 第 27 周：核心功能——增删改查与筛选
 
-**主题：** 将作品集项目部署到生产环境，完成所有细节打磨，写一份专业的 README
+**本周目标：** 完成新建、编辑、删除（带撤销），以及可分享的搜索、筛选、排序。
 
-**学习内容：**
-- Vercel 部署：
-  - 连接 GitHub 仓库到 Vercel
-  - 理解构建过程：Vercel 从 GitHub 拉取代码→安装依赖→运行构建命令→部署静态文件
-  - 环境变量配置（如果有的话）
-  - 每次 push 自动触发部署
-- 自定义域名（可选）：
-  - 购买域名（Namecheap、Cloudflare 等）
-  - 在 Vercel 中配置自定义域名
-  - DNS 记录：A 记录和 CNAME 记录
-- 网站 Metadata 打磨：
-  - Favicon：在浏览器标签页显示的小图标
-  - Meta 标签：`<title>`、`<meta name="description">`
-  - Open Graph 标签：分享到社交媒体时显示的标题、描述、图片
-- README.md 专业化：
-  - 项目截图或 GIF 演示
-  - 功能列表
-  - 技术栈说明
-  - 本地运行步骤
-  - 项目架构简述
-- UI 细节打磨：
-  - 空状态设计（Empty State）：当没有数据时显示什么
-  - 加载状态（Loading State）：数据加载中显示什么
-  - 错误状态（Error State）：出错时显示什么
-  - 边界情况处理：超长文本、特殊字符等
+##### Day 1：新建表单（1.5h）
 
-**本周产出物：**
-- 项目成功部署到 Vercel，有真实的公网 URL
-- 网站有 Favicon、Meta 标签和 Open Graph 标签
-- README.md 包含截图、功能列表、技术栈、运行步骤
-- 所有空状态、加载状态、错误状态都有合理的 UI 处理
-- 把 URL 发送给至少一个朋友，获得真实反馈
+1. 在对话框中实现新建表单（React Hook Form + Zod，schema 复用第 26 周的规则，但表单输入的是“元”字符串，提交时转成“分”——复用 T4B 的 `toCents`）。
+2. 字段：类型（收入/支出）、金额、分类、日期（默认今天）、备注。
+3. 每个字段都有 `<label>`；错误信息显示在字段下方，并通过 `aria-describedby` 与输入框关联。
+4. 提交后关闭对话框，弹出 toast“已添加”。
 
-**推荐资源：**
-- Vercel 部署文档：https://vercel.com/docs/deployments/overview
-- Open Graph Protocol：https://ogp.me/
-- Make a README（README 模板参考）：https://www.makeareadme.com/
+##### Day 2：编辑（1.5h）
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 解释 Vercel 的构建和部署流程
-- ✅ 可以：让 Claude 检查你的 Open Graph 标签是否正确配置
-- ❌ 禁止：让 AI 帮你写 README.md。用自己的话描述你的项目——这是你练习技术写作的机会
-- ❌ 禁止：让 AI 帮你做 UI 打磨。空状态、加载状态的设计是你的产品决策
+1. 表格每行的操作菜单中加“编辑”。
+2. 复用同一个表单组件，通过 props 传入初始值（`defaultValues`）；金额从“分”转回“元”显示。
+3. 提交时 dispatch `updated`。
+4. 写一个测试：编辑后列表中的值变化、条数不变。
+
+##### Day 3：删除与撤销（1.5h）
+
+1. 操作菜单加“删除”，用 AlertDialog 确认。
+2. 删除后 toast 显示“已删除”和“撤销”按钮。点击撤销，把刚删除的那一条恢复到原位置。
+3. 提示：删除前把被删的数据和它的位置保存在一个变量里（闭包，T5 Day 1B）。
+
+##### Day 4：筛选条件放进 URL（1.5h）
+
+1. 为什么：把筛选条件放进 URL（`/?q=coffee&category=food&month=2026-11`），刷新页面后筛选还在，链接发给别人能看到同样的结果，浏览器“后退”也能用。
+2. 用 React Router 的 `useSearchParams` 读取和更新查询参数。
+3. 搜索框输入时更新 `q`（用 W19 的 `useDebounce`，300ms）。
+4. 分类下拉、月份选择同理。
+5. 用 Zod 校验从 URL 读出的值（URL 也是外部输入！），非法值时使用默认值。
+
+##### Day 5：排序（1h）
+
+1. 表头点击排序：日期、金额。再次点击切换升序/降序。
+2. 排序状态也放进 URL（`sort=amount&dir=desc`）。
+3. 排序时不要修改原数组（`[...items].sort(...)`，T5 学过的突变陷阱）。
+
+##### Day 6：分类管理或标签（1.5h）
+
+按你的项目选做一项：
+
+- 财务：自定义分类（增删、颜色），删除分类时把该分类下的交易改为“其他”。
+- 习惯：习惯的启用/归档。
+- 食谱 / 书签：多标签；筛选时支持“同时包含多个标签”。
+
+##### Day 7：复习 + AI 对照审查（1h）
+
+1. 做一次 1.5 节的“AI 对照审查练习”，对象是你的 reducer 或筛选函数。
+2. 自测问题见下。
+
+**本周作业：** 完整的增删改查 + URL 驱动的搜索、筛选、排序。
+
+**验收清单：**
+
+- [ ] 新建/编辑共用一个表单组件，所有字段有校验和可访问的错误提示
+- [ ] 删除可撤销
+- [ ] 复制当前 URL 在新标签页打开，筛选和排序保持一致
+- [ ] 非法 URL 参数不会导致崩溃
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [React Hook Form：Get Started](https://react-hook-form.com/get-started) | Day 1 复习 |
+| [Zod 文档](https://zod.dev/) | Day 4：查 `z.enum`、`z.coerce` |
+| [React：Updating Arrays in State](https://react.dev/learn/updating-arrays-in-state) | Day 3、Day 5，做页面末尾的挑战 |
 
 **自测问题：**
-- 当你把你的 Vercel 部署 URL 分享到 Twitter/Slack 时，显示的预览卡片（标题、描述、图片）是由什么控制的？如何确保它们是正确的？
-- 你的项目的 README.md 能让一个从未见过你代码的开发者在 5 分钟内把项目跑起来吗？如果不能，缺少什么信息？
+
+1. 如果在两个浏览器标签页同时打开应用，在 A 中添加一条，B 会自动更新吗？为什么？（下周 Day 3 解决）
+2. 哪些状态是 UI 状态，哪些是业务数据，哪些是 URL 状态？各举一例。
+
+---
+
+#### 第 28 周：统计、导入导出与打磨
+
+##### Day 1：统计页（1.5h）
+
+1. 写纯函数 `summarizeByCategory(transactions, month)`，返回各分类合计（用 `Map`，T4B）。先写 4 个测试再实现。
+2. 页面显示：本月收入、支出、结余三张卡片；分类合计表。
+3. 图表：`pnpm dlx shadcn@latest add chart`，按 [shadcn Charts 文档](https://ui.shadcn.com/charts) 做一个按分类的柱状图。
+
+##### Day 2：导出与导入（1.5h）
+
+1. 导出：把全部数据转成 JSON，生成文件下载：
+
+   ```ts
+   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+   const url = URL.createObjectURL(blob);
+   const link = document.createElement("a");
+   link.href = url;
+   link.download = `money-tracker-${new Date().toISOString().slice(0, 10)}.json`;
+   link.click();
+   URL.revokeObjectURL(url);
+   ```
+
+2. 导入：`<input type="file" accept="application/json">`，读取 `await file.text()`，`JSON.parse` 后用 Zod 校验。
+3. 校验失败：显示是第几条、哪个字段出错（Zod 的错误信息里有路径），不要导入任何数据。
+4. 校验成功：让用户选择“合并”或“替换”。
+
+##### Day 3：多标签页同步（1h）
+
+1. 回答上周自测题：localStorage 在其他标签页被修改时，当前页会收到 `storage` 事件。
+2. 在 Provider 中监听 `window.addEventListener("storage", ...)`，key 匹配时重新 `loadTransactions()` 并 dispatch `replacedAll`。
+3. 记得在 `useEffect` 的清理函数中移除监听（W17）。
+4. 开两个标签页验证。
+
+##### Day 4：所有状态检查（1.5h）
+
+按第 23 周 Day 5 的方法，逐页检查：空、加载（导入大文件时）、错误（导入失败、存储失败）、成功（toast）。补齐缺少的。
+
+##### Day 5：重构（1.5h）
+
+1. 找出超过 80 行的组件，拆分。
+2. 把业务逻辑（计算、筛选、排序）从组件中移到 `features/transactions/logic.ts`，组件只负责显示。
+3. 每次重构后跑测试。
+
+##### Day 6：细节打磨（1.5h）
+
+超长备注截断（`truncate` 或 `line-clamp-2`）+ 悬停显示全文；金额列等宽数字（`tabular-nums`）右对齐；表格在手机上改为卡片列表。
+
+##### Day 7：复习（1h）
+
+AI 对照审查练习（对象：`summarizeByCategory`）；更新 README 截图。
+
+**本周作业 / 验收：**
+
+- [ ] 统计页有图表，计算函数有测试
+- [ ] 导入非法文件时给出具体错误，不破坏现有数据
+- [ ] 两个标签页数据同步
+- [ ] 没有超过 80 行的组件
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [shadcn/ui Charts](https://ui.shadcn.com/charts) | Day 1 |
+| [MDN：Window: storage 事件](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/storage_event) | Day 3 |
+| [React：You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) | Day 5：检查你的项目里有没有不必要的 Effect，做页面末尾的挑战 |
+
+---
+
+#### 第 29 周：组件测试与持续集成（CI）
+
+**本周目标：** 学会用 React Testing Library 测试组件；把类型检查和测试放进 GitHub Actions，每次推送自动运行。
+
+##### Day 1：组件测试环境（1.5h）
+
+1. 安装：`pnpm add -D @testing-library/react @testing-library/dom @testing-library/user-event @testing-library/jest-dom`。
+2. 新建 `src/test/setup.ts`，内容一行：`import "@testing-library/jest-dom/vitest";`
+3. `vite.config.ts` 的 `test` 中加 `setupFiles: "./src/test/setup.ts"`。
+4. 写第一个组件测试：渲染空状态组件，断言“还没有记录”出现：
+
+   ```tsx
+   import { render, screen } from "@testing-library/react";
+   import { EmptyState } from "./EmptyState";
+
+   it("显示空状态提示", () => {
+     render(<EmptyState />);
+     expect(screen.getByText("还没有记录")).toBeInTheDocument();
+   });
+   ```
+
+##### Day 2：查询优先级（1.5h）
+
+1. 读 [Testing Library：查询优先级](https://testing-library.com/docs/queries/about/#priority)。顺序：`getByRole` > `getByLabelText` > `getByPlaceholderText` > `getByText` > … > `getByTestId`（最后手段）。
+2. 原因：越接近用户和辅助技术感知页面的方式，测试越可靠。`getByRole("button", { name: "新建" })` 同时验证了“它是按钮”和“它有可访问的名字”。
+3. 把 Day 1 的测试改用 `getByRole`；如果找不到，说明你的组件缺少语义——修组件，而不是改用 testId。
+
+##### Day 3：模拟用户操作（1.5h）
+
+1. 测试新建表单：
+
+   ```tsx
+   import userEvent from "@testing-library/user-event";
+
+   it("金额为空时显示错误", async () => {
+     const user = userEvent.setup();
+     render(<TransactionForm onSubmit={vi.fn()} />);
+     await user.click(screen.getByRole("button", { name: "保存" }));
+     expect(await screen.findByText("请输入金额")).toBeInTheDocument();
+   });
+   ```
+
+2. 再写：填写正确后 `onSubmit` 被调用一次且参数中的金额是“分”。
+3. 写：删除 → 点撤销 → 数据恢复（需要渲染带 Provider 的组件）。
+
+##### Day 4：为测试写一个渲染辅助函数（1h）
+
+1. 很多组件需要 Router 和 Provider 包裹。写 `src/test/render.tsx` 导出 `renderWithProviders(ui, { route })`，内部用 `MemoryRouter` 和你的 Provider 包裹。
+2. 用它测试“URL 带 `?q=coffee` 时只显示匹配项”。
+
+##### Day 5：GitHub Actions CI（1.5h）
+
+1. 新建 `.github/workflows/ci.yml`：
+
+   ```yaml
+   name: CI
+   on:
+     push:
+       branches: [main]
+     pull_request:
+
+   jobs:
+     check:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - uses: pnpm/action-setup@v4
+         - uses: actions/setup-node@v4
+           with:
+             node-version: 24
+             cache: pnpm
+         - run: pnpm install --frozen-lockfile
+         - run: pnpm exec tsc -b
+         - run: pnpm test:run
+         - run: pnpm build
+   ```
+
+   `pnpm/action-setup` 会读取 `package.json` 中的 `packageManager` 字段确定 pnpm 版本；如果没有该字段，按它报错提示加上 `with: version: …`。
+2. 推送，打开 GitHub 仓库的 Actions 标签页，看着它运行。全部绿色后，在 README 顶部加一个状态徽章。
+3. 故意提交一个类型错误，观察 CI 变红、Vercel 的预览仍会生成——说明“部署成功不等于代码正确”。修复。
+4. 在仓库 Settings → Branches 中为 `main` 添加保护规则：合并前必须通过 CI（之后改代码都走 PR，复习 W10）。
+
+##### Day 6：补齐测试（1.5h）
+
+目标：数据层、reducer、统计函数、表单、筛选都有测试；总数 ≥ 25 个。
+
+##### Day 7：复习（1h）
+
+自测问题见下；AI 对照审查练习（对象：一个你写的测试——让 AI 指出它漏掉的场景）。
+
+**本周作业 / 验收：**
+
+- [ ] ≥ 25 个测试全部通过，其中 ≥ 5 个是组件交互测试
+- [ ] 组件测试中没有使用 `getByTestId`
+- [ ] CI 在每次推送和 PR 时运行，`main` 受保护
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [React Testing Library 入门](https://testing-library.com/docs/react-testing-library/intro/) | Day 1 |
+| [Testing Library：查询优先级](https://testing-library.com/docs/queries/about/#priority) | Day 2 |
+| [user-event 文档](https://testing-library.com/docs/user-event/intro) | Day 3 |
+| [Common mistakes with React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) | Day 6：对照检查你的测试 |
+| [GitHub Actions 快速入门](https://docs.github.com/zh/actions/writing-workflows/quickstart) | Day 5 |
+
+**自测问题：**
+
+1. 为什么用 `getByRole` 而不是 `getByTestId`？
+2. 一个接受 `items: string[]` 并渲染列表的组件，你会写哪些测试？
+
+---
+
+#### 第 30 周：响应式与无障碍（a11y）
+
+##### Day 1：三种宽度全面检查（1.5h）
+
+在 375 / 768 / 1440 宽度下逐页检查，列出所有问题（溢出、太挤、按钮太小——触控目标至少 44×44px），本周逐一修复。
+
+##### Day 2：手机导航与表格（1.5h）
+
+1. 手机宽度下用 shadcn `Sheet` 做抽屉式导航。
+2. 表格在手机上改为卡片列表（如果第 28 周已做，检查质量）。
+
+##### Day 3：键盘完整操作（1.5h）
+
+只用键盘（Tab、Shift+Tab、Enter、Space、Esc、方向键）完成：新建、编辑、删除、撤销、筛选、导入、切换主题。记录所有卡住的地方并修复。常见原因：用 `<div onClick>` 代替 `<button>`；自定义组件没有焦点样式。
+
+##### Day 4：语义与 ARIA（1.5h）
+
+1. 每个页面只有一个 `<h1>`，标题层级不跳级。
+2. 图标按钮（如只有 ⋯ 的按钮）加 `aria-label`。
+3. toast 区域使用 `aria-live`（sonner 已内置，确认一下）。
+4. 规则：**能用原生元素就不用 ARIA。** 读 [WebAIM 无障碍入门](https://webaim.org/intro/)。
+
+##### Day 5：自动化检查（1.5h）
+
+1. 安装浏览器扩展 [axe DevTools](https://www.deque.com/axe/devtools/)（免费版）。逐页扫描，修复所有 Critical 和 Serious 问题。
+2. Lighthouse Accessibility 目标 ≥ 95。
+
+##### Day 6：屏幕阅读器体验（1h）
+
+macOS 按 `Cmd + F5` 打开 VoiceOver，尝试用它新建一条记录。体验后关闭（再按 `Cmd + F5`）。记下 3 个让你困惑的地方并改进。
+
+##### Day 7：复习（1h）
+
+自测问题；把本周修复写进 README 的“无障碍”一节。
+
+**本周作业 / 验收：**
+
+- [ ] 三种宽度下无溢出、无横向滚动
+- [ ] 只用键盘能完成所有操作
+- [ ] axe 无 Critical / Serious 问题；Lighthouse Accessibility ≥ 95
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [web.dev：Learn Accessibility](https://web.dev/learn/accessibility) | 本周每天读一个模块（Keyboard focus、ARIA and HTML、Content structure 优先） |
+| [WebAIM：Introduction](https://webaim.org/intro/) | Day 4 |
+| [axe DevTools](https://www.deque.com/axe/devtools/) | Day 5 |
+
+**自测问题：**
+
+1. `<button>` 和 `<div onClick>` 在键盘和屏幕阅读器中的行为有什么区别？
+2. WCAG AA 的正文对比度要求是多少？怎么检查？
+
+---
+
+#### 第 31 周：上线打磨
+
+##### Day 1：元信息（1.5h）
+
+1. `index.html` 中设置 `<title>`、`<meta name="description">`、`lang="zh-CN"`。
+2. 做一个 favicon（可以用 emoji 生成，或在 Figma / Excalidraw 中画），放进 `public/`。
+3. Open Graph：`og:title`、`og:description`、`og:image`（1200×630 的截图图片）。部署后用 [opengraph.xyz](https://www.opengraph.xyz/) 检查预览效果。
+
+##### Day 2：性能（1.5h）
+
+1. 跑 Lighthouse Performance，记录 LCP、CLS。
+2. 图片设置宽高、使用合适尺寸；路由级代码分割（`React.lazy` + `Suspense`，对统计页这类含图表库的大页面效果明显）。
+3. 运行 `pnpm build`，查看终端输出的产物大小，把最大的文件记下来，分析它为什么大。
+
+##### Day 3：自定义域名（选做，1h）
+
+在域名注册商（如 Cloudflare Registrar）购买域名 → Vercel 项目 Settings → Domains 添加 → 按页面提示在注册商处添加 DNS 记录 → 等待生效（几分钟到几小时）。
+
+##### Day 4：README（1.5h）
+
+结构：标题 + 一句话 + 线上链接 + 截图/GIF（macOS `Cmd + Shift + 5` 可录屏）+ 功能 + 技术栈 + 架构说明（目录结构、状态管理、数据层）+ 本地运行 + 测试 + 你学到的东西。
+
+##### Day 5：用户测试（1.5h）
+
+请 2 位朋友在你旁边使用（不要提示）：给他们 3 个任务（新建一条、找出上个月最大的支出、导出数据）。只观察，记录他们在哪里犹豫。
+
+##### Day 6：修复反馈（2h）
+
+按严重程度修复 Day 5 发现的问题。
+
+##### Day 7：复习（1h）
+
+再跑一次 Lighthouse，和第 26 周的基线对比，写进 README。
+
+**验收：**
+
+- [ ] 社交平台分享预览正确
+- [ ] README 能让陌生开发者 5 分钟跑起来
+- [ ] 至少 2 位真实用户试用并修复了他们的反馈
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Open Graph protocol](https://ogp.me/) | Day 1 |
+| [web.dev：Core Web Vitals](https://web.dev/articles/vitals) | Day 2 |
+| [Make a README](https://www.makeareadme.com/) | Day 4 |
 
 ---
 
 #### 第 32 周：Phase 1 回顾与总结
 
-**主题：** 回顾整个 Phase 1 的学习成果，重构代码，输出公开内容，为 Phase 2 做准备
+##### Day 1：代码回顾（1.5h）
 
-**学习内容：**
-- 代码回顾与重构：
-  - 回看你在第 1-6 周写的 TypeScript 代码，你会发现自己成长了多少
-  - 识别代码中的"坏味道"（code smells）：重复代码、过长的函数、命名不清晰
-  - 进行 2-3 处有意义的重构（不是为了重构而重构）
-- 知识整理：
-  - 回顾 26 周的学习笔记
-  - 整理你遇到的最常见的错误和解决方案
-  - 列出你仍然不确定或想深入了解的主题
-- 作品集更新：
-  - 确保所有项目（Pokémon 浏览器 + 作品集项目）的 GitHub 仓库是公开的、README 是完善的
-  - 如果有个人网站，更新项目展示
-- 公开输出：
-  - 写一篇博客文章（Medium、Dev.to 或个人博客）或发一条长推（Twitter/X Thread）
-  - 主题：你在自学编程的前 6 个月中学到了什么
-  - 这不是为了"教别人"，而是为了整理自己的思路——写作是思考的最好工具
-- Phase 2 预览：
-  - 浏览 Phase 2 的学习大纲
-  - 确认你是否满足 Level 1 → Level 2 的升级条件
+回看你在 TS 教程第 1–4 周写的代码，挑 3 段用现在的能力重写，并在笔记里写“当时为什么那样写、现在为什么这样写”。
 
-**本周产出物：**
-- 代码经过回顾和重构，消除了明显的代码异味
-- 所有 GitHub 仓库整理完毕（公开、README 完善、无敏感信息）
-- 发布一篇公开内容（博客文章或社交媒体长推）
-- 完成 Phase 1 能力检查清单（见下方）
+##### Day 2：知识整理（1.5h）
 
-**推荐资源：**
-- Dev.to（开发者博客平台）：https://dev.to/
-- Hemingway Editor（检查文章可读性）：https://hemingwayapp.com/
+整理笔记中最常见的 10 个错误和解决办法，做成一页“个人错误速查表”。
 
-**AI 使用指南（Level 1）：**
-- ✅ 可以：让 Claude 审查你的代码并指出可以重构的地方（但重构本身由你完成）
-- ✅ 可以：让 Claude 帮你检查博客文章的英语语法（如果用英语写的话）
-- ❌ 禁止：让 AI 帮你写博客文章。这是你自己的学习经历，用你自己的声音去分享
-- ❌ 禁止：让 AI 帮你做重构。重构能力是开发者的核心素质之一
+##### Day 3：仓库整理（1.5h）
 
-**自测问题：**
-- 回顾 Phase 1 的所有代码，你最自豪的一段代码是什么？为什么？你最想重写的一段代码是什么？你现在会怎么写？
-- 不借助任何 AI 工具，你能否在 30 分钟内从零搭建一个 React + TypeScript + Tailwind 项目，并实现一个带有状态管理的交互组件？
+1. 检查所有仓库：README 完整；没有 `.env`、密钥、个人信息被提交（在 GitHub 仓库页面搜索 `key`、`token`、`password`）。
+2. 置顶 3 个最好的仓库到你的 GitHub 主页。
+
+##### Day 4–5：公开写作（3h）
+
+写一篇文章（中英文都可以，发在掘金、Dev.to 或个人博客）：《从零基础到第一个上线的 React 应用：我学到的 N 件事》。至少包含：学习路径、最难的 3 个概念以及你最终是怎么理解的、你的项目链接。
+
+##### Day 6：能力检查（1.5h）
+
+逐项完成下方「Phase 1 能力检查清单」和 1.5 节「Level 1 → Level 2 升级条件」。
+
+##### Day 7：Phase 2 准备（1h）
+
+1. 未达标的项目：在 `PROGRESS.md` 中安排 1–4 周的补强。
+2. 达标：阅读第 32B 周（HTTP 基础）和第 33 周的目标。
+3. 开始记录：每周写下 3 个你在生活或工作中遇到的、可能用软件解决的痛点（为第 44 周的产品选择积累素材）。
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [掘金](https://juejin.cn/) / [Dev.to](https://dev.to/) | Day 4–5 发布文章 |
+| [Hemingway Editor](https://hemingwayapp.com/) | 英文文章可读性检查 |
 
 ---
 
@@ -2627,17 +3655,19 @@ git reset --hard HEAD
 - [ ] 所有项目代码都托管在 GitHub 上
 
 **UI / 设计：**
-- [ ] 能使用 Tailwind CSS 构建响应式布局
+- [ ] 能使用 Tailwind CSS v4 构建响应式布局，会用 `@theme` 定义设计令牌
 - [ ] 能使用 shadcn/ui 组件库快速搭建专业 UI
 - [ ] 理解排版层级、间距系统、配色原则
 
 **工程能力：**
 - [ ] 作品集项目已部署在 Vercel 上，可公开访问
-- [ ] 项目有基础的自动化测试（Vitest + React Testing Library）
+- [ ] 项目有自动化测试（Vitest + React Testing Library，≥ 25 个）并在 GitHub Actions 中运行
+- [ ] 页面通过键盘可完整操作，Lighthouse Accessibility ≥ 95
 - [ ] README.md 完善，其他开发者能根据 README 运行你的项目
 - [ ] 已发布至少一篇公开的学习内容
 
 **AI 使用 Level 1 → Level 2 升级条件：**
+- [ ] 完成至少 10 次“AI 对照审查练习”，每次都找出了 AI 代码中的至少 1 个问题
 - [ ] 能不借助 AI 手写完整的 React 组件（含 state、effect、event handler）
 - [ ] 能不借助 AI 解决 TypeScript 类型错误
 - [ ] 能独立阅读和理解 React/Next.js 官方文档
@@ -2647,918 +3677,1942 @@ git reset --hard HEAD
 
 ---
 
+#### 第 32B 周（2026-10 新增）：HTTP 与浏览器网络基础
+
+> **为什么新增：** Next.js、登录认证、支付 Webhook 全都建立在 HTTP 之上：请求方法、状态码、请求头、Cookie、CORS、缓存。原计划把这些放在 Phase 3“补课”，但不懂 Cookie 就学 Supabase 登录、不懂 CORS 就调用 API，会在 Phase 2 不断卡住。这一周用一个 40 行的 Node 服务器亲手观察它们。
+>
+> **工作目录：** `Programming Learn/http-lab/`，用 TS 教程的方式初始化（`pnpm init`、`pnpm add -D typescript tsx @types/node`、复制 TS 教程 2.4 的 tsconfig）。**AI 使用：** Level 1。
+
+**本周目标：** 能读懂一个 HTTP 请求和响应的每一部分；理解 Cookie 的各个属性；能复现并修复 CORS 错误；知道缓存头的作用。
+
+##### Day 1：请求与响应长什么样（1.5h）
+
+1. 在终端执行 `curl -i https://example.com`。`-i` 表示同时显示响应头。在输出中找到：状态行（`HTTP/2 200`）、响应头（`content-type` 等）、空行、响应体（HTML）。
+2. 执行 `curl -v https://example.com -o /dev/null`。`-v` 会显示请求本身（以 `>` 开头的行）：方法、路径、`Host`、`User-Agent`、`Accept`。
+3. 在 Chrome 打开任意网站，DevTools → Network → 刷新 → 点击第一个请求，依次查看 Headers（General、Response Headers、Request Headers）、Preview、Response、Timing。
+4. 在笔记中画出一次请求的结构：
+
+   ```text
+   请求：方法 + URL + 请求头 + （可选）请求体
+   响应：状态码 + 响应头 + （可选）响应体
+   ```
+
+5. 回顾 W1 Day 1 你写的“浏览器 → 服务器 → HTML”流程，补上今天学到的细节。
+
+##### Day 2：方法与状态码（1.5h）
+
+1. 方法：`GET`（读取，不应改变数据）、`POST`（创建/提交）、`PUT`/`PATCH`（整体/部分更新）、`DELETE`（删除）。理解“GET 不应有副作用”的原因：浏览器、搜索引擎、预加载都可能自动发 GET 请求。
+2. 状态码分组：`2xx` 成功、`3xx` 重定向、`4xx` 客户端的问题、`5xx` 服务器的问题。
+3. 必须记住的 12 个：`200 OK`、`201 Created`、`204 No Content`、`301`/`308` 永久重定向、`302`/`307` 临时重定向、`304 Not Modified`、`400 Bad Request`、`401 Unauthorized`（没登录）、`403 Forbidden`（登录了但没权限）、`404 Not Found`、`429 Too Many Requests`、`500 Internal Server Error`。
+4. 动手：`curl -i https://httpbin.org/status/404`、`/status/500`、`curl -i https://httpbin.org/redirect/1`（观察 `location` 头），再加 `-L` 让 curl 跟随重定向。
+5. 复习 T8：`fetch` 收到 404 或 500 时**不会** reject，必须检查 `response.ok`。用 httpbin 的 `/status/500` 写一个 TS 小脚本验证。
+
+##### Day 3：亲手写一个 HTTP 服务器（1.5h）
+
+1. 新建 `src/server.ts`：
+
+   ```ts
+   import { createServer } from "node:http";
+
+   const server = createServer((request, response) => {
+     console.log(request.method, request.url);
+     console.log("请求头：", request.headers);
+
+     if (request.url === "/hello" && request.method === "GET") {
+       response.writeHead(200, { "Content-Type": "application/json" });
+       response.end(JSON.stringify({ message: "你好" }));
+       return;
+     }
+
+     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+     response.end("Not Found");
+   });
+
+   server.listen(3001, () => {
+     console.log("运行在 http://localhost:3001");
+   });
+   ```
+
+2. `pnpm exec tsx src/server.ts` 启动。另开一个终端：`curl -i http://localhost:3001/hello` 和 `curl -i http://localhost:3001/nope`。在服务器终端观察打印出的方法、路径和请求头。
+3. 在浏览器打开 `http://localhost:3001/hello`，对比 Network 面板里浏览器自动带上的请求头比 curl 多了哪些。
+4. 加一个 `POST /echo`：读取请求体并原样返回。提示：
+
+   ```ts
+   let body = "";
+   request.on("data", (chunk) => { body += chunk; });
+   request.on("end", () => {
+     response.writeHead(200, { "Content-Type": "application/json" });
+     response.end(body);
+   });
+   ```
+
+   用 `curl -i -X POST http://localhost:3001/echo -H "Content-Type: application/json" -d '{"a":1}'` 测试。
+5. 按 `Ctrl + C` 停止服务器。体会：Next.js、Express 这些框架做的事情，本质上就是帮你更方便地处理这里的 `request` 和 `response`。
+
+##### Day 4：Cookie（1.5h）
+
+1. 在服务器中加入登录和“我是谁”两个接口：
+
+   ```ts
+   if (request.url === "/login" && request.method === "POST") {
+     response.setHeader(
+       "Set-Cookie",
+       "session=abc123; HttpOnly; SameSite=Lax; Path=/; Max-Age=3600"
+     );
+     response.writeHead(200, { "Content-Type": "application/json" });
+     response.end(JSON.stringify({ ok: true }));
+     return;
+   }
+
+   if (request.url === "/me") {
+     const loggedIn = request.headers.cookie?.includes("session=abc123") ?? false;
+     response.writeHead(loggedIn ? 200 : 401, { "Content-Type": "application/json" });
+     response.end(JSON.stringify({ loggedIn }));
+     return;
+   }
+   ```
+
+2. 用 curl 模拟浏览器保存 Cookie：`curl -i -X POST http://localhost:3001/login -c cookies.txt`，再 `curl -i http://localhost:3001/me -b cookies.txt`（200）和 `curl -i http://localhost:3001/me`（401）。打开 `cookies.txt` 看看保存了什么。
+3. 理解每个属性：
+   - `HttpOnly`：页面上的 JavaScript 读不到它（`document.cookie` 里看不到），防止 XSS 偷走登录凭证。
+   - `Secure`：只在 HTTPS 下发送（本地 http 开发时先不加）。
+   - `SameSite=Lax`：从其他网站发起的大多数请求不带这个 Cookie，用来防御 CSRF。
+   - `Max-Age` / `Expires`：多久过期；都不写则关闭浏览器即失效。
+   - `Path` / `Domain`：哪些路径、域名会带上它。
+4. 在浏览器中：DevTools → Application → Cookies，观察 `localhost:3001` 下的 Cookie（可以在 Console 里执行 `fetch("/login", { method: "POST" })` 生成），并尝试在 Console 中执行 `document.cookie`，确认看不到 HttpOnly 的 Cookie。
+5. 在笔记里回答：为什么登录状态通常放在 HttpOnly Cookie 里，而不是 localStorage？（第 42 周 Supabase 登录就是这样做的。）
+
+##### Day 5：CORS（1.5h）
+
+1. 用 Vite 新建一个最小页面（`pnpm create vite@latest cors-client -- --template vanilla-ts`），在 `main.ts` 中：
+
+   ```ts
+   const response = await fetch("http://localhost:3001/hello");
+   console.log(await response.json());
+   ```
+
+2. 同时运行服务器（3001）和 Vite（5173），打开页面，在 Console 中看到 **CORS 错误**。注意：服务器终端里**显示收到了请求**——请求发出去了，是浏览器拒绝把响应交给你的代码。
+3. 理解“源（origin）”= 协议 + 域名 + 端口。`http://localhost:5173` 和 `http://localhost:3001` 端口不同，是不同的源。浏览器默认禁止页面读取其他源的响应，除非对方明确允许。
+4. 修复：在 `/hello` 的响应头中加 `"Access-Control-Allow-Origin": "http://localhost:5173"`。刷新，成功。
+5. **预检请求：** 把 fetch 改为 `POST /echo` 并带上 `Content-Type: application/json`。再次报错，Network 面板里多了一个 `OPTIONS` 请求——这是浏览器先“问一下能不能发”。在服务器中处理：
+
+   ```ts
+   if (request.method === "OPTIONS") {
+     response.writeHead(204, {
+       "Access-Control-Allow-Origin": "http://localhost:5173",
+       "Access-Control-Allow-Methods": "GET, POST",
+       "Access-Control-Allow-Headers": "Content-Type",
+     });
+     response.end();
+     return;
+   }
+   ```
+
+   并给 `/echo` 的响应也加上 `Access-Control-Allow-Origin`。
+6. 带 Cookie 的跨源请求需要双方都同意：前端 `fetch(url, { credentials: "include" })`，服务器加 `Access-Control-Allow-Credentials: true`，并且 `Allow-Origin` 不能是 `*`。动手试一次 `/me`。
+7. 记住结论：**CORS 是浏览器保护用户的机制，不是服务器的防火墙**（curl 根本不检查 CORS）。用 Next.js 时，前后端同源，大多数情况下不会遇到 CORS；调用第三方 API 时，在服务器端调用即可绕开（第 37 周的 API 代理就是这个思路）。
+
+##### Day 6：缓存、HTTPS 与 DNS（1.5h）
+
+1. **缓存头：** `curl -I https://developer.mozilla.org/`，找到 `cache-control`、`etag`、`age` 等头。理解：`Cache-Control: max-age=3600` 表示一小时内可直接使用缓存；`no-store` 表示不缓存；`ETag` 用于“我手上的版本还是最新的吗？”，服务器回 `304` 就不必重新下载。
+2. 在 DevTools Network 中勾选/取消 “Disable cache”，对比同一页面第二次加载时的 Size 列（出现 `memory cache`、`disk cache`）。
+3. **HTTPS：** 加密传输 + 证明网站身份。Vercel 会自动配置，你需要知道的是：生产环境 Cookie 必须加 `Secure`；HTTP 页面里的密码可以被同一网络中的人看到。
+4. **DNS：** `dig example.com`（或 `nslookup example.com`），看到域名被解析成 IP 地址。第 31 周设置自定义域名时添加的 A / CNAME 记录，就是在这里起作用。
+
+##### Day 7：复习与自测（1h）
+
+1. 闭卷画出：从你在浏览器输入网址到页面显示的完整过程（DNS → 建立连接 → HTTPS → 请求 → 响应 → 渲染）。
+2. 闭卷写出 401 和 403 的区别、`HttpOnly` 和 `SameSite` 的作用。
+3. 回答：同样的请求，为什么 curl 能成功、浏览器里却报 CORS 错误？
+
+**本周作业：** `http-lab` 仓库：包含服务器代码、CORS 客户端，以及一份 `NOTES.md`（12 个状态码、Cookie 属性表、CORS 流程图、缓存头说明）。
+
+**验收清单：**
+
+- [ ] 能用 curl 发 GET/POST、带请求头、保存和发送 Cookie
+- [ ] 能复现并修复简单请求和预检请求两种 CORS 错误
+- [ ] 能解释 `HttpOnly`、`Secure`、`SameSite`
+- [ ] 能说出 12 个状态码的含义
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [MDN：HTTP 概述](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Overview) | Day 1 |
+| [MDN：HTTP 响应状态码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status) | Day 2：查表，不必通读 |
+| [httpbin.org](https://httpbin.org/) | Day 2：用它的各个接口练习 curl |
+| [MDN：使用 HTTP Cookie](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies) | Day 4 |
+| [MDN：跨源资源共享（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS) | Day 5 |
+| [MDN：HTTP 缓存](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching) | Day 6 |
+| [How HTTPS works（漫画）](https://howhttps.works/) | Day 6：10 分钟读完 |
+
+---
+
 ### Phase 2：全栈实战（第 33-52 周）
 
-> **前置条件：** 你已完成 Phase 1 的全部内容——能用 TypeScript + React + Tailwind + shadcn/ui 构建交互式 Web 应用，有一个部署在 Vercel 上的作品集网站，熟练使用 Git 工作流。现在，你将从"前端开发者"进化为"全栈独立开发者"。
+> **前置条件：** 你已完成 Phase 1 和第 32B 周。
 >
-> **AI 使用级别：** Level 2（AI 作为初级助手）。AI 可以生成脚手架和样板代码，但业务逻辑必须由你亲手编写。详细规则见第一部分 §1.5。
+> **AI 使用级别：** Level 2（见 1.5 节）。Agent 可以生成骨架、配置和样板，并且必须在单独的分支上工作；业务逻辑、认证、授权、支付由你亲手编写。
 >
-> **阶段目标：** 第 52 周结束时，你的第一个 SaaS MVP 已经上线，至少完成支付沙盒闭环，并获得真实用户反馈。真实付款或明确付费承诺是加分目标，不是继续进入 Phase 3 的唯一门槛。
+> **阶段目标：** 第 52 周结束时，第一个 SaaS MVP 已上线，至少完成支付测试模式的完整流程，并获得真实用户反馈。
+>
+> **2026-10 更新：** 本阶段按 **Next.js 16.4**（2026-10-06 发布）重写。最大的变化是 **Cache Components**：从 16.4 起，用 `create-next-app` 新建的项目默认开启它，Next.js 17 会把它设为所有项目的默认。它改变了“页面哪些部分缓存、哪些部分每次请求时渲染”的写法。网上大量 2023–2025 年的教程使用旧模型（`export const revalidate = 60`、`export const dynamic = "force-dynamic"`、`fetch(url, { next: { revalidate } })`），在新模型下不适用。**遇到冲突时，以项目中 `node_modules/next/dist/docs/` 里的文档和 nextjs.org 为准。**
 
 ---
 
 ## 模块 D：Next.js 16 全栈深度（第 33-38 周）
 
-> 为什么选 Next.js？因为它是 2026 年独立开发者构建全栈 Web 应用的最成熟方案。App Router 的 Server Components 模型让你用同一套代码处理前后端逻辑，不需要单独维护一个 API 服务器。对于独立开发者来说，减少基础设施复杂度就是减少维护成本。
+> 为什么选 Next.js？它是 2026 年独立开发者构建全栈 Web 应用最成熟的方案：一套代码同时处理页面和服务器逻辑，Vercel 部署零配置，AI 编码工具对它的支持最好。
 
 ---
 
-#### 第 33 周：Next.js 基础 — App Router
+#### 第 33 周：Next.js 基础——App Router
 
-**主题：** 从 Vite 迁移到 Next.js，掌握 App Router 文件系统路由
+**本周目标：** 创建 Next.js 16 项目，理解文件系统路由、布局、加载与错误边界，做一个有 3 层嵌套布局的多页面应用。
 
-**学习内容：**
+##### Day 1：创建项目并认识目录（1.5h）
 
-- 理解 Next.js 与 Vite SPA 的核心区别：服务端渲染 vs 纯客户端渲染，文件系统路由 vs 手动路由配置
-- App Router 文件约定：`page.tsx`（页面）、`layout.tsx`（布局）、`loading.tsx`（加载状态）、`error.tsx`（错误边界）、`not-found.tsx`（404 页面）
-- 嵌套布局（Nested Layouts）：理解布局是如何在路由层级中自动嵌套的，以及为什么这比手动 `<Outlet />` 更优雅
-- 路由组（Route Groups）：用 `(groupName)` 文件夹实现不影响 URL 的逻辑分组，例如 `(marketing)` 和 `(dashboard)` 共享不同布局
-- 将 Phase 1 的一个 Vite 项目迁移到 Next.js，体会两种架构的差异
+1. 执行：
 
-**本周产出物：**
+   ```bash
+   pnpm create next-app@latest next-basics
+   ```
 
-- 一个多页面 Next.js 应用，包含至少 3 层嵌套布局（根布局 → 路由组布局 → 页面布局），每层布局有不同的 UI 结构
+   出现“是否使用推荐默认设置（recommended defaults）”时选是。如果出现逐项提问，按此回答：TypeScript → Yes；Linter → ESLint；Tailwind CSS → Yes；`src/` 目录 → No；App Router → Yes；import alias → 默认 `@/*`；React Compiler → No（第 81 周再学）。
+2. `cd next-basics && pnpm dev`，打开 `http://localhost:3000`。
+3. 逐个打开并理解这些文件：
+   - `app/layout.tsx`：根布局，包含 `<html>` 和 `<body>`，所有页面共享。
+   - `app/page.tsx`：路径 `/` 对应的页面。
+   - `app/globals.css`：已经包含 `@import "tailwindcss";`（你熟悉的 Tailwind v4）。
+   - `next.config.ts`：**确认里面有 `cacheComponents: true`**（16.4 起默认生成）。如果没有，按 [Next.js 16.4 发布说明](https://nextjs.org/blog/next-16-4) 加上 `cacheComponents: true` 和 `partialPrefetching: true`。
+   - `AGENTS.md` 和 `CLAUDE.md`：给 AI 编码工具的说明，指向 `node_modules/next/dist/docs/`（版本匹配的官方文档，**你自己查文档时也可以直接看这个目录**）。
+4. 执行 `pnpm exec next --version`，记录版本号。
+5. 提交：`chore: create next app`。
 
-**推荐资源：**
+##### Day 2：页面、链接与嵌套布局（1.5h）
 
-- Next.js 官方学习课程：https://nextjs.org/learn
-- Next.js 16 文档 — Routing：https://nextjs.org/docs/app/building-your-application/routing
+1. 文件即路由：新建 `app/about/page.tsx`（路径 `/about`）、`app/blog/page.tsx`（`/blog`）。
+2. 用 `next/link` 的 `<Link href="/about">` 做导航。打开 Network 面板点击链接：没有整页刷新，只请求了需要的数据。
+3. 新建 `app/blog/layout.tsx`：
 
-**AI 使用指南（Level 2）：**
+   ```tsx
+   export default function BlogLayout({ children }: { children: React.ReactNode }) {
+     return (
+       <div className="mx-auto flex max-w-5xl gap-8 p-6">
+         <aside className="w-48 shrink-0">博客侧栏</aside>
+         <section className="flex-1">{children}</section>
+       </div>
+     );
+   }
+   ```
 
-- ✅ 可以：让 AI 生成 `page.tsx`、`layout.tsx` 等文件的初始骨架结构；让 AI 解释 App Router 的文件约定
-- ❌ 禁止：让 AI 完成整个迁移过程；不理解嵌套布局原理就复制 AI 生成的 layout 代码
+   `/blog` 下的所有页面都会被这个布局包裹，而根布局又包裹它——这就是嵌套布局。
+4. 在不同布局里各放一个计数器按钮（需要 `"use client"`，明天细讲）。在 `/blog` 和 `/blog/xxx` 之间切换：布局里的计数器**不会重置**。布局在导航时保持状态，这是它和页面的关键区别。
+
+##### Day 3：路由组与多布局（1.5h）
+
+1. 路由组：文件夹名加括号，不影响 URL。新建 `app/(marketing)/pricing/page.tsx`（URL 是 `/pricing`）和 `app/(dashboard)/dashboard/page.tsx`（URL 是 `/dashboard`）。
+2. 分别给 `(marketing)` 和 `(dashboard)` 写不同的 `layout.tsx`：营销页有顶部导航和页脚；控制台有侧栏。
+3. 结果：根布局 → 路由组布局 → 页面，3 层嵌套。
+4. 在笔记中画出你的文件夹结构和对应的 URL。
+
+##### Day 4：加载、错误与 404（1.5h）
+
+1. 在 `app/(dashboard)/dashboard/` 下新建 `loading.tsx`，返回一个骨架屏。在 `page.tsx` 中模拟慢请求：`await new Promise((r) => setTimeout(r, 2000));`（页面组件改为 `async function`）。刷新，先看到骨架屏，2 秒后看到内容。
+2. 新建 `error.tsx`：
+
+   ```tsx
+   "use client";
+
+   export default function DashboardError({ error, reset }: { error: Error; reset: () => void }) {
+     return (
+       <div role="alert" className="p-6">
+         <p>出了点问题：{error.message}</p>
+         <button onClick={() => reset()} className="mt-4 underline">重试</button>
+       </div>
+     );
+   }
+   ```
+
+   `error.tsx` 必须是客户端组件（第一行 `"use client"`），因为它需要处理点击。在页面中 `throw new Error("测试错误")`，观察效果，然后删掉这行。
+3. 新建 `app/not-found.tsx`，访问一个不存在的路径验证。
+4. 读 [Next.js：Error Handling](https://nextjs.org/docs/app/getting-started/error-handling)。
+
+##### Day 5：样式、字体与 metadata 初识（1h）
+
+1. 在根布局中用 `next/font/google` 引入字体（`Inter` 或 `Noto_Sans_SC`），应用到 `<body>`。
+2. 在根布局导出 `metadata`：`export const metadata = { title: { template: "%s | 我的应用", default: "我的应用" }, description: "..." };`；在 `/about` 页面导出 `export const metadata = { title: "关于" }`，查看浏览器标签页标题。
+
+##### Day 6：把 Pokémon 列表搬到 Next.js（2h）
+
+1. 新建 `app/pokemon/page.tsx`，把第 21 周的列表搬过来。**区别：** 在 Next.js 里，页面组件可以直接是 `async` 函数，在服务器上获取数据，不需要 `useEffect`：
+
+   ```tsx
+   import { Suspense } from "react";
+   import { fetchPokemonList } from "@/lib/pokemon";
+
+   export default function PokemonPage() {
+     return (
+       <main className="mx-auto max-w-6xl p-6">
+         <h1 className="text-3xl font-bold">Pokédex</h1>
+         <Suspense fallback={<p>加载中…</p>}>
+           <PokemonList />
+         </Suspense>
+       </main>
+     );
+   }
+
+   async function PokemonList() {
+     const list = await fetchPokemonList();
+     return (
+       <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+         {list.map((p) => (
+           <li key={p.id}>{p.name}</li>
+         ))}
+       </ul>
+     );
+   }
+   ```
+
+   为什么要包一层 `<Suspense>`：在 Cache Components 模型下，**每次请求都要重新获取的数据**必须放在 `<Suspense>` 里，这样页面的其余部分（标题）可以立即显示，数据到达后再流式填入。如果你去掉 `<Suspense>`，开发服务器会报错并告诉你原因——请故意去掉一次，读完报错再加回来。第 35 周会系统讲。
+2. 对比 Vite 版本：Network 面板里还能看到对 `pokeapi.co` 的请求吗？（看不到——请求发生在服务器上。）
+3. 在笔记里写下 Vite SPA 与 Next.js 的 3 点区别。
+
+##### Day 7：复习（1h）
+
+回答自测问题；提交推送；部署到 Vercel（导入仓库即可，Next.js 无需 `vercel.json`）。
+
+**本周作业：** 一个 3 层嵌套布局的 Next.js 应用（营销区、控制台区、博客区），包含 loading、error、not-found，并部署上线。
+
+**验收清单：**
+
+- [ ] 能说出 `layout.tsx`、`page.tsx`、`loading.tsx`、`error.tsx`、`not-found.tsx` 各自的作用
+- [ ] 路由组的 URL 正确
+- [ ] 已部署到 Vercel
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Installation](https://nextjs.org/docs/app/getting-started/installation) | Day 1 |
+| [Next.js：Project Structure](https://nextjs.org/docs/app/getting-started/project-structure) | Day 1、Day 3 |
+| [Next.js：Layouts and Pages](https://nextjs.org/docs/app/getting-started/layouts-and-pages) | Day 2 |
+| [Next.js：Linking and Navigating](https://nextjs.org/docs/app/getting-started/linking-and-navigating) | Day 2 |
+| [Next.js：Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | Day 4 |
+
+**AI 使用（Level 2）：**
+
+- ✅ 让 Agent 在新分支上生成路由文件夹和空的 `page.tsx` / `layout.tsx` 骨架。
+- ❌ 让 Agent 写页面里的数据获取和渲染逻辑。
+- ⚠️ AI 常把 Next.js 16 写成旧版本写法（`middleware.ts`、`export const revalidate`）。看到就对照文档纠正，并记进“AI 错误清单”。
 
 **自测问题：**
 
-- `layout.tsx` 和 `template.tsx` 的区别是什么？在什么场景下应该用 `template.tsx`？
-- 如果你在 `app/(dashboard)/settings/page.tsx` 和 `app/(marketing)/about/page.tsx` 中分别访问这两个页面，它们的 URL 路径分别是什么？
+1. `layout.tsx` 和 `template.tsx` 的区别是什么？
+2. `app/(dashboard)/settings/page.tsx` 和 `app/(marketing)/about/page.tsx` 的 URL 分别是什么？
 
 ---
 
-#### 第 34 周：Server Components vs Client Components
+#### 第 34 周：Server Components 与 Client Components
 
-**主题：** 理解 React Server Components 的心智模型，掌握服务端与客户端的边界
+**本周目标：** 建立“服务器组件默认、客户端组件按需”的心智模型；理解两者之间的边界和能传递什么数据；掌握组合模式。
 
-**学习内容：**
+##### Day 1：默认是服务器组件（1.5h）
 
-- 核心心智模型：在 Next.js App Router 中，所有组件 **默认是 Server Component**。只有当你需要浏览器 API（`useState`、`useEffect`、事件处理器、`window` 对象等）时才标记 `"use client"`
-- Server Component 的优势：直接在服务端访问数据库、零 JS bundle 体积、可以使用 `async/await`
-- Client Component 的使用场景：交互性（点击、输入、动画）、浏览器 API、第三方客户端库
-- 序列化边界（Serialization Boundary）：理解 Server Component 传递给 Client Component 的 props 必须是可序列化的（不能传函数、Date 对象等）
-- 组合模式：Server Component 作为 Client Component 的 `children`（这是绕过序列化限制的关键模式）
+1. 读 [Next.js：Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)。
+2. 实验：在一个页面组件里 `console.log("我在哪里运行？")`。刷新页面，日志出现在**终端**（服务器），而不是浏览器 Console。
+3. 在同一个组件里尝试 `useState`——报错。读报错信息：服务器组件不能使用状态和事件处理。
+4. 服务器组件能做而客户端组件不能做的：直接读数据库、读文件、使用密钥（`process.env.SECRET_KEY`）、不把代码发送到浏览器（减少 JS 体积）。
 
-**本周产出物：**
+##### Day 2：`"use client"` 边界（1.5h)
 
-- 一个博客列表页面（Server Component 从 API 或本地数据获取文章列表）+ 交互式搜索过滤组件（Client Component），两者协同工作
+1. 新建 `app/components/LikeButton.tsx`，第一行 `"use client";`，内部用 `useState` 做点赞计数。在服务器组件页面中使用它。
+2. 关键理解：`"use client"` 标记的是**边界**——这个文件以及它 import 的所有组件都会被打包发送到浏览器。所以要把 `"use client"` 放在**尽可能小的叶子组件**上，而不是整个页面。
+3. 实验：把 `"use client"` 加到页面顶部，再看 `pnpm build` 输出中该路由的 JS 体积变化，然后改回来。
+4. 环境变量：只有 `NEXT_PUBLIC_` 开头的变量会暴露给浏览器。在 `.env.local` 中写 `SECRET_KEY=abc` 和 `NEXT_PUBLIC_SITE_NAME=Demo`，分别在服务器组件和客户端组件里打印，观察哪个在浏览器中是 `undefined`。
+5. 安装 `pnpm add server-only`，在只应该在服务器运行的文件（例如以后的数据库访问文件）第一行写 `import "server-only";`。如果有客户端组件误导入了它，构建会直接失败——这是防止密钥泄露的保险。试一次。
 
-**推荐资源：**
+##### Day 3：能跨越边界的数据（1.5h）
 
-- Next.js 文档 — Rendering：https://nextjs.org/docs/app/building-your-application/rendering
-- React 官方文档 — Server Components：https://react.dev/reference/rsc/server-components
+1. 服务器组件把 props 传给客户端组件时，props 要被**序列化**（转换成可以传输的格式）。
+2. 可以传：字符串、数字、布尔、`null`、数组、普通对象、`Date`、`Map`、`Set`、`BigInt`、Promise，以及标记了 `"use server"` 的服务器函数。
+3. 不能传：普通函数（例如 `onClick={() => ...}`）、类的实例、Symbol。
+4. 实验：从服务器组件给客户端组件传一个普通函数，读报错；再传一个 `new Date()`，确认可以（**原文说 Date 不能传是错误的**）。
+5. 安全提醒：传给客户端组件的 props 会出现在浏览器能看到的数据里。不要把整个用户对象（可能含邮箱、内部字段）传下去，只传需要的字段。
 
-**AI 使用指南（Level 2）：**
+##### Day 4：组合模式——把服务器组件作为 children（1.5h）
 
-- ✅ 可以：让 AI 解释 Server/Client Component 的区别；让 AI 生成组件文件的初始结构
-- ❌ 禁止：让 AI 决定哪些组件应该是 Server/Client——这个判断必须你自己做；不理解序列化边界就让 AI 修复报错
+1. 问题：一个客户端组件（例如可折叠面板 `Collapsible`）里面要显示服务器端获取的数据。
+2. 错误做法：在客户端组件中 import 服务器组件（会把它变成客户端组件，或者报错）。
+3. 正确做法：客户端组件接收 `children`，由服务器组件页面把内容作为 children 传进去：
+
+   ```tsx
+   // app/components/Collapsible.tsx
+   "use client";
+   import { useState } from "react";
+
+   export function Collapsible({ title, children }: { title: string; children: React.ReactNode }) {
+     const [open, setOpen] = useState(false);
+     return (
+       <div>
+         <button onClick={() => setOpen(!open)} aria-expanded={open}>{title}</button>
+         {open && <div>{children}</div>}
+       </div>
+     );
+   }
+
+   // app/page.tsx（服务器组件）
+   <Collapsible title="最新文章">
+     <ServerArticleList />
+   </Collapsible>
+   ```
+
+4. 动手实现并确认 `ServerArticleList` 的代码没有出现在浏览器下载的 JS 中（DevTools → Sources 中搜索它的特有文字）。
+
+##### Day 5–6：小项目——博客列表 + 客户端搜索（3h）
+
+1. 在 `content/posts.ts` 中写 10 篇假文章（标题、摘要、标签、日期）。
+2. 页面（服务器组件）读取全部文章，传给客户端组件 `PostSearch`。
+3. `PostSearch` 中有搜索框和标签筛选，在浏览器中即时过滤。
+4. 文章卡片本身是服务器组件，还是客户端组件？试着让它保持为服务器组件（提示：`PostSearch` 只负责筛选出 ID 列表，或者接受已渲染的元素作为 props）。如果做不到，写下原因——这个思考比答案更重要。
+
+##### Day 7：复习（1h）
+
+画一张图：你的博客页面里每个组件是服务器还是客户端，边界在哪里，传递了哪些 props。
+
+**验收清单：**
+
+- [ ] 页面中 `"use client"` 只出现在叶子组件上
+- [ ] 能解释哪些值可以、哪些不能跨越边界
+- [ ] 在至少一个文件中使用了 `server-only`
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) | 本周主文档 |
+| [React：Server Components](https://react.dev/reference/rsc/server-components) | Day 1 |
+| [React：'use client'](https://react.dev/reference/rsc/use-client) | Day 2–3：重点读“Serializable types”部分 |
 
 **自测问题：**
 
-- 为什么不能在 Server Component 中使用 `useState`？从技术实现层面解释。
-- 如果一个 Server Component 需要渲染一个带 `onClick` 的按钮，你会怎么设计组件结构？
+1. 为什么不能在服务器组件中使用 `useState`？
+2. 一个服务器组件需要渲染一个带 `onClick` 的按钮，你会怎么设计？
 
 ---
 
-#### 第 35 周：Next.js 数据获取
+#### 第 35 周：数据获取与 Cache Components
 
-**主题：** 掌握 Server Component 中的数据获取模式，理解 Next.js 16 的缓存模型
+**本周目标：** 理解 Cache Components 的核心思想——**页面由“静态外壳”和“动态部分”组成**；会用 `<Suspense>` 让动态部分流式加载；会用 `'use cache'`、`cacheLife`、`cacheTag` 声明哪些内容可以缓存。
 
-**学习内容：**
+##### Day 1：一个页面的三种内容（1.5h）
 
-- 在 Server Component 中直接使用 `async/await` 获取数据（这是 Server Component 的最大优势之一）
-- `use cache` 指令：Next.js 16 引入的新缓存模型，替代了之前的 `fetch` 缓存。理解 `use cache` 的工作方式和缓存粒度
-- `cacheLife` 和 `cacheTag`：控制缓存生命周期和按标签失效
-- Streaming 与 Suspense：用 `<Suspense>` 包裹异步组件，实现流式渲染。用户先看到页面骨架，数据到达后逐步填充
-- `loading.tsx` 的工作原理：它本质上是一个自动包裹在 `<Suspense>` 中的 fallback
+1. 读 [Next.js：Caching](https://nextjs.org/docs/app/getting-started/caching) 的开头部分和 [Next.js 16.4 发布说明](https://nextjs.org/blog/next-16-4) 中的 “What are Cache Components?” 一节。
+2. 把一个页面上的内容分成三类，在笔记中各举两个例子：
+   - **静态内容：** 不依赖任何数据，构建时就能确定（标题、导航）。
+   - **可缓存的数据：** 来自数据库或 API，但不需要每次请求都重新获取（文章列表、商品目录）——用 `'use cache'` 标记。
+   - **每次请求的数据：** 每个用户或每次请求都不同（当前用户、购物车、读取 Cookie）——放进 `<Suspense>`，请求时渲染。
+3. 规则：**在 Cache Components 模式下，如果你读取了“每次请求的数据”却没有放进 `<Suspense>`、也没有标记 `'use cache'`，开发服务器会报错提醒你做出选择。** 这不是 bug，而是框架在强制你明确每块内容的性质。
 
-**本周产出物：**
+##### Day 2：Suspense 与流式渲染（1.5h）
 
-- 一个新闻聚合页面：从公开 API（如 Hacker News API 或 NewsAPI）获取数据，使用 `<Suspense>` 实现流式加载，不同板块独立加载互不阻塞
+1. 新建 `app/news/page.tsx`，使用 Hacker News 公开 API（无需密钥）：热门列表 `https://hacker-news.firebaseio.com/v0/topstories.json`，单条 `https://hacker-news.firebaseio.com/v0/item/{id}.json`。
+2. 页面结构：静态标题 + 三个独立板块（Top、New、Best，对应 `topstories`、`newstories`、`beststories`），每个板块是一个 `async` 组件，各自包在 `<Suspense fallback={<骨架 />}>` 中。
+3. 在每个板块的获取函数里加不同的人工延迟（1、2、3 秒）。刷新页面：标题立即出现，三个板块依次出现，互不阻塞。
+4. 对比：把三个板块放进同一个 `<Suspense>`，观察要等最慢的那个。
+5. 用 `Promise.all` 并发获取每个板块的 10 条详情（T8 学过），不要在循环里一个个 `await`。
 
-**推荐资源：**
+##### Day 3：`'use cache'`（1.5h）
 
-- Next.js 16 文档 — Caching：https://nextjs.org/docs/app/building-your-application/caching
-- Next.js 文档 — Data Fetching：https://nextjs.org/docs/app/building-your-application/data-fetching
+1. 把“获取 Top 列表”的函数标记为可缓存：
 
-**AI 使用指南（Level 2）：**
+   ```ts
+   import { cacheLife } from "next/cache";
 
-- ✅ 可以：让 AI 生成 API 调用的样板代码（fetch + 类型定义）；让 AI 解释 `use cache` 的行为
-- ❌ 禁止：让 AI 设计整个数据获取架构；不理解 Suspense 的工作原理就使用它
+   export async function getTopStoryIds(): Promise<number[]> {
+     "use cache";
+     cacheLife("minutes");
+     const response = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
+     if (!response.ok) throw new Error(`HN 请求失败：${response.status}`);
+     const data: unknown = await response.json();
+     // 用 Zod 或手写守卫把 data 校验为 number[]
+     return parseIds(data).slice(0, 10);
+   }
+   ```
+
+2. `'use cache'` 可以放在：一个函数的第一行（缓存它的返回值）、一个组件的第一行（缓存它渲染出的 UI）、一个文件的第一行（缓存文件中所有导出）。
+3. `cacheLife` 的预设：`"seconds"`、`"minutes"`、`"hours"`、`"days"`、`"weeks"`、`"max"`。选择依据：数据多久变化一次、用户能接受多旧的数据。
+4. 缓存过的板块不再需要 `<Suspense>` 也能成为静态外壳的一部分。实验：运行 `pnpm build && pnpm start`，查看构建输出中该路由的标记，然后刷新页面，观察 Top 板块是否立即出现。
+5. 重要限制：被缓存的函数**不能**读取 `cookies()`、`headers()` 这类每次请求都不同的数据（否则不同用户会看到同一份缓存）。需要用户信息时，在缓存函数外部读取，再作为参数传进去（参数会成为缓存键的一部分）。
+
+##### Day 4：`cacheTag` 与按需失效（1.5h）
+
+1. 给缓存打标签：在 `getTopStoryIds` 中加 `cacheTag("hn-top")`（从 `next/cache` 导入）。
+2. 做一个“刷新 Top”按钮，提交到一个服务器函数（明天细讲，今天照抄这一小段）：
+
+   ```ts
+   // app/news/actions.ts
+   "use server";
+   import { updateTag } from "next/cache";
+
+   export async function refreshTop() {
+     updateTag("hn-top");
+   }
+   ```
+
+   页面中 `<form action={refreshTop}><button>刷新 Top</button></form>`。
+3. 三种失效方式（在笔记中整理成表）：
+   - `updateTag(tag)`：只能在服务器函数中用，**立刻**让缓存失效，当前用户马上看到新数据（适合“我刚提交了表单，要看到自己的修改”）。
+   - `revalidateTag(tag, "max")`：标记为过期，下次访问时先返回旧数据、后台刷新（适合 Webhook 通知“数据变了”）。**旧写法 `revalidateTag(tag)`（只有一个参数）已废弃。**
+   - `revalidatePath(path)`：让某个路径的缓存失效。
+4. 了解即可：Next.js 16 还提供 `refresh()`，用于刷新未缓存的数据。
+
+##### Day 5：动态参数与 `params`（1.5h）
+
+1. 新建 `app/news/[id]/page.tsx` 显示单条新闻详情。**在 Next.js 16 中 `params` 是 Promise，必须 `await`：**
+
+   ```tsx
+   export default async function NewsItemPage({ params }: { params: Promise<{ id: string }> }) {
+     const { id } = await params;
+     const itemId = Number(id);
+     if (!Number.isInteger(itemId)) notFound();
+     // ...
+   }
+   ```
+
+   `notFound` 从 `next/navigation` 导入。网上旧教程里 `params.id` 的同步写法已不适用。
+2. 详情数据用 `'use cache'` + `cacheLife("hours")`。
+3. 同理，`searchParams`、`cookies()`、`headers()` 都是异步的，都要 `await`。
+
+##### Day 6：项目整合（2h）
+
+完成新闻聚合页：三个板块独立加载、Top 可缓存并可手动刷新、详情页、所有外部数据经过校验、请求失败时由 `error.tsx` 处理。
+
+##### Day 7：复习（1h）
+
+1. 闭卷：画出你的新闻页面，标出哪些属于静态外壳、哪些被缓存、哪些在请求时渲染。
+2. 自测问题。
+
+**验收清单：**
+
+- [ ] 三个板块各自流式加载
+- [ ] 至少一处使用 `'use cache'` + `cacheLife` + `cacheTag`，并能通过按钮使其失效
+- [ ] 动态路由正确 `await params`，非法 ID 返回 404
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Fetching Data](https://nextjs.org/docs/app/getting-started/fetching-data) | Day 2 |
+| [Next.js：Caching](https://nextjs.org/docs/app/getting-started/caching) | Day 1、Day 3 |
+| [Next.js：Revalidating](https://nextjs.org/docs/app/getting-started/revalidating) | Day 4 |
+| [Next.js 16.4 发布说明](https://nextjs.org/blog/next-16-4) | Day 1：Cache Components 的官方解释 |
+| [Hacker News API](https://github.com/HackerNews/API) | Day 2 |
 
 **自测问题：**
 
-- `use cache` 指令和旧版 Next.js 的 `fetch` 缓存有什么区别？为什么 Next.js 16 做了这个改变？
-- 如果页面有 3 个独立的数据源，如何用 Suspense 让它们独立加载，而不是等待最慢的那个？
+1. `'use cache'` 和旧版 Next.js 的 `fetch` 缓存有什么区别？（提示：旧版是“默认隐式缓存”，新版是“默认不缓存、显式声明”。）
+2. 页面有 3 个独立数据源，如何让它们独立加载？
+3. 为什么缓存函数里不能读取 `cookies()`？
 
 ---
 
-#### 第 36 周：Server Actions + 表单
+#### 第 36 周：服务器函数（Server Actions）与表单
 
-**主题：** 用 Server Actions 实现服务端数据变更，掌握现代全栈表单处理
+**本周目标：** 用服务器函数处理表单和数据修改；用 `useActionState` 显示校验错误和提交状态；用 `useOptimistic` 做乐观更新；**理解服务器函数是公开的接口，必须在函数内部做认证和授权。**
 
-**学习内容：**
+> 名称说明：React 文档把 `"use server"` 函数统称为 **Server Functions**；用在表单 `action` 或修改数据时，习惯上叫 **Server Actions**。两个词指的是同一类东西。
 
-- Server Actions 基础：`"use server"` 指令。Server Action 本质上是一个在服务端执行的异步函数，可以直接在表单的 `action` 属性中使用
-- 表单处理模式：`<form action={serverAction}>`，`useActionState` 处理表单状态（pending、error、success）
-- 乐观更新（Optimistic Updates）：`useOptimistic` hook——在服务端响应之前先在 UI 上显示预期结果，响应后再同步真实数据
-- 缓存失效：`revalidatePath()` 让指定路径重新获取数据；`revalidateTag()` 让带有指定标签的缓存失效
-- 安全考量：Server Actions 的入参必须验证（永远不要信任客户端数据）
+##### Day 1：第一个服务器函数（1.5h）
 
-**本周产出物：**
+1. 新项目 `guestbook`。数据暂存在本地 JSON 文件中（第 40 周换成数据库）：
 
-- 一个留言板（Guestbook）应用：用 Server Actions 实现留言的创建和删除，使用 `useOptimistic` 实现乐观 UI 更新，删除后自动刷新列表
+   ```ts
+   // lib/store.ts
+   import "server-only";
+   import { readFile, writeFile } from "node:fs/promises";
 
-**推荐资源：**
+   export interface Entry { id: string; name: string; message: string; createdAt: string }
 
-- Next.js 文档 — Server Actions and Mutations：https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
-- Next.js 文档 — Forms：https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations
+   const FILE = "data/guestbook.json";
 
-**AI 使用指南（Level 2）：**
+   export async function readEntries(): Promise<Entry[]> {
+     try {
+       return JSON.parse(await readFile(FILE, "utf8")) as Entry[];
+     } catch {
+       return [];
+     }
+   }
 
-- ✅ 可以：让 AI 生成 Server Action 的函数签名和表单骨架；让 AI 解释 `useOptimistic` 的工作机制
-- ❌ 禁止：让 AI 编写完整的数据验证逻辑（你必须理解为什么要验证以及如何验证）；让 AI 直接处理你的表单提交逻辑
+   export async function writeEntries(entries: Entry[]): Promise<void> {
+     await writeFile(FILE, JSON.stringify(entries, null, 2));
+   }
+   ```
+
+   先创建 `data/guestbook.json`，内容 `[]`。（`as Entry[]` 是临时偷懒——今天的 Day 3 会改成 Zod 校验。）
+2. 新建 `app/actions.ts`：
+
+   ```ts
+   "use server";
+   import { updateTag } from "next/cache";
+   import { readEntries, writeEntries } from "@/lib/store";
+
+   export async function addEntry(formData: FormData) {
+     const name = String(formData.get("name") ?? "");
+     const message = String(formData.get("message") ?? "");
+     const entries = await readEntries();
+     await writeEntries([
+       { id: crypto.randomUUID(), name, message, createdAt: new Date().toISOString() },
+       ...entries,
+     ]);
+     updateTag("guestbook");
+   }
+   ```
+
+3. 页面：一个 `<form action={addEntry}>`，两个带 `name` 属性的输入框，一个提交按钮。列表组件用 `'use cache'` + `cacheTag("guestbook")` 读取 `readEntries()`。
+4. 提交，看到新留言立即出现。**关掉浏览器的 JavaScript**（DevTools → Cmd+Shift+P → 输入 Disable JavaScript）再提交一次：仍然可以工作。这叫“渐进增强”——表单的 `action` 是原生 HTML 能力。实验完重新开启 JavaScript。
+
+##### Day 2：服务器函数是公开接口（1.5h）——本周最重要的一课
+
+1. 打开 Network 面板，提交一次留言，找到那个 `POST` 请求。观察：它就是一个普通的 HTTP 请求，发往你的页面地址，请求头里带着一个标识这个函数的 ID。
+2. 结论：**任何人都可以绕过你的页面，直接构造这个请求调用你的服务器函数，传入任意参数。** 页面上把按钮藏起来、在客户端检查权限，都挡不住。
+3. 所以每个服务器函数内部都必须做到：
+   - **认证：** 当前是谁？（第 42 周接入真实登录）
+   - **授权：** 这个人有没有权限做这件事、操作这条数据？
+   - **校验：** 参数是否合法？（明天）
+4. 练习：加一个“删除留言”函数 `deleteEntry(id: string)`。暂时用一个管理员口令模拟授权：表单里多一个口令输入框，函数内部比对 `process.env.ADMIN_PASSWORD`（写在 `.env.local` 中），不匹配就返回 `{ ok: false, error: "无权限" }`，**不执行删除**。
+5. 读 [Next.js：Data Security](https://nextjs.org/docs/app/guides/data-security) 中关于 Server Actions 的部分，把“所有服务器函数都要检查的 3 件事”抄进笔记。
+
+##### Day 3：校验与 `useActionState`（1.5h）
+
+1. 用 Zod 校验表单：
+
+   ```ts
+   const entrySchema = z.object({
+     name: z.string().trim().min(1, "请填写名字").max(30, "名字太长"),
+     message: z.string().trim().min(1, "请填写留言").max(280, "最多 280 字"),
+   });
+
+   export type FormState =
+     | { status: "idle" }
+     | { status: "error"; fieldErrors: Partial<Record<"name" | "message", string[]>> }
+     | { status: "success" };
+
+   export async function addEntry(_prev: FormState, formData: FormData): Promise<FormState> {
+     const parsed = entrySchema.safeParse({
+       name: formData.get("name"),
+       message: formData.get("message"),
+     });
+     if (!parsed.success) {
+       return { status: "error", fieldErrors: z.flattenError(parsed.error).fieldErrors };
+     }
+     // ……写入、updateTag……
+     return { status: "success" };
+   }
+   ```
+
+   注意函数签名变了：配合 `useActionState` 时，第一个参数是上一次的状态。
+2. 把表单抽成客户端组件：
+
+   ```tsx
+   "use client";
+   import { useActionState } from "react";
+   import { addEntry, type FormState } from "@/app/actions";
+
+   const initialState: FormState = { status: "idle" };
+
+   export function EntryForm() {
+     const [state, formAction, isPending] = useActionState(addEntry, initialState);
+     // 在对应输入框下方显示 state.fieldErrors?.name 等
+     // 提交按钮：disabled={isPending}，文字在 isPending 时显示“提交中…”
+   }
+   ```
+
+3. 把 `lib/store.ts` 里的 `as Entry[]` 改为 Zod 校验——文件内容也是外部数据。
+4. 测试：空提交、超长留言、只有空格的名字，都应显示对应字段的错误。
+
+##### Day 4：乐观更新（1.5h）
+
+1. 读 [React：useOptimistic](https://react.dev/reference/react/useOptimistic)。
+2. 在留言列表中使用 `useOptimistic`：提交时立即把新留言以半透明样式显示在列表顶部，服务器返回后被真实数据替换。
+3. 在服务器函数中人工延迟 2 秒，观察乐观效果。
+4. 让服务器函数故意失败一次（抛错），观察乐观条目自动消失（回滚），并用 toast 告诉用户失败了。
+
+##### Day 5：`useFormStatus` 与可复用的提交按钮（1h）
+
+1. 写 `SubmitButton` 客户端组件，内部用 `useFormStatus()` 获取 `pending`，在任何表单中复用。
+2. 注意：`useFormStatus` 必须在 `<form>` **内部**的子组件中调用。
+
+##### Day 6：整合与测试（2h）
+
+1. 完成留言板：新增（校验 + 乐观）、删除（口令授权 + 二次确认）、列表缓存 + `updateTag`。
+2. 为 `entrySchema` 和授权判断函数写 Vitest 测试（把它们放在不带 `"use server"` 的普通模块中，以便测试）。按 [Next.js：Testing with Vitest](https://nextjs.org/docs/app/guides/testing/vitest) 配置。
+
+##### Day 7：复习（1h）
+
+自测问题；把“服务器函数安全三件事”写在显眼的地方。
+
+**验收清单：**
+
+- [ ] 每个服务器函数都校验输入；删除函数在内部检查授权
+- [ ] 表单显示字段级错误和提交中状态
+- [ ] 乐观更新在失败时正确回滚
+- [ ] 没有 JavaScript 时表单仍能提交
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Mutating Data](https://nextjs.org/docs/app/getting-started/mutating-data) | 本周主文档 |
+| [Next.js：Forms](https://nextjs.org/docs/app/guides/forms) | Day 3 |
+| [Next.js：Data Security](https://nextjs.org/docs/app/guides/data-security) | Day 2 |
+| [React：useActionState](https://react.dev/reference/react/useActionState) | Day 3 |
+| [React：useOptimistic](https://react.dev/reference/react/useOptimistic) | Day 4 |
+| [React：useFormStatus](https://react.dev/reference/react-dom/hooks/useFormStatus) | Day 5 |
+
+**AI 使用（Level 2）：** ✅ Agent 生成表单组件的 JSX 骨架；❌ Agent 写校验规则和授权判断。
 
 **自测问题：**
 
-- Server Actions 和传统的 API Route（POST 请求）在使用体验和技术实现上有什么区别？各自适合什么场景？
-- 如果 Server Action 执行失败，`useOptimistic` 已经更新了 UI，应该如何回滚？
+1. 服务器函数和 API 路由（`route.ts`）在使用和实现上有什么区别？
+2. 为什么“在页面上隐藏删除按钮”不能代替服务器函数里的授权检查？
+3. 乐观更新失败时应如何回滚？
 
 ---
 
-#### 第 37 周（前半）：动态路由 + generateStaticParams
+#### 第 37 周：动态路由、元数据、API 路由与 proxy.ts
 
-**主题：** 掌握动态路由和静态生成，为 SEO 打基础
+**本周目标：** 掌握动态路由与预生成、SEO 元数据；会写 API 路由（Route Handlers）；理解 `proxy.ts` 的用途和局限。
 
-**学习内容：**
+##### Day 1：动态路由与 `generateStaticParams`（1.5h）
 
-- 动态路由段：`[slug]` 文件夹约定，`params` 的获取方式
-- 可选的 Catch-all 路由：`[[...slug]]` 的使用场景（如文档站点的多级路径）
-- `generateStaticParams`：在构建时预生成静态页面。理解何时用 SSG（内容不常变化）vs SSR（内容频繁更新）
-- `generateMetadata`：动态生成页面的 `<title>`、`<meta>` 标签，对 SEO 至关重要
-- 将动态路由与 Server Components 数据获取结合：根据路由参数获取不同的数据
+1. 给留言板加个人主页 `app/user/[username]/page.tsx`（记得 `await params`）。
+2. 三种动态段：`[slug]` 匹配一段；`[...slug]` 匹配多段（至少一段）；`[[...slug]]` 匹配零段或多段。新建一个 `app/docs/[[...slug]]/page.tsx`，打印出 `slug`，分别访问 `/docs`、`/docs/a`、`/docs/a/b` 观察。
+3. `generateStaticParams`：在构建时预生成一批页面。为留言最多的 5 个用户预生成主页：
 
-**本周产出物：**
+   ```ts
+   export async function generateStaticParams() {
+     const top = await getTopUsernames(5);
+     return top.map((username) => ({ username }));
+   }
+   ```
 
-- 扩展留言板应用：为每个留言者添加个人主页（`/user/[username]`），使用 `generateStaticParams` 预生成活跃用户页面，使用 `generateMetadata` 为每个用户页面生成独立的 SEO 元数据
+4. `pnpm build`，在构建输出中找到这 5 个预生成的路径。
 
-**推荐资源：**
+##### Day 2：元数据与 SEO（1.5h）
 
-- Next.js 文档 — Dynamic Routes：https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
-- Next.js 文档 — generateStaticParams：https://nextjs.org/docs/app/api-reference/functions/generate-static-params
-- Next.js 文档 — Metadata：https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+1. 用 `generateMetadata` 为每个用户页生成标题和描述（同样要 `await params`）。
+2. 新建 `app/sitemap.ts` 和 `app/robots.ts`，访问 `/sitemap.xml`、`/robots.txt` 验证。
+3. 新建 `app/opengraph-image.tsx`，用代码生成分享图片（按 [Metadata and OG images](https://nextjs.org/docs/app/getting-started/metadata-and-og-images) 的示例）。
 
-**AI 使用指南（Level 2）：**
+##### Day 3：API 路由（Route Handlers）（1.5h）
 
-- ✅ 可以：让 AI 生成动态路由的文件结构；让 AI 生成 `generateMetadata` 的样板代码
-- ❌ 禁止：让 AI 决定哪些页面应该静态生成、哪些应该动态渲染——这个架构决策必须你自己做
+1. 什么时候用 API 路由而不是服务器函数：**被第三方调用时**（支付平台的 Webhook、移动 App、其他服务），或需要返回非 HTML 的数据（RSS、文件下载）。应用自己的表单和数据修改优先用服务器函数。
+2. 新建 `app/api/health/route.ts`：
+
+   ```ts
+   export async function GET() {
+     return Response.json({ ok: true, time: new Date().toISOString() });
+   }
+   ```
+
+   用 `curl -i http://localhost:3000/api/health` 测试（复习 32B）。
+3. 新建 `app/api/entries/route.ts`，支持 `GET`（返回留言 JSON）和 `POST`（校验后新增，失败返回 `400` 和错误信息，成功返回 `201`）。用 curl 测试所有情况，状态码必须正确。
+
+##### Day 4：API 代理——在服务器端安全使用密钥（1.5h）
+
+1. 需求：前端要显示某个 GitHub 用户的公开仓库，但你不想把 GitHub Token 暴露给浏览器（也顺便避开 CORS，复习 32B Day 5）。
+2. 在 GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens 创建一个**只读、无任何仓库权限**的 token，写入 `.env.local` 的 `GITHUB_TOKEN`。（不创建也可以：未认证请求每小时有 60 次额度。）
+3. `app/api/github/[user]/route.ts`：服务器端带上 token 请求 `https://api.github.com/users/{user}/repos`，只挑出名称、星标数、链接返回给前端。
+4. 简单限流：用一个 `Map<string, number[]>` 记录每个 IP 最近 1 分钟的请求时间，超过 10 次返回 `429`。IP 从 `request.headers.get("x-forwarded-for")` 读取。
+5. **重要局限（写进笔记）：** 在 Vercel 上，你的代码可能同时运行在多个实例中，每个实例都有自己的内存，所以内存限流在生产环境**不可靠**，实例重启后计数也会清零。生产环境要用共享存储（第 113–114 周用 Upstash Redis）。今天的目的是理解原理。
+
+##### Day 5：`proxy.ts`（1.5h）
+
+1. 读 [Next.js：Proxy](https://nextjs.org/docs/app/getting-started/proxy)。`proxy.ts` 就是以前的 `middleware.ts`（Next.js 16 改名），在请求到达页面之前运行，运行在 Node.js 运行时。**它不是“WebSocket 代理”，原文这一描述是错误的。**
+2. 在项目根目录新建 `proxy.ts`：
+
+   ```ts
+   import { NextResponse, type NextRequest } from "next/server";
+
+   export function proxy(request: NextRequest) {
+     if (request.nextUrl.pathname === "/old-guestbook") {
+       return NextResponse.redirect(new URL("/", request.url));
+     }
+     const response = NextResponse.next();
+     response.headers.set("x-learning", "proxy-works");
+     return response;
+   }
+
+   export const config = {
+     matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+   };
+   ```
+
+3. 验证重定向（`curl -i http://localhost:3000/old-guestbook` 看 `location` 头）和自定义响应头。
+4. 适合放在 proxy 中的：重定向、改写路径、设置响应头、**刷新登录 Cookie**（第 42 周 Supabase 正是这样用）。
+5. **不适合只靠 proxy 做的：权限判断。** 官方文档明确建议：proxy 可以做“未登录就重定向到登录页”这类乐观检查，但真正的授权必须在离数据最近的地方（数据访问层、服务器函数内部）再检查一次。原因：proxy 的 matcher 写错、新增路由忘了覆盖、服务器函数被直接调用，都会绕过它。
+
+##### Day 6：整合（2h）
+
+留言板 v2：用户主页（预生成 + 元数据）、REST 接口、GitHub 代理（带限流）、proxy 重定向。全部用 curl 或浏览器验证。
+
+##### Day 7：复习（1h）
+
+画出：请求 → proxy → 页面 / 服务器函数 / API 路由 的关系图，标出每一处应该做什么检查。
+
+**验收清单：**
+
+- [ ] API 路由返回正确的状态码（200 / 201 / 400 / 404 / 429）
+- [ ] GitHub token 只出现在服务器端代码和 `.env.local` 中，`.env.local` 未提交
+- [ ] 能解释为什么内存限流在 Vercel 上不可靠
+- [ ] 能解释为什么不能只靠 proxy 做授权
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Route Handlers](https://nextjs.org/docs/app/getting-started/route-handlers) | Day 3 |
+| [Next.js：Proxy](https://nextjs.org/docs/app/getting-started/proxy) | Day 5 |
+| [Next.js：Metadata and OG images](https://nextjs.org/docs/app/getting-started/metadata-and-og-images) | Day 2 |
+| [Next.js：Environment Variables](https://nextjs.org/docs/app/guides/environment-variables) | Day 4 |
+| [GitHub REST API：列出用户仓库](https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user) | Day 4 |
 
 **自测问题：**
 
-- `[slug]`、`[...slug]` 和 `[[...slug]]` 三种动态路由分别匹配什么样的 URL 路径？
-- `generateStaticParams` 返回的数据在什么时候被使用？如果一个 URL 对应的参数不在返回列表中会怎样？
+1. 接收支付平台的 Webhook 应该用服务器函数还是 API 路由？为什么？
+2. 一个基于 IP 的限流器需要哪些数据结构？服务器重启后会怎样？
 
 ---
 
-#### 第 37 周（后半）：API Routes + proxy.ts
+#### 第 38 周：性能优化 + 官方 Learn 课程
 
-**主题：** 创建 API 端点处理外部集成，理解 Next.js 16 的请求代理机制
+**本周目标：** 掌握图片、字体、打包体积的优化；完成 Next.js 官方 Learn 课程，用官方示例校准你这 6 周的理解。
 
-**学习内容：**
+##### Day 1：图片与字体（1.5h）
 
-- API Routes（`route.ts`）：在 App Router 中创建 RESTful API 端点。何时用 API Routes vs Server Actions（API Routes 用于第三方集成和 Webhook；Server Actions 用于应用内的表单和数据变更）
-- HTTP 方法处理：导出 `GET`、`POST`、`PUT`、`DELETE` 等命名函数
-- `proxy.ts`：Next.js 16 引入的请求代理机制，替代传统 `middleware.ts` 的部分功能。用于请求转发、header 修改、简单的请求预处理
-- Request / Response 对象：`NextRequest` 和 `NextResponse` 的 API
-- 速率限制（Rate Limiting）概念：为什么需要限制 API 调用频率，基于内存的简单实现思路（生产环境会用 Redis，但现在先理解原理）
+1. 把留言板里的 `<img>` 换成 `next/image`：必须提供 `width` 和 `height`（或使用 `fill` 并给父元素定尺寸），这样浏览器能提前留出空间，避免布局跳动（CLS）。
+2. 远程图片需要在 `next.config.ts` 中配置 `images.remotePatterns` 允许的域名。
+3. 理解 `sizes` 属性：告诉浏览器图片在不同屏幕宽度下显示多大，浏览器据此下载合适尺寸的版本。
+4. 首屏最重要的图片加 `priority`（或 `preload`，以当前文档为准）。
+5. 确认字体使用 `next/font`（自动自托管，不向 Google 发请求）。
 
-**本周产出物：**
+##### Day 2：测量与体积（1.5h）
 
-- 一个 API 代理服务：创建一个 API Route 作为第三方 API 的代理（例如代理 GitHub API），隐藏 API Key 的同时添加基础的速率限制（基于 IP 的内存计数器）
+1. `pnpm build && pnpm start`，在生产模式下跑 Lighthouse（开发模式的分数没有参考意义）。记录 LCP、CLS、INP（交互延迟）。
+2. 读 [web.dev：Core Web Vitals](https://web.dev/articles/vitals)，写下三项指标“良好”的阈值。
+3. 按 [Next.js：Package Bundling](https://nextjs.org/docs/app/guides/package-bundling) 打开打包分析，找出最大的客户端依赖。如果某个大库只在服务器使用，确认它没有进入客户端组件。
+4. 目标：Lighthouse Performance ≥ 90。
 
-**推荐资源：**
+##### Day 3–7：完成 Next.js 官方 Learn 课程（约 8–10h）
 
-- Next.js 文档 — Route Handlers：https://nextjs.org/docs/app/building-your-application/routing/route-handlers
-- Next.js 16 文档 — proxy.ts：https://nextjs.org/docs/app/api-reference/file-conventions/proxy
+1. 打开 [Next.js Learn：Dashboard App](https://nextjs.org/learn/dashboard-app)，从第 1 章开始，**每章亲手做完**再进入下一章。按每天 2–3 章安排。
+2. 课程会使用 Postgres 数据库和认证。按课程指引注册所需服务即可；这是练习项目，学完后可以删除，以免占用免费额度。
+3. 每完成一章，在笔记中写一行：“这一章和我前几周的做法有什么不同？”如果课程的写法与本蓝图不同，**以课程为准**（它跟随最新版本更新），并把差异记下来。
+4. 完成后把课程项目部署到 Vercel。
 
-**AI 使用指南（Level 2）：**
+**验收清单：**
 
-- ✅ 可以：让 AI 生成 `route.ts` 的骨架代码；让 AI 解释 `proxy.ts` 和旧版 `middleware.ts` 的区别
-- ❌ 禁止：让 AI 编写完整的速率限制逻辑（你需要理解滑动窗口等算法的原理）；不经审查就使用 AI 生成的请求处理代码
+- [ ] 留言板 Lighthouse Performance ≥ 90、CLS < 0.1
+- [ ] 官方课程所有章节完成并部署
 
-**自测问题：**
+**本周练习资源：**
 
-- Server Actions 和 API Routes 各自的最佳使用场景是什么？如果要接收第三方 Webhook 通知，应该用哪个？为什么？
-- 一个简单的基于 IP 的速率限制器需要哪些核心数据结构？如果服务器重启，基于内存的实现会有什么问题？
-
----
-
-#### 第 38 周（前半）：Next.js 性能优化 + Image/Font 优化
-
-**主题：** 让应用达到生产级性能标准，掌握 Next.js 内置的优化工具
-
-**学习内容：**
-
-- `next/image` 组件：自动图片优化（格式转换为 WebP/AVIF、响应式尺寸、懒加载）。理解 `width`/`height` 属性为什么是必需的（防止布局偏移 CLS）
-- `next/font`：字体加载优化，避免 FOIT（Flash of Invisible Text）和 FOUT（Flash of Unstyled Text）。使用 Google Fonts 或本地字体
-- Metadata API：结构化的 SEO 元数据配置，Open Graph 标签，Twitter Card
-- 静态 vs 动态渲染决策树：什么条件触发动态渲染？如何避免意外的动态渲染？
-- Core Web Vitals 基础：LCP（最大内容绘制）、FID/INP（交互延迟）、CLS（累计布局偏移），以及如何用 Lighthouse 和 PageSpeed Insights 测量
-
-**本周产出物：**
-
-- 对留言板应用进行全面性能优化：替换所有 `<img>` 为 `next/image`，配置 `next/font`，完善 Metadata，目标 Lighthouse 性能分数 > 90
-
-**推荐资源：**
-
-- Next.js 文档 — Optimizations：https://nextjs.org/docs/app/building-your-application/optimizing
-- web.dev — Core Web Vitals：https://web.dev/vitals/
-
-**AI 使用指南（Level 2）：**
-
-- ✅ 可以：让 AI 生成 `next/image` 和 `next/font` 的配置代码；让 AI 分析 Lighthouse 报告并建议优化方向
-- ❌ 禁止：让 AI 直接"修复"所有性能问题而你不理解每个优化背后的原理
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Images](https://nextjs.org/docs/app/getting-started/images) | Day 1 |
+| [Next.js：Fonts](https://nextjs.org/docs/app/getting-started/fonts) | Day 1 |
+| [web.dev：Core Web Vitals](https://web.dev/articles/vitals) | Day 2 |
+| [Next.js Learn](https://nextjs.org/learn/dashboard-app) | Day 3–7 |
 
 **自测问题：**
 
-- `next/image` 的 `sizes` 属性是做什么的？如果不设置会有什么影响？
-- 什么操作会导致 Next.js 将一个原本可以静态渲染的页面变为动态渲染？列举至少 3 种情况。
-
----
-
-#### 第 38 周（后半）：完成 Next.js 官方 Learn 课程
-
-**主题：** 系统性地走完官方教程，巩固 Next.js 全栈心智模型
-
-**学习内容：**
-
-- 完整完成 Next.js 官方 Learn 课程（Dashboard 项目），包括所有章节
-- 这个课程会综合运用前几周学到的所有概念：App Router、Server/Client Components、数据获取、Server Actions、动态路由、认证、元数据等
-- 重点关注课程中你之前理解不够深的部分，针对性地补强
-- 对比官方课程的实现方式和你之前的做法，思考哪种更好以及为什么
-
-**本周产出物：**
-
-- 完成 Next.js 官方 Learn 课程的 Dashboard 项目，代码推送到 GitHub 并部署到 Vercel
-
-**推荐资源：**
-
-- Next.js 官方 Learn 课程：https://nextjs.org/learn
-
-**AI 使用指南（Level 2）：**
-
-- ✅ 可以：遇到课程中不理解的概念时向 AI 提问；让 AI 对比你的实现和课程的实现
-- ❌ 禁止：跳过课程中的动手练习，直接让 AI 写答案；不做课程就标记为"已完成"
-
-**自测问题：**
-
-- 回顾模块 D 的全部内容，你能否在白板上画出一个 Next.js 应用的完整请求生命周期（从用户点击链接到页面渲染完成）？
-- Server Components、Client Components、Server Actions、API Routes、`proxy.ts` 这五个概念各自的职责是什么？画一张关系图。
+1. 画出一个 Next.js 应用从用户点击链接到页面显示完成的完整过程。
+2. 服务器组件、客户端组件、服务器函数、API 路由、`proxy.ts`——这五者各自的职责是什么？
 
 ---
 
 ## 模块 E：Supabase + Auth + 支付（第 39-46 周）
 
-> 这个模块让你从"只会写前端"变成"能操作数据库、管理用户、收钱"的全栈开发者。每一项都是 SaaS 产品的核心基础设施。学习顺序是精心设计的：先学 SQL 基础（理解数据层），再学 ORM（工具层），然后是 Auth（用户层），最后是支付（商业层）。
+> 这个模块让你从“只会写前端”变成“能操作数据库、管理用户、收钱”的全栈开发者。顺序：数据库环境与 SQL → ORM 与数据访问架构 → 表结构设计 → 登录 → 权限（RLS）与文件存储 → 产品方向 → 支付。
+>
+> **2026-10 更新（重要）：**
+>
+> 1. **本地开发环境：** 改为用 Supabase CLI 在本机运行完整的 Supabase（需要容器运行时，macOS 推荐免费的 OrbStack）。好处：不受免费云项目“7 天无活动自动暂停”“最多 2 个项目”的限制；可以随意重置数据库；登录邮件在本地查看。云端项目只用于部署。
+> 2. **新的 API 密钥：** Supabase 已用 **publishable key**（可公开）和 **secret key**（绝密）取代旧的 `anon` / `service_role` 密钥。环境变量名改为 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`。
+> 3. **服务器端验证登录用 `getClaims()`**，不要用 `getSession()`（它不验证签名，官方明确警告不能用于授权）。
+> 4. **Drizzle 会绕过 RLS：** Drizzle 通过 `DATABASE_URL` 以 `postgres` 角色直连数据库，这个角色拥有 `BYPASSRLS` 权限，你写的 RLS 策略对 Drizzle 查询**完全不生效**。原计划没有说明这一点，照做会以为数据受 RLS 保护而实际上没有。第 40 周 Day 1 给出本蓝图采用的数据访问架构，第 43 周亲手验证。
+> 5. **Supabase Storage 的图片变换需要付费计划**，原文的“免费自动缩放”不成立，改为上传前在浏览器缩放。
+> 6. **支付：** 学习阶段统一用 Stripe 测试模式（文档、本地 Webhook 工具最完善）；上线前再在 Stripe、Stripe Managed Payments（Stripe 自己的“代收税”方案，2026 年 2 月公开预览，提供从 Lemon Squeezy 迁移的路径）、Lemon Squeezy、Paddle 之间选择。
+>
+> **AI 使用：Level 2。** 认证、RLS 策略、授权检查、Webhook 处理必须亲手写，AI 只能解释和审查。
 
 ---
 
-#### 第 39 周：SQL 基础 + PostgreSQL
+#### 第 39 周：本地数据库环境 + SQL 综合
 
-**主题：** 掌握关系型数据库的核心概念和 SQL 查询语言
+**本周目标：** 在本机跑起完整的 Supabase；在它的 SQL 编辑器里巩固 SQL（你已经通过 SQL 副线做过 20 多周练习），补上建表约束、索引、事务、`EXPLAIN` 等实际项目会用到的内容。
 
-**学习内容：**
+##### Day 1：安装 OrbStack 和 Supabase CLI（1.5h）
 
-- 关系型数据库核心概念：表（Table）、行（Row）、列（Column）、主键（Primary Key）、外键（Foreign Key）
-- 核心 SQL 操作：`SELECT`、`INSERT`、`UPDATE`、`DELETE` —— CRUD 的数据库层实现
-- 查询进阶：`WHERE` 条件筛选、`ORDER BY` 排序、`LIMIT` 分页、`LIKE` 模糊搜索
-- JOIN 操作：`INNER JOIN`（内连接——只返回匹配行）、`LEFT JOIN`（左连接——保留左表所有行）。理解 JOIN 是关系型数据库的核心能力
-- 聚合函数：`COUNT`、`SUM`、`AVG`、`MAX`、`MIN` + `GROUP BY` 分组统计
+1. 打开 [orbstack.dev](https://orbstack.dev/) 下载安装（个人使用免费），启动后在菜单栏看到它的图标。它提供 Docker 兼容的容器运行时，Supabase 本地环境会在里面运行。终端执行 `docker --version` 确认可用。
+2. 安装 Supabase CLI：`brew install supabase/tap/supabase`，然后 `supabase --version`。
+3. 新建练习目录 `Programming Learn/sql-lab`，在里面执行：
 
-**本周产出物：**
+   ```bash
+   supabase init
+   supabase start
+   ```
 
-- 在练习平台上完成至少 30 道 SQL 练习题，覆盖基础 CRUD、JOIN 和聚合函数
+   第一次会下载镜像，需要几分钟。完成后终端会打印一组地址和密钥，**复制保存到笔记**（以后用 `supabase status` 随时查看）：API URL（`http://127.0.0.1:54321`）、Database URL（`postgresql://postgres:postgres@127.0.0.1:54322/postgres`）、Studio URL（`http://127.0.0.1:54323`）、邮件测试工具地址（Mailpit / Inbucket，通常是 `http://127.0.0.1:54324`）、publishable key 和 secret key（旧版 CLI 显示为 anon key 和 service_role key）。
+4. 浏览器打开 Studio，左侧找到 SQL Editor。
+5. 停止：`supabase stop`。下次 `supabase start` 数据还在；`supabase stop --no-backup` 会清空。
 
-**推荐资源：**
+##### Day 2：建表与约束（1.5h）
 
-- SQLBolt（交互式 SQL 教程）：https://sqlbolt.com
-- PostgreSQL Tutorial：https://www.postgresqltutorial.com
-- SQLZoo：https://sqlzoo.net
+在 SQL Editor 中亲手输入并执行（每执行一段，到左侧 Table Editor 看结果）：
 
-**AI 使用指南（Level 2）：**
+```sql
+create table authors (
+  id uuid primary key default gen_random_uuid(),
+  name text not null check (char_length(name) between 1 and 100),
+  email text not null unique,
+  created_at timestamptz not null default now()
+);
 
-- ✅ 可以：遇到不理解的 SQL 概念时向 AI 提问；让 AI 解释复杂查询的执行逻辑
-- ❌ 禁止：让 AI 帮你写练习题的答案——SQL 必须形成手写的肌肉记忆；跳过练习直接进入下一周
+create table books (
+  id uuid primary key default gen_random_uuid(),
+  author_id uuid not null references authors(id) on delete cascade,
+  title text not null,
+  price_in_cents integer not null check (price_in_cents >= 0),
+  tags text[] not null default '{}',
+  metadata jsonb not null default '{}'::jsonb,
+  published_on date
+);
+```
 
-**自测问题：**
+逐项理解：`uuid` 主键与 `gen_random_uuid()`；`timestamptz`（**永远用带时区的时间戳**）；`not null`、`unique`、`check` 约束；外键与 `on delete cascade`；数组 `text[]`；`jsonb` 存半结构化数据。然后**故意违反每一个约束各一次**（插入重复 email、负价格、不存在的 author_id），读懂每条错误信息。
 
-- 不借助任何工具，手写一条 SQL 查询：从 `users` 表和 `orders` 表中查出每个用户的姓名和订单总金额，只显示订单总金额大于 100 的用户，按金额降序排列。
-- `INNER JOIN` 和 `LEFT JOIN` 的区别是什么？画一个韦恩图来说明。
+##### Day 3：查询综合（1.5h）
 
----
+插入至少 5 位作者、20 本书（可以让 AI 生成 INSERT 语句的**测试数据**，这是允许的），然后手写以下查询：
 
-#### 第 40 周：Supabase 配置 + Drizzle ORM
+1. 每位作者的书数量和平均价格（`GROUP BY` + `count` + `avg`），只显示书数 ≥ 2 的作者（`HAVING`）。
+2. 没有任何书的作者（`LEFT JOIN ... WHERE books.id IS NULL`）。
+3. 带某个标签的书（`where 'ts' = any(tags)`）。
+4. `metadata` 中 `language` 为 `zh` 的书（`metadata->>'language' = 'zh'`）。
+5. 每位作者最贵的一本书（窗口函数 `row_number() over (partition by author_id order by price_in_cents desc)`，读 [PostgreSQL 教程：窗口函数](https://www.postgresql.org/docs/current/tutorial-window.html)）。
+6. 分页：按出版日期倒序，每页 5 条，取第 2 页（`limit` + `offset`）。
 
-**主题：** 搭建数据库基础设施——Supabase 提供数据库，Drizzle ORM 提供类型安全的查询接口
+##### Day 4：索引与 `EXPLAIN`（1.5h）
 
-**学习内容：**
+1. 用 `generate_series` 造 10 万条书的数据：
 
-- 创建 Supabase 项目：了解 Supabase 提供的完整服务栈（PostgreSQL 数据库、Auth、Storage、Realtime、Edge Functions）
-- 在 Next.js 中连接 Supabase：环境变量配置（`SUPABASE_URL`、`SUPABASE_ANON_KEY`、`DATABASE_URL`）
-- Drizzle ORM 安装和配置：为什么选 Drizzle（类型安全、轻量、SQL-like API）而非 Prisma（更重、查询抽象层级高）
-- Schema 定义：用 Drizzle 的 TypeScript API 定义数据库表结构，理解 Schema 即代码的理念
-- drizzle-kit：数据库迁移工具。`drizzle-kit generate` 生成迁移文件、`drizzle-kit migrate` 执行迁移、`drizzle-kit studio` 可视化数据库
-- 类型安全查询：Drizzle 如何从 Schema 定义自动推导 TypeScript 类型
+   ```sql
+   insert into books (author_id, title, price_in_cents)
+   select (select id from authors limit 1), 'Book ' || n, (random() * 10000)::int
+   from generate_series(1, 100000) as n;
+   ```
 
-**本周产出物：**
+2. `explain analyze select * from books where title = 'Book 99999';` 观察 `Seq Scan`（全表扫描）和耗时。
+3. `create index books_title_idx on books (title);` 再执行一次，观察变为 `Index Scan`，耗时下降。
+4. 理解代价：索引让读取变快，但让写入变慢、占空间。规则：给经常出现在 `WHERE`、`JOIN`、`ORDER BY` 中且选择性高的列加索引；**外键列通常需要索引**（Postgres 不会自动为外键建索引）。给 `books.author_id` 加索引。
 
-- 一个 Next.js 应用连接到 Supabase，通过 Drizzle ORM 定义了至少 3 张表的 Schema，成功运行数据库迁移，并能执行基本的 CRUD 操作
+##### Day 5：事务（1h）
 
-**推荐资源：**
+1. 场景：把一本书从一位作者“转移”给另一位，同时记录一条日志，两步必须同时成功或同时失败。
+2. 用 `begin; ... commit;` 包住两条语句；再试 `begin; ... rollback;` 观察数据未变化。
+3. 在笔记中写：为什么支付、库存这类操作必须用事务？
 
-- Supabase 文档：https://supabase.com/docs
-- Drizzle ORM 文档：https://orm.drizzle.team/docs/overview
-- drizzle-kit 文档：https://orm.drizzle.team/docs/kit-overview
+##### Day 6：视图与安全意识（1h）
 
-**AI 使用指南（Level 2）：**
+1. 建一个视图 `book_stats`（每位作者的统计），查询它。
+2. 在 Studio 的 Advisors（安全顾问）里查看警告：它会提示这些表“没有启用 RLS”。先记下来，第 40–43 周会处理。
 
-- ✅ 可以：让 AI 生成 Drizzle Schema 的初始结构；让 AI 生成 drizzle.config.ts 配置文件；让 AI 解释迁移机制
-- ❌ 禁止：不经审查就使用 AI 生成的 Schema（你必须逐字段确认数据类型、约束和关系）；让 AI 生成复杂查询而你不理解底层 SQL
+##### Day 7：闭卷测验（1h）
 
-**自测问题：**
+不看笔记写出：建一张带外键和 check 约束的表；一条 JOIN + GROUP BY + HAVING 查询；一条带索引的优化前后对比。
 
-- Drizzle ORM 和 Prisma 的核心设计哲学有什么不同？为什么本蓝图推荐 Drizzle？
-- 如果你修改了 Schema 中一个字段的类型，需要执行什么操作才能让数据库同步更新？这个过程叫什么？
+**本周练习资源：**
 
----
-
-#### 第 41 周：数据库 Schema 设计
-
-**主题：** 学习数据库设计方法论，为 SaaS 应用设计合理的数据结构
-
-**学习内容：**
-
-- 实体关系图（ERD）：用图形化方式表达数据表之间的关系，工具推荐 dbdiagram.io 或 Excalidraw
-- 数据库范式基础：第一范式（1NF，消除重复列组）、第二范式（2NF，消除部分依赖）、第三范式（3NF，消除传递依赖）。理解"够用就好"——过度范式化会导致过多的 JOIN
-- 关系类型：一对多（用户 → 订单）、多对多（用户 ↔ 标签，通过中间表实现）、一对一（用户 → 用户详情）
-- 外键约束和级联操作：`ON DELETE CASCADE` vs `ON DELETE SET NULL` 的选择
-- 索引基础：什么是索引、为什么索引能加速查询、什么列需要加索引（频繁 WHERE/JOIN 的列）、索引的代价（写入变慢、占用空间）
-
-**本周产出物：**
-
-- 为一个 SaaS 应用设计完整的多表 Schema（至少包含 `users`、`teams`、`team_members`、`subscriptions`、`content` 表），绘制 ERD 图，用 Drizzle 实现 Schema 并运行迁移
-
-**推荐资源：**
-
-- dbdiagram.io（在线 ERD 工具）：https://dbdiagram.io
-- Database Design for Mere Mortals（书籍推荐）
-- Supabase 数据库设计指南：https://supabase.com/docs/guides/database/overview
-
-**AI 使用指南（Level 2）：**
-
-- ✅ 可以：让 AI 根据你的业务描述生成 Schema 初稿；让 AI 审查你的 ERD 设计并提出改进建议
-- ❌ 禁止：完全依赖 AI 设计 Schema 而不理解范式化的原因；不考虑实际查询模式就机械套用范式规则
-
-**自测问题：**
-
-- 在你设计的 Schema 中，`users` 和 `teams` 之间是什么关系？为什么需要一个 `team_members` 中间表？
-- 如果你的应用需要频繁查询"某个团队的所有成员"，你会在哪些列上创建索引？为什么？
+| 资源 | 做什么 |
+|---|---|
+| [Supabase CLI：本地开发入门](https://supabase.com/docs/guides/local-development/cli/getting-started) | Day 1 |
+| [PostgreSQL 官方教程](https://www.postgresql.org/docs/current/tutorial.html) | Day 2–3：读 “The SQL Language” 与 “Advanced Features” 两章 |
+| [pgexercises：Aggregates](https://pgexercises.com/questions/aggregates/) | Day 3：完成剩余未做的题 |
+| [Use The Index, Luke!](https://use-the-index-luke.com/) | Day 4：读前两章 |
 
 ---
 
-#### 第 42 周：Supabase Auth — Email + OAuth
+#### 第 40 周：Next.js + Supabase + Drizzle——数据访问架构
 
-**主题：** 为应用添加用户认证系统——邮箱注册和第三方登录
+**本周目标：** 确定并实现本蓝图的数据访问架构；在 Next.js 项目中连接本地 Supabase；用 Drizzle 定义表结构、生成并执行迁移、完成增删改查。
 
-**学习内容：**
+##### Day 1：先定架构（1.5h，只读和画图，不写代码）
 
-- Supabase Auth 的架构：它基于 GoTrue，提供开箱即用的用户管理系统
-- 邮箱/密码注册和登录：`supabase.auth.signUp()`、`supabase.auth.signInWithPassword()`、邮箱验证流程
-- OAuth 第三方登录：配置 Google 和 GitHub OAuth Provider。理解 OAuth 2.0 的授权码流程（Authorization Code Flow）——用户授权 → 获取 code → 交换 token → 获取用户信息
-- Session 管理：Supabase 使用 JWT。理解 Access Token 和 Refresh Token 的角色。`supabase.auth.getSession()` 和 `supabase.auth.onAuthStateChange()`
-- 在 Next.js 中保护路由：结合 Supabase 的 SSR helper（`@supabase/ssr`），在 Server Component 中检查认证状态，未登录用户重定向到登录页
+**本蓝图采用的数据访问架构：**
 
-**本周产出物：**
+```text
+浏览器 ──▶ Next.js 服务器（服务器组件 / 服务器函数 / API 路由）
+                │
+                ├─ lib/dal/*  数据访问层：每个函数先做“认证 + 授权”，再用 Drizzle 查询
+                │      └─ Drizzle ──（postgres 角色，绕过 RLS）──▶ Postgres
+                │
+                └─ Supabase Auth（登录、Cookie 会话）
 
-- 一个完整的认证流程：注册（邮箱 + Google + GitHub）→ 邮箱验证 → 登录 → 受保护的 Dashboard 页面 → 登出。未认证用户访问 Dashboard 自动跳转到登录页
+浏览器 ──（publishable key + 用户会话）──▶ Supabase Storage / Realtime
+                                           └─ 受 RLS 策略保护（第 43 周编写）
+```
 
-**推荐资源：**
+规则：
 
-- Supabase Auth 文档：https://supabase.com/docs/guides/auth
-- Supabase SSR 指南：https://supabase.com/docs/guides/auth/server-side
-- OAuth 2.0 简化解释：https://oauth.net/2/
+1. **业务数据只在服务器上读写**，全部经过 `lib/dal/` 中的函数。每个函数第一步调用 `requireUser()`，查询时总是带上 `where userId = 当前用户` 或检查团队成员身份。**授权在这里完成。**
+2. **所有 `public` 表都开启 RLS，但不给 `anon` / `authenticated` 角色写任何策略**——这样 Supabase 自动提供的公开数据接口对这些表完全不可用。即使 publishable key 被人拿到（它本来就是公开的），也读不到任何业务数据。
+3. **浏览器需要直连 Supabase 的地方**（上传文件、实时订阅）才写精确的 RLS 策略。
+4. **记住为什么第 1 条不能省：** Drizzle 用 `postgres` 角色连接，RLS 对它无效。
+5. 进阶（第 101–102 周）：让 Drizzle 查询也带上用户身份、受 RLS 约束，作为第二道防线。
 
-**AI 使用指南（Level 2）：**
+在笔记中把这张图画一遍，并用自己的话写出每条规则的理由。
 
-- ✅ 可以：让 AI 生成 Supabase Auth 的客户端初始化代码和 Provider 配置骨架；让 AI 解释 OAuth 流程
-- ❌ 禁止：让 AI 生成完整的认证流程而你不理解每一步的作用——认证是安全的核心，必须逐行理解；不理解 JWT 原理就使用 Session
+##### Day 2：创建项目并连接（1.5h）
+
+1. `pnpm create next-app@latest saas-lab`（同第 33 周设置），进入目录后 `supabase init`，再 `supabase start`。
+2. `pnpm add @supabase/supabase-js @supabase/ssr drizzle-orm postgres zod server-only`，`pnpm add -D drizzle-kit dotenv`。
+3. `.env.local`（确认 `.gitignore` 中有 `.env*`）：
+
+   ```bash
+   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=（supabase status 中的 publishable key）
+   DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
+   ```
+
+4. 新建 `lib/env.ts`，启动时校验环境变量（代替到处写 `process.env.X!`）：
+
+   ```ts
+   import { z } from "zod";
+
+   export const publicEnv = z
+     .object({
+       NEXT_PUBLIC_SUPABASE_URL: z.url(),
+       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
+     })
+     .parse({
+       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+     });
+   ```
+
+   再建 `lib/server-env.ts`（第一行 `import "server-only";`），用同样方式校验 `DATABASE_URL`。
+5. 新建 `db/index.ts`：
+
+   ```ts
+   import "server-only";
+   import { drizzle } from "drizzle-orm/postgres-js";
+   import postgres from "postgres";
+   import { serverEnv } from "@/lib/server-env";
+   import * as schema from "./schema";
+
+   const client = postgres(serverEnv.DATABASE_URL, { prepare: false });
+   export const db = drizzle(client, { schema });
+   ```
+
+   `prepare: false` 是因为生产环境会通过 Supabase 的连接池（事务模式）连接，它不支持预编译语句。
+
+##### Day 3：第一张表与迁移（1.5h）
+
+1. `drizzle.config.ts`：
+
+   ```ts
+   import { config } from "dotenv";
+   import { defineConfig } from "drizzle-kit";
+
+   config({ path: ".env.local" });
+
+   export default defineConfig({
+     schema: "./db/schema.ts",
+     out: "./drizzle",
+     dialect: "postgresql",
+     dbCredentials: { url: process.env.DATABASE_URL ?? "" },
+     entities: { roles: { provider: "supabase" } },
+   });
+   ```
+
+   `entities.roles.provider: "supabase"` 告诉 drizzle-kit：`anon`、`authenticated` 等角色是 Supabase 已有的，不要尝试创建。
+2. `db/schema.ts`，第一张表（开启 RLS、不写策略，符合 Day 1 规则 2）：
+
+   ```ts
+   import { pgTable, uuid, text, timestamp, boolean } from "drizzle-orm/pg-core";
+
+   export const todos = pgTable.withRLS("todos", {
+     id: uuid("id").primaryKey().defaultRandom(),
+     userId: uuid("user_id").notNull(),
+     title: text("title").notNull(),
+     done: boolean("done").notNull().default(false),
+     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+   });
+   ```
+
+   如果你安装的 drizzle-orm 版本中 `pgTable.withRLS` 的写法有变化，按 [Drizzle：Row-Level Security](https://orm.drizzle.team/docs/rls) 当前文档开启 RLS；判断标准是：生成的迁移 SQL 里出现 `ENABLE ROW LEVEL SECURITY`。
+3. 生成迁移：`pnpm exec drizzle-kit generate`。打开 `drizzle/` 目录里新生成的 `.sql` 文件，**逐行读懂**。
+4. 执行迁移：`pnpm exec drizzle-kit migrate`。在 Studio 的 Table Editor 中确认 `todos` 表存在，并显示 RLS 已启用。
+5. **迁移规则（写进笔记）：** ① 只改 `schema.ts`，然后 `generate` → 读 SQL → `migrate`；② 迁移文件提交到 Git；③ 不手改已执行过的迁移文件；④ 不在生产环境用 `drizzle-kit push`；⑤ 本项目只用 drizzle-kit 管理表结构，不同时用 `supabase migration` 管理同一批表（避免两套迁移互相冲突）。
+
+##### Day 4：数据访问层与增删改查（1.5h）
+
+1. 今天还没有登录，先用一个固定的测试用户 ID 模拟（第 42 周替换）。新建 `lib/dal/todos.ts`：
+
+   ```ts
+   import "server-only";
+   import { and, desc, eq } from "drizzle-orm";
+   import { db } from "@/db";
+   import { todos } from "@/db/schema";
+
+   const DEV_USER_ID = "00000000-0000-0000-0000-000000000001"; // 第 42 周删除
+
+   export async function listTodos() {
+     const userId = DEV_USER_ID;
+     return db.select().from(todos).where(eq(todos.userId, userId)).orderBy(desc(todos.createdAt));
+   }
+
+   export async function toggleTodo(id: string) {
+     const userId = DEV_USER_ID;
+     const [row] = await db.select().from(todos).where(and(eq(todos.id, id), eq(todos.userId, userId)));
+     if (!row) return { ok: false as const, error: "不存在或无权限" };
+     await db.update(todos).set({ done: !row.done }).where(eq(todos.id, id));
+     return { ok: true as const };
+   }
+   ```
+
+   注意 `toggleTodo` 的查询同时带上了 `id` **和** `userId`——这就是“授权在 DAL 里做”的具体样子。
+2. 补全 `createTodo(title)`、`deleteTodo(id)`，同样带上 `userId` 条件。
+3. 页面（服务器组件）调用 `listTodos()` 渲染列表；表单通过服务器函数调用 `createTodo` 等（复习第 36 周：校验输入、返回结构化结果）。
+4. 读取用户数据属于“每次请求的数据”，记得放在 `<Suspense>` 里（第 35 周）。
+
+##### Day 5：Drizzle 查询练习（1.5h）
+
+1. 给 `todos` 加一列 `priority`（`integer`，默认 0），走一遍 Day 3 的迁移流程。
+2. 用 Drizzle 写：按优先级排序、只查未完成、统计完成数量（`count()`）、批量标记完成。
+3. 对每条 Drizzle 查询，在开发时打开日志（`drizzle(client, { schema, logger: true })`），在终端看到生成的 SQL，确认和你手写的一致。
+
+##### Day 6：类型推导与测试数据（1h）
+
+1. `type Todo = typeof todos.$inferSelect;`、`type NewTodo = typeof todos.$inferInsert;`——类型从表结构自动推导，不再手写接口。
+2. 写一个 `db/seed.ts` 插入 10 条测试数据，在 `package.json` 加 `"db:seed": "tsx db/seed.ts"`（seed 脚本需要自行用 dotenv 加载 `.env.local`）。
+3. 练习“从零重建”：`supabase db reset`（清空本地数据库）→ `pnpm exec drizzle-kit migrate` → `pnpm db:seed`。以后数据乱了就这样重来。
+
+##### Day 7：复习（1h）
+
+1. 闭卷画出 Day 1 的架构图并解释 5 条规则。
+2. 自测问题。
+
+**验收清单：**
+
+- [ ] 本地 Supabase + Next.js + Drizzle 跑通增删改查
+- [ ] 所有表 RLS 已启用（Studio 中可见），没有为 anon / authenticated 写策略
+- [ ] 每个 DAL 函数的查询都带有用户条件
+- [ ] 能从零重建数据库
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Drizzle：连接 Supabase](https://orm.drizzle.team/docs/connect-supabase) | Day 2 |
+| [Drizzle：Schema 声明](https://orm.drizzle.team/docs/sql-schema-declaration) | Day 3 |
+| [Drizzle：Migrations](https://orm.drizzle.team/docs/migrations) | Day 3 |
+| [Drizzle：Row-Level Security](https://orm.drizzle.team/docs/rls) | Day 3 |
+| [Drizzle：Select](https://orm.drizzle.team/docs/select) / [Update](https://orm.drizzle.team/docs/update) | Day 4–5 |
 
 **自测问题：**
 
-- OAuth 2.0 Authorization Code Flow 的完整步骤是什么？画出序列图。
-- Access Token 过期后会发生什么？Refresh Token 在这个过程中扮演什么角色？
+1. 修改了表结构中一个字段的类型，要执行哪些步骤？
+2. 为什么 DAL 查询必须带用户条件，即使表上开启了 RLS？
 
 ---
 
-#### 第 43 周（前半）：Row Level Security（RLS）
+#### 第 41 周：SaaS 表结构设计
 
-**主题：** 用数据库级别的安全策略确保用户只能访问自己有权限的数据
+**本周目标：** 为一个多人 SaaS 设计完整的数据模型，画出 ER 图，并用 Drizzle 实现。
 
-**学习内容：**
+##### Day 1：实体与关系（1.5h）
 
-- RLS 是什么：数据库层面的访问控制，独立于应用代码。即使应用代码有 bug，RLS 也能防止越权访问——这是深度防御的体现
-- 编写 RLS 策略：分别为 `SELECT`、`INSERT`、`UPDATE`、`DELETE` 操作编写策略。使用 `auth.uid()` 获取当前用户 ID
-- 常见 SaaS RLS 模式：
-  - 用户隔离：`WHERE user_id = auth.uid()`（用户只能看到自己的数据）
-  - 团队共享：通过 `team_members` 表 JOIN 判断用户是否属于某个团队
-  - 角色权限：管理员可以操作所有团队数据，普通成员只能操作自己的
-- 测试 RLS 策略：用不同用户身份执行查询，验证权限是否正确
-- RLS 常见坑：忘记启用 RLS（默认关闭！）、策略过于宽松、策略之间的 OR/AND 关系
+1. 列出一个典型 SaaS 的实体：用户资料（profiles）、团队（teams）、团队成员（team_members，含角色）、订阅（subscriptions）、业务内容（例如 projects）、邀请（invitations）。
+2. 判断每两个实体之间的关系：一对一（用户 ↔ 资料）、一对多（团队 → 项目）、多对多（用户 ↔ 团队，通过 team_members 中间表）。
+3. 在 [dbdiagram.io](https://dbdiagram.io/) 画出 ER 图。
 
-**本周产出物：**
+##### Day 2：范式与取舍（1.5h）
 
-- 在上周的认证应用基础上，实现完整的 RLS 策略：用户只能 CRUD 自己的数据 + 团队成员可以读取团队共享数据 + 管理员可以管理团队设置。编写至少 5 个测试用例验证 RLS 策略
+1. 读一篇范式入门（1NF、2NF、3NF），用自己的话写出每一条。
+2. 判断：订单表里存“下单时的商品价格”是不是违反范式？（不是冗余——价格以后会变，下单时的价格是历史事实，必须保存。）
+3. 规则：默认遵守 3NF；只有在“数据是历史快照”或有明确性能需要时才冗余。
 
-**推荐资源：**
+##### Day 3：用户资料与 Supabase Auth 的关系（1.5h）
 
-- Supabase RLS 文档：https://supabase.com/docs/guides/database/postgres/row-level-security
-- Supabase RLS 指南（实战）：https://supabase.com/docs/guides/auth/row-level-security
+1. Supabase 的用户存放在 `auth.users`（不要修改这个表）。你自己的资料表用相同的 ID 关联：
 
-**AI 使用指南（Level 2）：**
+   ```ts
+   import { authUsers } from "drizzle-orm/supabase";
 
-- ✅ 可以：让 AI 解释 RLS 策略的语法；让 AI 审查你写的策略并找出漏洞
-- ❌ 禁止：让 AI 生成 RLS 策略而你不测试——安全策略必须手动验证；不理解 `auth.uid()` 的来源就使用它
+   export const profiles = pgTable.withRLS("profiles", {
+     id: uuid("id").primaryKey().references(() => authUsers.id, { onDelete: "cascade" }),
+     displayName: text("display_name").notNull(),
+     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+   });
+   ```
+
+2. 用户注册后如何创建 profile：在第 42 周的注册服务器函数中，注册成功后由服务器创建（逻辑清楚、易测试）。
+
+##### Day 4：团队与角色（1.5h）
+
+1. `teams`（id、name、slug 唯一、created_at）；`team_members`（team_id、user_id、role，复合主键 `(team_id, user_id)`）。
+2. `role` 用 Postgres 枚举：`pgEnum("team_role", ["owner", "admin", "member"])`。
+3. 外键删除策略：删除团队 → 成员记录一起删（cascade）；删除用户 → 成员记录一起删；但如果用户是某团队唯一的 owner，应先在应用层阻止删除（写进待办，第 101 周实现）。
+
+##### Day 5：订阅与业务表（1.5h）
+
+1. `subscriptions`：`team_id`（订阅属于团队而不是个人，方便以后做团队版）、`provider`（stripe 等）、`provider_customer_id`、`provider_subscription_id`（唯一）、`status`（文本，存支付平台返回的原值）、`price_id`、`current_period_end`、`cancel_at_period_end`、`updated_at`。
+2. `webhook_events`：`id`（支付平台的事件 ID，主键，用于防止重复处理）、`type`、`received_at`。
+3. 一张业务表（例如 `projects`：team_id、name、created_by、时间戳）。
+4. 索引：所有外键列；按查询需要的组合索引（例如 `projects (team_id, created_at)`）。
+
+##### Day 6：实现与种子数据（2h）
+
+在 `saas-lab` 中用 Drizzle 实现全部表（每张都 `withRLS`），生成迁移并读懂 SQL，执行。写种子脚本：2 个团队、5 个用户（种子中可以直接往 `auth.users` 插入测试用户，或先只插入业务表，第 42 周注册真实用户后再关联）、若干项目。
+
+##### Day 7：复习（1h）
+
+自测问题；ER 图放进 README。
+
+**验收清单：**
+
+- [ ] ER 图 + Drizzle 实现 + 迁移文件
+- [ ] 所有外键有索引；所有表启用 RLS
+- [ ] 能解释每个 `on delete` 选择
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [dbdiagram.io](https://dbdiagram.io/) | Day 1 |
+| [Supabase：管理用户数据](https://supabase.com/docs/guides/auth/managing-user-data) | Day 3 |
+| [Drizzle：Indexes & Constraints](https://orm.drizzle.team/docs/indexes-constraints) | Day 4–5 |
 
 **自测问题：**
 
-- 如果一张表启用了 RLS 但没有创建任何策略，会发生什么？
-- 设计一个 RLS 策略：团队管理员可以增删改查团队的所有数据，普通成员只能查看和创建，不能修改和删除他人的数据。用 SQL 写出这个策略。
+1. 为什么需要 `team_members` 中间表？
+2. 频繁查询“某团队的所有成员”，应该在哪些列上建索引？
 
 ---
 
-#### 第 43 周（后半）：文件存储 + Supabase Storage
+#### 第 42 周：Supabase Auth——邮箱登录与 GitHub 登录
 
-**主题：** 实现文件上传下载功能——SaaS 应用的常见需求
+**本周目标：** 实现注册、邮箱确认、登录、退出、GitHub 第三方登录；用 `proxy.ts` 刷新会话；用 `getClaims()` 在数据访问层中认证；替换掉第 40 周的固定测试用户。
 
-**学习内容：**
+##### Day 1：理解会话（1.5h）
 
-- Supabase Storage 概念：存储桶（Bucket）、公开 vs 私有桶、文件路径组织方式
-- 从 Next.js 上传文件：前端使用 `<input type="file">` 获取文件，通过 Supabase Client 上传到指定桶
-- 文件下载和公开 URL：`getPublicUrl()` 获取公开访问链接
-- 图片处理：Supabase Storage 的 Transforms 功能——自动缩放、裁剪、格式转换，无需第三方图片处理服务
-- 存储策略（Storage Policies）：类似 RLS 的访问控制，确保用户只能上传和访问自己的文件
+1. 读 [Supabase：Next.js 服务端认证](https://supabase.com/docs/guides/auth/server-side/nextjs)。
+2. 理解流程：登录成功后，Supabase 返回 **access token**（JWT，短期有效，约 1 小时）和 **refresh token**（长期）。`@supabase/ssr` 把它们存进 **Cookie**（复习 32B Day 4）。access token 过期前，`proxy.ts` 用 refresh token 换新的，并写回 Cookie。
+3. 三个方法的区别（写进笔记）：
+   - `getClaims()`：验证 JWT 签名后返回其中的信息。**服务器端保护页面和数据时使用它。**
+   - `getUser()`：向 Supabase Auth 服务器请求最新用户信息（有网络请求）。需要最新资料时使用。
+   - `getSession()`：直接从 Cookie 读出会话，**不验证**。服务器端不能用它做权限判断——Cookie 可以被伪造。
 
-**本周产出物：**
+##### Day 2：两个客户端工具函数 + proxy（1.5h）
 
-- 用户头像上传功能：用户可以上传头像图片，自动缩放为多个尺寸（原图 + 缩略图），在个人资料页显示。包含文件类型和大小验证
+按 Supabase 文档的 Next.js 指南，**亲手输入**以下三个文件（不要复制粘贴；每输入一段，在上方写一行中文注释说明它做什么）：
 
-**推荐资源：**
+1. `lib/supabase/client.ts`：用 `createBrowserClient(url, publishableKey)` 创建浏览器端客户端。
+2. `lib/supabase/server.ts`：用 `createServerClient`，通过 `await cookies()` 的 `getAll` / `setAll` 读写 Cookie。文档中 `setAll` 外面有一个 `try/catch`，注释中解释原因：服务器组件里不能写 Cookie，失败可以忽略，因为 proxy 会负责刷新。
+3. `proxy.ts` + `lib/supabase/proxy.ts`：在每次请求时刷新会话（调用 `getClaims()` 触发刷新），并把新的 Cookie 写回响应。matcher 排除静态资源。
 
-- Supabase Storage 文档：https://supabase.com/docs/guides/storage
-- Supabase Storage Transforms：https://supabase.com/docs/guides/storage/serving/image-transformations
+用你的 `publicEnv` 代替文档中的 `process.env.XXX!`。
 
-**AI 使用指南（Level 2）：**
+##### Day 3：数据访问层的认证函数（1.5h）
 
-- ✅ 可以：让 AI 生成文件上传组件的骨架代码；让 AI 生成 Storage Policy 模板
-- ❌ 禁止：让 AI 处理文件验证逻辑而你不理解（恶意文件上传是常见安全漏洞）；跳过存储策略的配置
+1. 新建 `lib/dal/auth.ts`：
+
+   ```ts
+   import "server-only";
+   import { cache } from "react";
+   import { redirect } from "next/navigation";
+   import { createClient } from "@/lib/supabase/server";
+
+   export const getCurrentUser = cache(async () => {
+     const supabase = await createClient();
+     const { data, error } = await supabase.auth.getClaims();
+     if (error || !data) return null;
+     return { id: data.claims.sub, email: data.claims.email };
+   });
+
+   export async function requireUser() {
+     const user = await getCurrentUser();
+     if (!user) redirect("/login");
+     return user;
+   }
+   ```
+
+   React 的 `cache()` 让同一次请求中多次调用只执行一次。
+2. 打开 `lib/dal/todos.ts`，删除 `DEV_USER_ID`，每个函数第一行改为 `const { id: userId } = await requireUser();`。
+3. 读取了 Cookie 的组件都是“每次请求的数据”——确认它们都在 `<Suspense>` 内（第 35 周）。
+
+##### Day 4：邮箱注册与确认（1.5h）
+
+1. 登录页 `/login`、注册页 `/signup`，表单提交到服务器函数，服务器函数中用 `lib/supabase/server.ts` 的客户端调用 `supabase.auth.signUp({ email, password })` / `signInWithPassword(...)`。输入先用 Zod 校验（邮箱格式、密码至少 8 位）。
+2. 注册后打开本地邮件工具（`supabase status` 中的 Mailpit / Inbucket 地址），找到确认邮件。
+3. 按 Supabase 文档添加确认路由（`app/auth/confirm/route.ts`，用 `verifyOtp` 校验链接中的 `token_hash`），点击邮件中的链接完成确认。确认邮件模板中的链接格式要与该路由匹配，文档里有说明。
+4. 注册成功后为用户创建 `profiles` 记录（第 41 周 Day 3）。
+5. 退出：服务器函数调用 `supabase.auth.signOut()` 后 `redirect("/login")`。
+6. 忘记密码：`/forgot-password` 页面的服务器函数调用 `supabase.auth.resetPasswordForEmail(email, { redirectTo: "http://localhost:3000/auth/confirm?next=/reset-password" })`（以 Supabase 文档中当前的重置流程为准）；用户点击邮件链接、完成确认后进入 `/reset-password`，在那里调用 `supabase.auth.updateUser({ password })`。无论邮箱是否存在，页面都显示同样的“如果该邮箱已注册，你会收到邮件”，避免泄露哪些邮箱注册过。
+7. 错误处理：错误密码、未确认邮箱、邮箱已注册——给出人话提示，不要原样显示错误对象。
+
+##### Day 5：GitHub 登录（OAuth）（1.5h）
+
+1. 理解授权码流程（画序列图）：用户点“用 GitHub 登录” → 跳转 GitHub 授权页 → 用户同意 → GitHub 带着一次性 `code` 跳回 Supabase → Supabase 用 code 换取令牌 → 跳回你的应用的回调地址 → 你的应用用 `exchangeCodeForSession(code)` 建立会话。
+2. GitHub → Settings → Developer settings → OAuth Apps → New OAuth App：Homepage URL `http://localhost:3000`；Authorization callback URL `http://127.0.0.1:54321/auth/v1/callback`（本地 Supabase 的回调地址）。记下 Client ID，生成 Client Secret。
+3. 打开项目中的 `supabase/config.toml`，找到 `[auth.external.github]`，设置 `enabled = true`，`client_id` 和 `secret` 用 `env(...)` 读取环境变量（文件里有注释示例），把真实值写进 `supabase/.env`（确认它在 `.gitignore` 中）。同时检查 `[auth]` 中的 `site_url` 和 `additional_redirect_urls` 包含 `http://localhost:3000`。
+4. `supabase stop && supabase start` 让配置生效。
+5. 登录按钮的服务器函数调用 `signInWithOAuth({ provider: "github", options: { redirectTo: "http://localhost:3000/auth/callback" } })` 并 `redirect(data.url)`；回调路由 `app/auth/callback/route.ts` 读取 `code` 并调用 `exchangeCodeForSession`。
+6. 完整走一遍，在 Studio 的 Authentication 页面看到 GitHub 用户。
+
+##### Day 6：保护页面与测试（1.5h）
+
+1. `/dashboard` 下的所有页面和服务器函数都通过 `requireUser()` 获取用户。
+2. 在 proxy 中加一个“乐观重定向”：未登录访问 `/dashboard` 直接跳 `/login`（体验更好），但**不依赖它做安全**（第 37 周 Day 5）。
+3. 手动测试：两个不同用户分别登录（用两个浏览器或一个无痕窗口），各自只能看到自己的待办。
+4. 尝试越权：用户 A 登录后，构造一个请求删除用户 B 的待办（在 DevTools 中复制服务器函数请求、修改 id 后重发；或临时在页面上加一个输入框直接传入 B 的 id）。确认 DAL 拒绝。
+
+##### Day 7：复习（1h）
+
+画出：邮箱注册 → 确认 → 登录 → 访问 dashboard → 退出 的完整流程，标出每一步中 Cookie 的变化。
+
+**验收清单：**
+
+- [ ] 邮箱注册/确认/登录/退出、GitHub 登录全部可用
+- [ ] 服务器端只用 `getClaims()` 做认证；代码中没有用 `getSession()` 做判断
+- [ ] 越权测试被拒绝
+- [ ] Client Secret 等密钥没有提交到 Git
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Supabase：Next.js 服务端认证](https://supabase.com/docs/guides/auth/server-side/nextjs) | 本周主文档 |
+| [Supabase：迁移到新 API 密钥](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys) | Day 2：理解 publishable / secret key |
+| [Supabase：Login with GitHub](https://supabase.com/docs/guides/auth/social-login/auth-github) | Day 5 |
+| [Next.js：Authentication](https://nextjs.org/docs/app/guides/authentication) | Day 3、Day 6 |
+| [OAuth 2.0 简明介绍](https://oauth.net/2/) | Day 5 |
 
 **自测问题：**
 
-- 如果允许用户上传任意文件而不做验证，可能导致哪些安全问题？
-- 公开桶和私有桶各适合存储什么类型的文件？你的 SaaS 应用中，用户上传的文件应该放在哪种桶？
+1. OAuth 授权码流程的每一步是什么？为什么用“code 换令牌”而不是直接把令牌放在跳转 URL 里？
+2. access token 过期后发生什么？refresh token 起什么作用？
+3. 为什么服务器端不能用 `getSession()` 判断用户身份？
 
 ---
 
-#### 第 44 周：SaaS 产品发现 + 验证
+#### 第 43 周：RLS 策略与文件存储
 
-**主题：** 找到你的 SaaS 产品方向——这是从"学习者"到"构建者"的关键一步
+**本周目标：** 学会编写和测试 RLS 策略；亲手验证 Drizzle 绕过 RLS；用 RLS 保护浏览器直连的 Storage 上传。
 
-**学习内容：**
+##### Day 1：RLS 是什么（1.5h）
 
-- 寻找 SaaS 创意的方法论：
-  - **挠自己的痒（Scratch Your Own Itch）：** 你日常工作中有哪些重复、低效、烦人的流程？
-  - **行业痛点：** 你熟悉的行业或领域有哪些人在用 Excel 解决的问题？
-  - **改进现有工具：** 找到一个你不满意的现有 SaaS，做一个更简单/更便宜/更专注的替代品
-- 验证技术——在写代码之前确认有人需要你的产品：
-  - Landing Page 测试：做一个单页描述你的产品概念，看有多少人留下邮箱
-  - 社交媒体验证：在 Twitter/X、Reddit、V2EX 等社区发帖描述痛点，观察反馈
-  - 直接对话：找 3-5 个潜在用户聊天，问他们目前如何解决这个问题
-- MVP 范围界定：Must-have（没有这个功能产品不成立）vs Nice-to-have（可以后续迭代加入）vs Won't-have（明确不做的功能）
-- 定价假设：你的目标用户愿意为这个问题付多少钱？竞品价格如何？
+1. 读 [Supabase：Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security)。
+2. RLS 是数据库层的访问控制：开启后，**除非有策略允许，否则一行都不能访问**（对受 RLS 约束的角色而言）。
+3. 在 `sql-lab`（第 39 周的练习项目）中建一张 `notes` 表（id、user_id、content），开启 RLS，然后写策略：
 
-**本周产出物：**
+   ```sql
+   alter table notes enable row level security;
 
-- 一份 `spec.md` 文档，包含：问题陈述、目标用户画像、核心功能列表（标注优先级）、定价假设、竞品分析（至少 2 个竞品）
+   create policy "用户只能读取自己的笔记"
+   on notes for select
+   to authenticated
+   using ( (select auth.uid()) = user_id );
 
-**备选项目（如果实在没有想法）：**
+   create policy "用户只能插入属于自己的笔记"
+   on notes for insert
+   to authenticated
+   with check ( (select auth.uid()) = user_id );
+   ```
 
-1. **简易发票工具：** 面向自由职业者，创建和管理发票，支持 PDF 导出，追踪付款状态
-2. **带标签的书签管理器：** 比浏览器书签更智能——支持标签、搜索、分享书签集合
-3. **习惯追踪器（含连胜机制）：** 每日打卡、连续天数可视化、统计分析、提醒通知
+4. 理解：`using` 决定“哪些已有的行可见/可改”，`with check` 决定“新写入的行是否合法”。`(select auth.uid())` 外面包一层 `select` 是官方推荐的性能写法。
 
-**推荐资源：**
+##### Day 2：用不同身份测试策略（1.5h）
 
-- The Mom Test（书籍）：如何正确地与用户对话验证需求
-- Indie Hackers 社区：https://www.indiehackers.com
-- Product Hunt：https://www.producthunt.com （观察什么样的产品能火）
+1. 在 `sql-lab` 中通过 Studio 的 Authentication 页面创建两个测试用户 A、B。
+2. 写一个 `scripts/rls-test.ts`（用 tsx 运行），用 `@supabase/supabase-js` 和 **publishable key** 创建客户端，分别以 A、B 身份 `signInWithPassword`，然后：A 插入一条笔记；B 尝试读取（应读不到）；B 尝试插入 `user_id` 为 A 的笔记（应被拒绝）；未登录时读取（应为空）。
+3. 补全 `update`、`delete` 策略，并为它们各加一个测试。
+4. 写一条“团队共享”策略：同一团队的成员可以读取团队笔记（`exists (select 1 from team_members where ...)`）。
 
-**AI 使用指南（Level 2）：**
+##### Day 3：亲手验证 Drizzle 绕过 RLS（1h）
 
-- ✅ 可以：让 AI 帮你做竞品分析和市场调研；让 AI 帮你头脑风暴产品创意；让 AI 帮你完善 spec.md 的结构
-- ❌ 禁止：让 AI 替你做产品决策——选择做什么产品必须基于你自己的洞察和验证；跳过用户验证步骤
+1. 在 `scripts/` 中用 Drizzle（`DATABASE_URL` 连接）查询 `notes` 表：返回了**所有用户**的笔记，RLS 没有任何作用。
+2. 在 Studio SQL Editor 中执行 `select rolname, rolbypassrls from pg_roles where rolname in ('postgres', 'authenticated', 'anon');`，看到 `postgres` 的 `rolbypassrls` 为 `true`。
+3. 在笔记中写出结论：**RLS 只保护经过 Supabase 数据接口、以 `anon`/`authenticated` 身份进行的访问；你的服务器代码通过 Drizzle 的访问，安全完全依赖 DAL 中的授权检查。** 这就是第 40 周架构规则 1 的原因。
+
+##### Day 4：Storage 与上传策略（1.5h）
+
+1. 回到 `saas-lab`。在 `supabase/config.toml` 中配置（或在 Studio 中创建）一个**私有**存储桶 `avatars`。
+2. 规定文件路径：`{用户ID}/avatar.webp`。为 `storage.objects` 写策略：已登录用户只能在以自己 ID 命名的文件夹中上传、读取、更新：
+
+   ```sql
+   create policy "用户只能上传到自己的文件夹"
+   on storage.objects for insert
+   to authenticated
+   with check (
+     bucket_id = 'avatars'
+     and (storage.foldername(name))[1] = (select auth.uid())::text
+   );
+   ```
+
+   用同样的条件补全 `select`、`update` 策略。把这些 SQL 放进一个 drizzle 自定义迁移（`pnpm exec drizzle-kit generate --custom --name storage_policies`，在生成的空文件中写 SQL），这样它们也纳入迁移管理。
+3. 理解为什么这里需要 RLS：上传是**浏览器**直接用 publishable key + 用户会话访问 Supabase，不经过你的服务器（这样大文件不占用服务器带宽）。
+
+##### Day 5：上传头像（1.5h）
+
+1. 客户端组件：`<input type="file" accept="image/png,image/jpeg,image/webp">`。
+2. 上传前在浏览器中校验：类型在白名单内、大小 ≤ 2MB。**注意：浏览器端校验只是体验，安全靠的是存储桶本身的限制**——在存储桶设置中也配置允许的 MIME 类型和大小上限。
+3. 上传前缩放：用 `createImageBitmap` 读入图片，画到 256×256 的 `<canvas>` 上，`canvas.toBlob(..., "image/webp", 0.85)` 导出。原文所说的 Supabase 图片变换功能需要付费计划，所以这里自己缩放。
+4. 用 `lib/supabase/client.ts` 的客户端 `storage.from("avatars").upload(path, blob, { upsert: true })`。
+5. 显示：私有桶的文件用 `createSignedUrl(path, 3600)` 生成 1 小时有效的链接。
+6. 用第二个用户尝试上传到第一个用户的文件夹——应被拒绝。
+
+##### Day 6：Advisors 安全检查（1h）
+
+1. 打开 Studio 的 Advisors → Security，逐条处理警告。目标：没有“表未启用 RLS”的警告。
+2. 写一份 `SECURITY.md`：列出每张表的访问方式（只经 DAL / 浏览器直连 + 哪些策略）。
+
+##### Day 7：复习（1h）
+
+自测问题。
+
+**验收清单：**
+
+- [ ] `rls-test.ts` 中至少 8 个测试场景全部符合预期
+- [ ] 完成并记录 Drizzle 绕过 RLS 的实验
+- [ ] 头像上传可用，跨用户上传被拒绝，Advisors 无 RLS 警告
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Supabase：Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security) | Day 1–2 |
+| [Supabase：Storage 访问控制](https://supabase.com/docs/guides/storage/security/access-control) | Day 4 |
+| [Supabase：Storage 上传](https://supabase.com/docs/guides/storage/uploads/standard-uploads) | Day 5 |
+| [MDN：canvas.toBlob](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob) | Day 5 |
 
 **自测问题：**
 
-- 你的产品解决的核心问题用一句话能描述清楚吗？如果目标用户听到这句话不感兴趣，说明什么？
-- Must-have 功能列表有几项？如果超过 5 项，你可能需要进一步削减范围。
+1. 表开启了 RLS 但没有任何策略，用 publishable key 查询会怎样？用 Drizzle 查询会怎样？
+2. 为什么文件类型校验必须在存储桶设置（服务器端）也做一次？
 
 ---
 
-#### 第 45 周（前半）：SaaS UI/UX 设计
+#### 第 44 周：SaaS 产品发现与验证
 
-**主题：** 在写代码之前把产品设计想清楚——线框图 + 用户流程设计
+**本周目标：** 从你从第 32 周开始记录的痛点中选出产品方向，用低成本方式验证，写出第一版产品规格。
 
-**学习内容：**
+##### Day 1：整理痛点清单（1.5h）
 
-- 线框图（Wireframing）工具选择：Excalidraw（免费、轻量、适合快速草图）或 Figma（免费版够用、更精细、有组件系统）
-- Landing Page 设计原则：
-  - Hero Section：一句话说清价值主张 + CTA 按钮
-  - 功能展示：3-4 个核心功能的简洁展示
-  - 社会证明：用户评价、使用数据（初期可以先占位）
-  - 定价表：清晰的价格对比
-  - 最终 CTA：再次引导注册
-- Dashboard 布局模式：侧边栏导航 vs 顶部导航、内容区域布局、空状态设计
-- 用户引导（Onboarding）流程设计：新用户注册后的前 5 分钟体验，减少认知负荷，引导完成关键操作
-- Mobile-first 设计思维：先设计手机端，再扩展到桌面端
+1. 打开你从第 32 周起每周记录的痛点（如果没有记录，今天花 1 小时补写 20 条）。
+2. 每条打三项分（1–5）：多痛（有多烦）、多频（多久遇到一次）、有没有人会为此付钱。
+3. 选出得分前 3 的痛点。
 
-**本周产出物：**
+##### Day 2：竞品调查（1.5h）
 
-- 完整的线框图集：Landing Page、注册/登录页、Dashboard（含空状态和数据状态）、设置页面、核心功能页面。至少覆盖手机端和桌面端两个尺寸
+对前 3 个痛点，各找 2–3 个现有解决方案（搜索、Product Hunt、G2、Reddit）。记录：价格、目标用户、用户评论里最常见的抱怨（这是你的机会）。
 
-**推荐资源：**
+##### Day 3：用户访谈（2h）
 
-- Excalidraw：https://excalidraw.com
-- Figma（免费版）：https://www.figma.com
-- Dribbble（SaaS Dashboard 设计灵感）：https://dribbble.com/search/saas-dashboard
-- shadcn/ui 组件库（你将用它实现 UI）：https://ui.shadcn.com
+1. 读《The Mom Test》的核心规则（网上有很多总结）：不问“你会用吗”，而是问“你上次遇到这个问题是什么时候？你当时怎么解决的？花了多少时间/钱？”
+2. 找 3–5 个潜在用户（同事、朋友、相关社区），每人聊 15–20 分钟，记录原话。
 
-**AI 使用指南（Level 2）：**
+##### Day 4：选定方向（1h）
 
-- ✅ 可以：让 AI 提供 Landing Page 文案建议；让 AI 分析竞品的 UI 设计模式
-- ❌ 禁止：跳过设计阶段直接写代码——"边做边想"会导致大量返工
+根据访谈选定一个方向。如果实在没有把握，从备选项目中选一个：简易发票工具（自由职业者）、带标签的书签管理器、习惯追踪器（含连胜机制）。
+
+##### Day 5：落地页验证（2h）
+
+1. 用你在第 21–24 周学的技能，花 2 小时做一个单页：一句话价值主张、3 个核心功能、一个“加入等候名单”的邮箱表单（数据存进 `saas-lab` 的一张表，或直接用一个表单服务）。
+2. 部署后发到 1–2 个目标用户聚集的社区，记录访问量和留下邮箱的人数（第一个数据点，多少都可以）。
+
+##### Day 6：写第一版规格（1.5h）
+
+用 OpenSpec（你的项目中已安装，用 `/opsx-propose` 命令）或第三部分的 spec 模板写 `spec.md`：问题陈述、目标用户、Must 功能（≤ 5 个）、Won't、定价假设、竞品对比、成功指标（例如“上线 4 周内 10 个活跃用户”）。
+
+##### Day 7：复习（1h）
+
+自测问题。
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Indie Hackers](https://www.indiehackers.com/) | Day 2：搜索你的方向，看别人的收入和经验 |
+| [Product Hunt](https://www.producthunt.com/) | Day 2 |
+| 《The Mom Test》（Rob Fitzpatrick） | Day 3：书很薄，值得买来读完 |
 
 **自测问题：**
 
-- 用户从第一次访问 Landing Page 到开始使用核心功能，需要经过哪些步骤？每个步骤可能流失用户的原因是什么？
-- 你的 Dashboard 空状态（用户刚注册、还没有数据）应该展示什么？
+1. 你的产品能用一句话说清楚吗？
+2. Must 功能有几项？超过 5 项就继续砍。
 
 ---
 
-#### 第 45 周（后半）：支付集成 I — Lemon Squeezy / Stripe 配置
+#### 第 45 周：产品设计 + 支付入门（Stripe 测试模式）
 
-**主题：** 接入支付系统——让产品能收钱，这是 SaaS 的核心闭环
+**本周目标：** 前三天完成线框图和用户流程；后四天在 Stripe 测试模式中跑通订阅结账。
 
-**学习内容：**
+##### Day 1：用户流程与线框图（2h）
 
-- 支付平台选择：Lemon Squeezy（推荐初学者——它作为 Merchant of Record 处理税务和合规问题）vs Stripe（更灵活但需要自己处理税务）
-- 创建账号和配置：产品（Product）、价格计划（Pricing Plan）、测试模式 vs 生产模式
-- 订阅生命周期：理解状态机——`trialing` → `active` → `past_due` → `canceled` → `expired`
-- Checkout 流程实现：用支付平台提供的 Checkout 页面（Hosted Checkout）或嵌入式 Checkout
-- 传递自定义数据：在 Checkout URL 中附带用户 ID，以便后续关联支付与用户
+1. 画出用户从“看到落地页”到“开始使用核心功能”再到“付费”的完整流程，标出每一步可能流失的原因。
+2. 用 Excalidraw 画线框图：落地页、注册/登录、引导（新用户前 5 分钟）、仪表盘（空状态 + 有数据状态）、核心功能页、设置/账单页、定价页。手机和桌面两种尺寸。
 
-**本周产出物：**
+##### Day 2：落地页与定价页设计（1.5h）
 
-- 一个可以工作的结账页面（测试模式）：用户点击"订阅"→ 跳转到支付页面 → 完成支付 → 回调到成功页面。在数据库中记录订阅状态
+1. 落地页结构：Hero（一句话 + 行动按钮）、功能（3–4 个）、社会证明（先放 Beta 用户的话或你自己的使用截图）、定价、FAQ、最后的行动按钮。
+2. 定价：先只做两档（免费版 + 一个付费版，月付和年付）。写下每档的限制。
 
-**推荐资源：**
+##### Day 3：用 shadcn/ui 组件对照线框图（1h）
 
-- Lemon Squeezy 文档：https://docs.lemonsqueezy.com
-- Stripe 文档：https://docs.stripe.com
-- Lemon Squeezy Next.js 集成指南：https://docs.lemonsqueezy.com/guides/developer-guide/nextjs-billing
+列出每个页面需要的 shadcn 组件；缺少的组件先在 `saas-lab` 中试用一遍。
 
-**AI 使用指南（Level 2）：**
+##### Day 4：Stripe 账户与产品（1.5h）
 
-- ✅ 可以：让 AI 生成支付平台 SDK 的初始化代码；让 AI 解释订阅生命周期的状态转换
-- ❌ 禁止：让 AI 生成完整的支付集成而你不理解每一步——支付代码的 bug 直接影响收入；不测试就部署支付功能
+1. 注册 [Stripe](https://dashboard.stripe.com/register)。如果你所在的国家/地区暂不支持开户，用 Lemon Squeezy 或 Paddle 的测试模式完成本周和下周同样的步骤（概念完全一致：产品、价格、结账、Webhook、订阅状态）。
+2. 确认处于测试环境（Dashboard 左上角显示 Sandbox / Test mode）。
+3. 在 Product catalog 中创建一个产品“Pro”，添加两个**循环（recurring）**价格：月付、年付。记下两个价格 ID（`price_...`）。
+4. 在 Developers → API keys 中复制测试用的 secret key（`sk_test_...`），写入 `.env.local` 的 `STRIPE_SECRET_KEY`，并加入 `lib/server-env.ts` 的校验。
+5. `pnpm add stripe`，新建 `lib/stripe.ts`（第一行 `import "server-only";`）导出 `new Stripe(serverEnv.STRIPE_SECRET_KEY)`。
+
+##### Day 5：创建结账会话（1.5h）
+
+1. 服务器函数 `startCheckout(priceId)`：
+   1. `requireUser()`，并查出用户当前所在团队。
+   2. 校验 `priceId` 是否在你允许的两个价格之内（**永远不要信任客户端传来的价格**）。
+   3. 如果团队还没有 Stripe 客户 ID：`stripe.customers.create({ email, metadata: { teamId } })`，把 ID 存进 `subscriptions` 或团队记录。
+   4. `stripe.checkout.sessions.create({ mode: "subscription", customer, line_items: [{ price: priceId, quantity: 1 }], success_url: "http://localhost:3000/billing?success=1", cancel_url: "http://localhost:3000/pricing", client_reference_id: teamId })`。
+   5. `redirect(session.url)`。
+2. 定价页按钮调用它。用测试卡 `4242 4242 4242 4242`（任意未来日期、任意 CVC）完成支付。
+3. 在 Stripe Dashboard 中看到新的客户和订阅。
+4. 注意：此时你的数据库还**不知道**用户付了钱——**不要**在 `success_url` 页面里把用户标记为已付费（用户可以直接访问这个地址）。下周用 Webhook 解决。
+
+##### Day 6：Stripe CLI（1h）
+
+1. `brew install stripe/stripe-cli/stripe`，`stripe login`。
+2. `stripe listen --forward-to localhost:3000/api/webhooks/stripe`。终端会打印一个 `whsec_...` 签名密钥，写入 `.env.local` 的 `STRIPE_WEBHOOK_SECRET`。
+3. 再完成一次结账，观察 CLI 中打印出的一串事件：`checkout.session.completed`、`customer.subscription.created`、`invoice.paid` 等。把它们的顺序抄进笔记。
+
+##### Day 7：订阅状态（1h）
+
+1. 读 [Stripe：订阅如何运作](https://docs.stripe.com/billing/subscriptions/overview)，抄下订阅的状态：`incomplete`、`incomplete_expired`、`trialing`、`active`、`past_due`、`canceled`、`unpaid`、`paused`。原文列出的 `expired` 等状态属于 Lemon Squeezy，与 Stripe 不同——这正是“状态要存平台原值”的原因。
+2. 写一个纯函数 `hasPaidAccess(status, cancelAtPeriodEnd, currentPeriodEnd, now)`，决定哪些状态可以使用付费功能（例如 `active`、`trialing` 可以；`past_due` 给几天宽限期——由你决定并写进规格）。为它写 8 个 Vitest 测试。
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Stripe：构建订阅集成](https://docs.stripe.com/billing/subscriptions/build-subscriptions) | Day 4–5 |
+| [Stripe：测试卡](https://docs.stripe.com/testing) | Day 5 |
+| [Stripe CLI](https://docs.stripe.com/stripe-cli) | Day 6 |
+| [Stripe：订阅概述](https://docs.stripe.com/billing/subscriptions/overview) | Day 7 |
+| [Stripe Managed Payments](https://docs.stripe.com/payments/managed-payments) | 选读：了解上线时的“代收税”选项 |
 
 **自测问题：**
 
-- 订阅状态从 `active` 变为 `past_due` 意味着什么？你的应用应该如何处理这种状态？
-- 为什么推荐使用支付平台的 Hosted Checkout 而不是自己构建支付表单？从安全角度解释。
+1. 为什么必须在服务器端校验 `priceId`？
+2. 为什么不能在 `success_url` 页面把用户标记为已付费？
 
 ---
 
-#### 第 46 周：支付集成 II — Webhooks + 订阅状态管理
+#### 第 46 周：Webhook 与订阅生命周期
 
-**主题：** 用 Webhook 同步支付事件，实现完整的订阅生命周期管理
+**本周目标：** 安全地接收 Stripe Webhook，把订阅状态同步进数据库；实现功能门控、客户门户（用户自己管理订阅），以及失败、取消、重复事件等全部情况。
 
-**学习内容：**
+##### Day 1：Webhook 端点与签名验证（1.5h）
 
-- Webhook 概念：支付平台在特定事件发生时（如支付成功、订阅取消），向你的服务器发送 HTTP POST 请求。这是 **异步事件驱动** 的通信模式
-- Webhook 签名验证：每个 Webhook 请求都携带签名，你必须验证签名以确认请求来自真正的支付平台，而非恶意伪造
-- 在 Next.js 中实现 Webhook 端点：用 API Route（`route.ts`）接收 Webhook，解析事件类型并处理
-- 需要处理的核心事件：
-  - `subscription_created`：新订阅创建，在数据库中记录
-  - `subscription_updated`：订阅信息变更（升级/降级/续期）
-  - `subscription_cancelled`：用户取消订阅
-  - `subscription_payment_failed`：扣款失败
-- 同步订阅状态到数据库：Webhook 接收到事件后更新 `subscriptions` 表
-- 基于订阅状态的功能门控：付费用户看到完整功能，免费用户看到升级提示
+1. `app/api/webhooks/stripe/route.ts`：
 
-**本周产出物：**
+   ```ts
+   import { stripe } from "@/lib/stripe";
+   import { serverEnv } from "@/lib/server-env";
 
-- 完整的订阅生命周期管理：注册 → 付费 → 访问付费功能 → 取消订阅 → 失去付费功能访问权。Webhook 端点能正确处理所有核心事件，数据库状态与支付平台保持同步
+   export async function POST(request: Request) {
+     const body = await request.text(); // 必须是原始文本，签名基于原始内容计算
+     const signature = request.headers.get("stripe-signature");
+     if (!signature) return new Response("缺少签名", { status: 400 });
 
-**推荐资源：**
+     let event;
+     try {
+       event = stripe.webhooks.constructEvent(body, signature, serverEnv.STRIPE_WEBHOOK_SECRET);
+     } catch {
+       return new Response("签名无效", { status: 400 });
+     }
 
-- Lemon Squeezy Webhook 文档：https://docs.lemonsqueezy.com/guides/developer-guide/webhooks
-- Stripe Webhook 文档：https://docs.stripe.com/webhooks
-- Svix（Webhook 测试工具）：https://www.svix.com
+     console.log("收到事件：", event.type, event.id);
+     return new Response("ok", { status: 200 });
+   }
+   ```
 
-**AI 使用指南（Level 2）：**
+2. 运行 `stripe listen ...`，完成一次结账，确认每个事件都打印出来。
+3. 用 curl 发一个伪造请求（不带签名或签名错误）：返回 400。这就是签名验证的意义——任何人都能向这个地址发请求。
+4. 读 [Stripe：Webhooks](https://docs.stripe.com/webhooks) 的 “Best practices” 一节。
 
-- ✅ 可以：让 AI 生成 Webhook 端点的骨架结构；让 AI 解释 Webhook 签名验证的原理
-- ❌ 禁止：让 AI 生成 Webhook 处理逻辑而你不理解事件流——每个支付事件的处理错误都可能导致用户体验或收入问题；不验证 Webhook 签名
+##### Day 2：幂等性——同一事件可能来两次（1.5h）
+
+1. Stripe 在你没有及时返回 200 时会重发事件，网络问题也可能导致重复。处理逻辑必须做到“处理一次和处理两次结果相同”。
+2. 在处理任何事件之前，先把 `event.id` 插入 `webhook_events` 表（主键冲突说明处理过了）：用 Drizzle 的 `insert ... onConflictDoNothing().returning()`，如果没有返回行，直接回复 200 并结束。
+3. 用 `stripe events resend <事件ID>`（或 Dashboard 中的“重新发送”）重发同一事件，确认没有重复处理。
+
+##### Day 3：同步订阅状态（1.5h）
+
+1. 处理这些事件（在一个 `switch (event.type)` 中，复习 T10 的穷尽思想）：
+   - `checkout.session.completed`：用 `client_reference_id` 找到团队，记录 Stripe 客户 ID。
+   - `customer.subscription.created` / `customer.subscription.updated` / `customer.subscription.deleted`：把订阅的 `id`、`status`、价格 ID、`cancel_at_period_end`、当前周期结束时间 **upsert** 到 `subscriptions` 表（按 `provider_subscription_id` 唯一键）。
+   - `invoice.payment_failed`：记录日志（第 50 周接入邮件通知）。
+2. **当前周期结束时间在哪里：** 较新的 Stripe API 版本中，`current_period_end` 位于订阅项上（`subscription.items.data[0].current_period_end`），而不是订阅对象本身。按你账户使用的 API 版本对应的文档读取，并在代码注释中写明。
+3. 处理完返回 200；处理过程中抛错则返回 500，让 Stripe 稍后重试（结合 Day 2 的幂等，重试是安全的——但要注意：如果在写入 `webhook_events` 后处理失败，需要删除那条记录或在同一事务中完成，否则重试会被跳过。用事务包住“记录事件 + 更新订阅”）。
+
+##### Day 4：功能门控（1.5h）
+
+1. DAL 中新增 `getTeamPlan(teamId)`，读取订阅并调用第 45 周的 `hasPaidAccess`。
+2. 在付费功能的**服务器函数和数据访问函数内部**检查套餐（不只是隐藏按钮）。
+3. 界面：免费用户看到升级提示；付费用户看到完整功能和“管理订阅”按钮。
+
+##### Day 5：客户门户（1h）
+
+1. 在 Stripe Dashboard 的 Billing → Customer portal 中启用门户（允许取消、切换月付/年付、更新银行卡）。
+2. 服务器函数 `openBillingPortal()`：`requireUser()` → 找到团队的客户 ID → `stripe.billingPortal.sessions.create({ customer, return_url: "http://localhost:3000/billing" })` → `redirect(session.url)`。
+3. 在门户中取消订阅，观察 Webhook 事件和数据库中 `cancel_at_period_end` 的变化。
+
+##### Day 6：测试所有路径（2h）
+
+逐一完成并记录结果：
+
+1. 正常订阅（4242 卡）。
+2. 需要额外验证的卡（3D Secure，测试卡列表中的 `4000 0025 0000 3155`）。
+3. 被拒绝的卡（`4000 0000 0000 9995`）。
+4. 月付切换为年付。
+5. 取消（到期前仍可使用，到期后失去权限）。
+6. 续费失败：用 Stripe 的 **Test clocks**（测试时钟）把时间快进到下一个账单日，配合一张会在续费时失败的测试卡，观察 `invoice.payment_failed` 和 `past_due`。
+7. 重复事件（Day 2）。
+
+##### Day 7：复习（1h）
+
+画出订阅状态转换图（从点击订阅到过期的所有路径），标出每个转换对应的 Webhook 事件。
+
+**验收清单：**
+
+- [ ] 伪造的 Webhook 请求返回 400
+- [ ] 重发同一事件不会重复处理
+- [ ] Day 6 的 7 种情况全部符合预期
+- [ ] 付费功能的检查在服务器端
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Stripe：Webhooks](https://docs.stripe.com/webhooks) | Day 1–2 |
+| [Stripe：使用 Webhook 管理订阅](https://docs.stripe.com/billing/subscriptions/webhooks) | Day 3 |
+| [Stripe：Customer portal](https://docs.stripe.com/customer-management) | Day 5 |
+| [Stripe：Test clocks](https://docs.stripe.com/billing/testing/test-clocks) | Day 6 |
+| [Stripe：测试卡](https://docs.stripe.com/testing) | Day 6 |
 
 **自测问题：**
 
-- 如果你的 Webhook 端点返回 500 错误（处理失败），支付平台通常会怎么处理？为什么 Webhook 处理需要幂等性？
-- 画出完整的订阅状态转换图：从用户点击"订阅"到订阅过期的所有可能路径。
+1. Webhook 端点返回 500 时，Stripe 会怎么做？为什么处理逻辑必须是幂等的？
+2. 为什么 Webhook 必须用 API 路由而不是服务器函数？
 
 ---
 
 ## 模块 F：第一个 SaaS MVP 上线（第 47-52 周）
 
-> 学习阶段结束，构建阶段开始。接下来的 6 周，你将把前面学到的所有技术整合到一个真实产品中。这不是练习项目——这是你的第一个商业产品雏形。你会遇到大量"教程里不会讲"的问题，而这正是最有价值的学习。
+> 学习阶段结束，构建阶段开始。接下来 6 周把前面所有技术整合进一个真实产品。你会遇到大量“教程里没讲过”的问题——这正是最有价值的部分。
+>
+> **工作方式：** 每天开始时写下今天要完成的 1–3 个任务（来自 `spec.md` 的 Must 列表）；每天结束时提交并推送。遇到卡住超过 2 小时的问题，按 4.5 节第 6 条去社区求助。
+>
+> **AI 使用：Level 2。** 本模块开始正式使用 AGENTS.md 和 Agent 做骨架工作。业务逻辑、认证授权、支付、RLS 仍然由你编写。
 
 ---
 
-#### 第 47 周：MVP Sprint — 项目搭建 + 核心基础设施
+#### 第 47 周：项目搭建与基础设施
 
-**主题：** 初始化项目骨架，把所有技术栈集成到一起
+**本周目标：** 从空目录开始，一周内跑通“注册 → 登录 → 进入仪表盘 → 创建数据 → 付费解锁”的完整骨架（功能可以是占位的），并建立本地、预览、生产三套环境。
 
-**学习内容：**
+##### Day 1：创建项目与 AI 规则（1.5h）
 
-- 用 `create-next-app` 初始化项目，配置 TypeScript strict mode
-- 集成 Supabase（数据库 + Auth）：配置 `@supabase/ssr`，创建 Supabase Client 工具函数
-- 集成 Drizzle ORM：定义完整的数据库 Schema（基于第 41 周的设计），运行迁移
-- 集成支付（Lemon Squeezy / Stripe）：配置 SDK，创建 Webhook 端点
-- 设置 `.cursor/rules/` 目录：定义项目规范（命名约定、文件结构、组件模式）
-- 创建 `CLAUDE.md`：为 AI 助手提供项目上下文（技术栈、架构决策、禁止事项）
-- 配置代码质量工具：ESLint + Prettier，确保代码风格一致
+1. `pnpm create next-app@latest <产品名>`（同第 33 周设置），`supabase init`，`git init`，推送到 GitHub 私有仓库。
+2. 在项目根目录放 `.node-version`（内容 `24`）。
+3. 打开自动生成的 `AGENTS.md`，在 Next.js 标记区块**之外**追加你的项目约定（模板见第三部分 3.2），包括：技术栈、目录结构、数据访问架构的 5 条规则（第 40 周 Day 1）、“服务器端只用 `getClaims()`”、“服务器函数必须认证+授权+校验”、“禁止使用 `middleware.ts`、`revalidateTag` 单参数写法”等。
+4. 确认 `CLAUDE.md` 的内容是 `@AGENTS.md`。
+5. 提交：`chore: init project with agents rules`。
 
-**本周产出物：**
+##### Day 2：复用第 40–42 周的基础代码（2h）
 
-- 项目骨架已就绪：能完成完整的注册 → 登录 → 进入 Dashboard → 创建数据 → 付费解锁功能的流程（即使功能是 placeholder）。所有集成在开发环境正常工作
+从 `saas-lab` 中**有选择地**搬入（逐个文件检查，不整个复制）：`lib/env.ts`、`lib/server-env.ts`、`lib/supabase/*`、`proxy.ts`、`lib/dal/auth.ts`、`db/index.ts`、`drizzle.config.ts`。安装对应依赖。本地 `supabase start`，登录流程跑通。
 
-**推荐资源：**
+> 可以让 Agent 在新分支上完成“搬运和安装依赖”这类机械工作（Level 2 允许），但你要逐行审查差异。
 
-- 回顾模块 D 和模块 E 的文档和笔记
-- Cursor Rules 最佳实践：https://docs.cursor.com/context/rules-for-ai
+##### Day 3：数据模型（1.5h）
 
-**AI 使用指南（Level 2）：**
+按 `spec.md` 和第 41 周的设计写 `db/schema.ts`：profiles、teams、team_members、subscriptions、webhook_events，加上你产品的核心业务表。生成迁移、读懂 SQL、执行。写种子脚本。
 
-- ✅ 可以：让 AI 生成项目的初始文件结构和配置文件（ESLint、Prettier、tsconfig、drizzle.config）；让 AI 创建 `.cursor/rules/` 文件
-- ❌ 禁止：让 AI 一次性生成整个项目——你需要逐步集成，确保每一步都能工作
+##### Day 4：支付骨架（1.5h）
+
+搬入第 45–46 周的 Stripe 代码：`lib/stripe.ts`、结账服务器函数、Webhook 路由、`hasPaidAccess` 及其测试。在 Stripe 中为这个产品新建产品和价格（测试模式）。
+
+##### Day 5：代码质量工具（1h）
+
+1. ESLint：`create-next-app` 已生成配置。在 `package.json` 增加 `"lint": "eslint ."`、`"typecheck": "tsc --noEmit"`。注意 Next.js 16 已移除 `next lint` 命令，直接运行 `eslint`。
+2. 如果 ESLint 的 TypeScript 插件提示与 TypeScript 7 不兼容：这是因为 TypeScript 7.0 暂时没有提供编程接口（预计 7.1 提供）。处理方式：按插件报错中的说明或其文档安装 TypeScript 6 兼容包（`@typescript/typescript6`）；类型检查本身仍用 TypeScript 7 的 `tsc`。
+3. Prettier（可选）：`pnpm add -D prettier prettier-plugin-tailwindcss`，配置自动排序 Tailwind 类名。
+4. 把第 29 周的 CI 工作流复制过来：`pnpm lint`、`pnpm typecheck`、`pnpm test:run`、`pnpm build`。
+
+##### Day 6：三套环境（2h）
+
+1. **本地：** 本机 Supabase（`supabase start`）+ `pnpm dev`。
+2. **生产数据库：** 在 [supabase.com](https://supabase.com/dashboard) 创建云端项目（选择离你的用户最近的区域，记下数据库密码）。在项目的 Connect 页面复制两种连接串：**连接池（Transaction 模式，端口 6543）**给应用运行时用；**直连或 Session 模式**给迁移用。
+3. 在本机用生产的迁移连接串执行一次 `DATABASE_URL=<生产迁移连接串> pnpm exec drizzle-kit migrate`（**不要**把这个连接串写进任何文件）。以后每次生产迁移前先备份（Dashboard → Database → Backups 查看可用备份），并且只在你确认过迁移 SQL 后执行——这是 1.5 节中的“不可逆操作”。
+4. 在云端项目中配置 Auth：Site URL 设为你的生产域名（先用 Vercel 分配的 `*.vercel.app`）；Redirect URLs 加上生产和预览的回调地址；为生产单独创建一个 GitHub OAuth App（回调地址填云端项目 Auth 设置页显示的那个）。
+5. **Vercel：** 导入仓库；在 Settings → Environment Variables 中按环境（Production / Preview / Development）分别填写变量。生产用云端 Supabase 的 URL、publishable key、连接池连接串；Stripe 先用测试密钥。
+6. 为生产 Webhook 在 Stripe Dashboard → Developers → Webhooks 添加端点 `https://<你的域名>/api/webhooks/stripe`，选择第 46 周处理的事件，把它的签名密钥填入 Vercel 的 `STRIPE_WEBHOOK_SECRET`（本地 `stripe listen` 的密钥与它不同）。
+
+##### Day 7：端到端检查（1h）
+
+在生产地址走一遍：注册 → 收到确认邮件 → 登录 → 仪表盘 → 测试卡支付 → Webhook 到达 → 权限变化。任何一步失败，查 Vercel 的 Logs 和 Stripe 的 Webhook 投递记录。
+
+> Supabase 免费云项目在 7 天没有活动时会被暂停。MVP 上线后有真实流量一般不会触发；开发期间若被暂停，在 Dashboard 中手动恢复即可。
+
+**验收清单：**
+
+- [ ] 生产地址可完成完整骨架流程
+- [ ] 生产环境的所有密钥只存在于 Vercel 环境变量和 Supabase/Stripe 后台中
+- [ ] CI 全绿；`AGENTS.md` 包含项目约定
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：AI Coding Agents](https://nextjs.org/docs/app/guides/ai-agents) | Day 1 |
+| [Supabase：连接到数据库](https://supabase.com/docs/guides/database/connecting-to-postgres) | Day 6：理解直连、Session、Transaction 三种连接 |
+| [Vercel：环境变量](https://vercel.com/docs/environment-variables) | Day 6 |
+| [Stripe：Webhooks](https://docs.stripe.com/webhooks) | Day 6 |
 
 **自测问题：**
 
-- 你的项目中有哪些环境变量？它们分别是做什么的？哪些可以暴露给客户端（`NEXT_PUBLIC_`），哪些必须保密？
-- 如果一个新开发者克隆你的项目，她需要做哪些配置才能在本地运行？
+1. 你的项目有哪些环境变量？哪些可以带 `NEXT_PUBLIC_`，哪些必须保密？
+2. 一个新开发者克隆仓库后，需要哪些步骤才能在本地运行？（把答案写进 README。）
 
 ---
 
-#### 第 48-49 周：MVP Sprint — 核心功能开发（2 周冲刺）
+#### 第 48 周：核心功能冲刺（一）
 
-**主题：** 构建产品最核心的功能——那个让用户愿意付费的东西
+**本周目标：** 完成 `spec.md` 中 Must 功能的前一半，每个功能都有服务器端授权和测试。
 
-**学习内容：**
+**每个功能都按同一套 6 步流程做（这是你以后每个功能的标准流程）：**
 
-- 聚焦 Must-have 功能：参考第 44 周的 `spec.md`，只做核心功能。抵制"再加一个功能"的诱惑——每多一个功能，上线时间就推迟一周
-- 遵循 Level 2 AI 规则：
-  - AI 生成组件骨架和文件结构 → 你编写业务逻辑
-  - AI 生成 Drizzle 查询初稿 → 你审查 SQL 和类型安全
-  - AI 处理重复性的 CRUD 样板 → 你处理边界情况和错误处理
-- 为关键路径编写测试（Vitest）：至少覆盖核心业务逻辑的单元测试。不需要 100% 覆盖率，但关键路径必须有测试
-- 前后端联调：Server Actions 处理数据变更，Server Components 处理数据展示，Client Components 处理交互
+1. **写清楚：** 在 `spec.md`（或 OpenSpec 的 change）中写出该功能的输入、输出、边界情况、谁有权限。
+2. **表结构：** 需要新表或新字段时，改 `schema.ts` → generate → 读 SQL → migrate。
+3. **数据访问层：** 在 `lib/dal/` 中写函数：认证 → 授权 → 查询。先写测试（纯逻辑部分）。
+4. **服务器函数：** 校验输入（Zod）→ 调用 DAL → 失效相关缓存（`updateTag`）→ 返回结构化结果。
+5. **界面：** 服务器组件获取数据；交互部分用客户端组件；空、加载、错误状态齐全。
+6. **验证：** 用两个账号测试越权；`pnpm test:run`；提交。
 
-**本周产出物：**
+##### Day 1–2：功能 1（3h）
 
-- 核心功能端到端可用：用户可以完成产品的核心工作流。至少 5 个单元测试覆盖关键业务逻辑
+按 6 步流程完成第一个 Must 功能。
 
-**推荐资源：**
+##### Day 3–4：功能 2（3h）
 
-- Vitest 文档：https://vitest.dev
-- Testing Library：https://testing-library.com
+同上。
 
-**AI 使用指南（Level 2）：**
+##### Day 5：团队与成员（1.5h）
 
-- ✅ 可以：让 AI 生成组件文件骨架和 CRUD 操作的样板代码；让 AI 生成 Vitest 测试的初始结构
-- ❌ 禁止：让 AI 实现核心业务逻辑——这是你的产品差异化所在，必须自己写；让 AI 生成测试而你不理解测试在验证什么
+注册时自动创建个人团队（owner 是自己）；仪表盘中显示当前团队；DAL 中所有查询以团队为单位授权（`team_members` 中存在当前用户）。
 
-**自测问题：**
+##### Day 6：测试补齐（1.5h）
 
-- 关掉 AI，你能否在白板上画出核心功能的完整数据流（用户操作 → 前端处理 → Server Action → 数据库 → 响应 → UI 更新）？
-- 你的核心功能有哪些边界情况？列举至少 3 个并说明你是如何处理的。
+为本周的 DAL 授权判断、校验 schema、关键计算写测试。目标：每个 Must 功能至少 3 个测试。
 
----
+##### Day 7：回顾（1h）
 
-#### 第 50 周：MVP Sprint — Landing Page + 用户引导
+做一次 AI 对照审查——这次反过来：让 AI **审查你的代码**（Level 2 允许），重点问：“这些服务器函数中有没有缺少授权检查的地方？”逐条核实它的意见。
 
-**主题：** 构建产品的"门面"——让访客变成用户
+**验收清单：**
 
-**学习内容：**
-
-- 构建转化导向的 Landing Page：基于第 45 周的线框图，用 shadcn/ui + Tailwind 实现。重点关注：
-  - 首屏（Hero）：3 秒内让访客理解你的产品是做什么的
-  - 社会证明区域：初期可以放 beta 用户反馈或自己的使用截图
-  - 定价表：清晰透明，减少决策摩擦
-  - CTA（Call to Action）：每个折叠区域都有行动按钮
-- 用户引导（Onboarding）流程：新用户注册后引导完成关键操作（如创建第一条数据、配置个人信息），降低"注册了不知道干什么"的流失率
-- 集成邮件服务（Resend）：注册欢迎邮件。Resend 提供简洁的 API 和免费额度
-- 响应式设计检查：确保 Landing Page 在手机端也有良好的展示效果
-
-**本周产出物：**
-
-- 专业级 Landing Page（设计美观、文案清晰、CTA 突出）+ 顺畅的注册引导流程 + 注册欢迎邮件
-
-**推荐资源：**
-
-- Resend（邮件 API）：https://resend.com
-- React Email（邮件模板）：https://react.email
-- Landing Page 案例分析：https://www.landingfolio.com
-
-**AI 使用指南（Level 2）：**
-
-- ✅ 可以：让 AI 生成 Landing Page 的 HTML/Tailwind 结构；让 AI 帮你优化营销文案；让 AI 生成 Resend 的邮件发送代码
-- ❌ 禁止：让 AI 完全决定你的 Landing Page 文案和价值主张——你比 AI 更了解你的目标用户
-
-**自测问题：**
-
-- 用 5 秒钟看一眼你的 Landing Page 首屏，能否立刻说清楚产品是做什么的、为谁做的、为什么选它？
-- 新用户注册后的前 3 步操作是什么？有没有办法让这个过程更简单？
+- [ ] 2 个 Must 功能端到端可用
+- [ ] 越权测试全部被拒绝
+- [ ] 新增测试 ≥ 6 个
 
 ---
 
-#### 第 51 周（前半）：MVP Sprint — 打磨 + 错误处理
+#### 第 49 周：核心功能冲刺（二）
 
-**主题：** 把"能用"变成"好用"——细节决定用户的第一印象
+**本周目标：** 完成剩余的 Must 功能，接上付费门控。
 
-**学习内容：**
+##### Day 1–2：功能 3（3h）
 
-- 全局错误处理策略：
-  - Next.js 的 `error.tsx` 和 `global-error.tsx` 自动捕获渲染错误
-  - Server Actions 中的错误处理：返回结构化的错误信息而非抛出异常
-  - 用户友好的错误提示：不显示技术错误细节，提供有意义的操作引导
-- 加载状态：所有异步操作都有视觉反馈（Skeleton、Spinner、Progress Bar）。用户永远不应该面对一个"什么都没发生"的界面
-- Toast 通知：操作成功/失败时给用户即时反馈（推荐 sonner 库，与 shadcn/ui 兼容）
-- 响应式设计最终检查：在手机、平板、桌面上逐页检查布局
+按 6 步流程完成。
 
-**本周产出物：**
+##### Day 3–4：功能 4（及功能 5，如有）（3h）
 
-- 应用处理所有可预见的错误情况（网络失败、数据验证失败、权限不足等），所有异步操作都有加载状态，用户能通过 Toast 即时了解操作结果。在移动端体验流畅
+按 6 步流程完成。
 
-**推荐资源：**
+##### Day 5：付费门控落到具体功能（1.5h）
 
-- sonner（Toast 库）：https://sonner.emilkowal.dev
-- shadcn/ui Sonner 组件：https://ui.shadcn.com/docs/components/sonner
+按定价方案，在对应的 DAL / 服务器函数中加入 `getTeamPlan` 检查（例如免费版最多 3 个项目）。界面上在达到限制时显示升级提示，并链接到定价页。
 
-**AI 使用指南（Level 2）：**
+##### Day 6：E2E 冒烟测试（1.5h）
 
-- ✅ 可以：让 AI 生成 Toast 通知和 Skeleton 组件的样板代码；让 AI 帮你找出遗漏的错误处理场景
-- ❌ 禁止：让 AI 一次性"修复所有问题"——逐个场景处理，确保你理解每个错误的来源和处理方式
+1. `pnpm create playwright`（按提示选 TypeScript），按 [Next.js：Testing with Playwright](https://nextjs.org/docs/app/guides/testing/playwright) 配置。
+2. 只写一个“冒烟测试”：打开首页 → 注册（本地环境，邮件确认可以在测试中通过本地 Supabase 的管理接口完成，或用一个预先确认好的测试账号登录）→ 创建一条核心数据 → 看到它出现在列表中。
+3. 第 55–56 周会系统学习 Playwright，今天的目标是“核心流程坏了时能自动发现”。
 
-**自测问题：**
+##### Day 7：回顾（1h）
 
-- 断开网络后使用你的应用，会发生什么？用户能理解发生了什么吗？
-- 列举 3 个你的应用中需要 loading 状态的异步操作，它们各自的 loading 指示器是什么？
+对照 `spec.md` 逐条检查 Must 功能；把没完成的写进下周计划。**不要在本周加任何 Must 以外的功能。**
 
 ---
 
-#### 第 51 周（后半）：CI/CD + 监控配置
+#### 第 50 周：落地页、引导与邮件
 
-**主题：** 建立自动化质量保障体系——让部署变得安全和可重复
+**本周目标：** 让访客变成用户：落地页、定价页、新用户引导、事务性邮件。
 
-**学习内容：**
+##### Day 1–2：落地页（3h）
 
-- GitHub Actions 基础：
-  - 创建 `.github/workflows/ci.yml`——每次 PR 自动运行 lint + type check + test
-  - 理解 workflow、job、step 的层级关系
-  - 缓存 `node_modules` 加速 CI
-- Vercel Preview Deploys：每个 PR 自动生成独立的预览 URL，方便测试和分享
-- 错误监控——Sentry：
-  - 集成 `@sentry/nextjs`，自动捕获前后端的未处理异常
-  - Source Map 上传，让 Sentry 报告显示原始代码位置
-  - 配置告警规则：新错误类型出现时通知你
-- 数据分析——PostHog：
-  - 基础事件追踪：页面访问、按钮点击、核心功能使用
-  - 用户行为漏斗：注册 → 引导完成 → 使用核心功能 → 付费
-  - 了解哪些功能被使用、哪些被忽略
-- 环境变量安全审查：确认所有密钥类变量只存在于 Vercel 的环境变量配置中，不在代码中硬编码
+1. 按第 45 周的线框图实现：Hero、功能、社会证明、定价、FAQ、行动按钮。
+2. 落地页是公开的静态页面：确保它不读取 Cookie，整页可以进入静态外壳（构建输出中确认）。
+3. 用 `generateMetadata` / `opengraph-image` 做好 SEO 和分享图（第 37 周）。
 
-**本周产出物：**
+##### Day 3：新用户引导（1.5h）
 
-- CI/CD 流水线工作正常（PR 自动检查，通过后可合并），Sentry 错误监控已集成并能接收报告，PostHog 分析已配置基础事件追踪
+1. 新用户第一次进入仪表盘时，显示一个 3 步的引导清单（例如：完善资料 → 创建第一条数据 → 邀请成员或开始试用）。
+2. 每一步完成后自动打勾；全部完成后隐藏。状态存在数据库中（不是 localStorage——用户会换设备）。
 
-**推荐资源：**
+##### Day 4–5：事务性邮件（3h）
 
-- GitHub Actions 文档：https://docs.github.com/en/actions
-- Sentry Next.js 集成：https://docs.sentry.io/platforms/javascript/guides/nextjs/
-- PostHog 文档：https://posthog.com/docs
+1. 注册 [Resend](https://resend.com/)，在 Domains 中添加你的域名并按提示配置 DNS（SPF、DKIM）。没有域名时先用 Resend 提供的测试发件地址，只能发给你自己。
+2. `pnpm add resend @react-email/components`，用 React Email 写一封欢迎邮件模板。
+3. 在注册成功后的服务器流程中发送欢迎邮件（失败时记录日志，但不要让注册失败）。
+4. 在第 46 周的 `invoice.payment_failed` 处理中，发送“付款失败，请更新银行卡”邮件，附上客户门户链接。
+5. 让 Supabase Auth 的确认邮件也通过你的域名发送：在云端项目的 Auth 设置中配置自定义 SMTP（Resend 提供 SMTP 方式），并修改邮件模板为中文。（Supabase 自带的邮件服务有严格的发送频率限制，只适合开发。）
 
-**AI 使用指南（Level 2）：**
+##### Day 6：移动端检查（1.5h）
 
-- ✅ 可以：让 AI 生成 GitHub Actions workflow 文件；让 AI 生成 Sentry 和 PostHog 的初始化配置代码
-- ❌ 禁止：让 AI 配置环境变量——你必须自己理解哪些变量需要保密以及为什么；不测试 CI 流程就认为它正常工作
+所有页面在 375px 宽度下检查一遍（第 30 周的方法）。
 
-**自测问题：**
+##### Day 7：回顾（1h）
 
-- 如果你向 `main` 分支提交了一段有 TypeScript 类型错误的代码，CI 会在哪一步阻止你？
-- Sentry 和 PostHog 的核心用途有什么区别？一个是监控什么，另一个是追踪什么？
+5 秒测试：给一个没见过产品的人看 5 秒落地页，请他说出产品是做什么的、给谁用的。说不清就改 Hero 文案。
 
----
+**本周练习资源：**
 
-#### 第 52 周（前半）：上线前检查清单 + 内测发布
-
-**主题：** 确保产品达到可公开发布的最低质量标准
-
-**学习内容：**
-
-- 生产环境检查清单：
-  - **安全：** HTTPS（Vercel 自动提供）、安全 HTTP 头（`X-Frame-Options`、`Content-Security-Policy` 基础配置）、所有用户输入都有验证
-  - **法律：** 隐私政策页面、服务条款页面（可以用模板生成器，但要读一遍确保准确）
-  - **性能：** Lighthouse 审计，每个页面性能分 > 80，LCP < 2.5s
-  - **SEO：** 每个页面有唯一的 `<title>` 和 `<meta description>`，有 `sitemap.xml`，有 `robots.txt`
-  - **支付：** 用测试卡（4242 4242 4242 4242）走完所有支付流程——订阅、升级、降级、取消、支付失败恢复
-- 邀请 Beta 测试者：找 5-10 个朋友或在线社区的人试用你的产品。准备一个简单的反馈表（Google Form 即可）
-- 收集和整理反馈：区分"必须修复"（阻塞性 bug）和"可以后续改进"（体验优化）
-
-**本周产出物：**
-
-- 所有检查清单项目通过，至少 5 个 Beta 测试者已开始使用产品，收集到初始反馈并修复了所有阻塞性 bug
-
-**推荐资源：**
-
-- Vercel 安全头配置：https://nextjs.org/docs/app/api-reference/config/next-config-js/headers
-- 隐私政策生成器（参考用）：https://www.privacypolicygenerator.info
-- Next.js sitemap：https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
-
-**AI 使用指南（Level 2）：**
-
-- ✅ 可以：让 AI 生成安全头配置和 sitemap；让 AI 帮你生成隐私政策和服务条款的初稿（你必须审查和修改）
-- ❌ 禁止：让 AI 代替你做最终的人工测试——你必须亲自走一遍所有核心流程；跳过支付流程的测试
-
-**自测问题：**
-
-- 以一个完全陌生的用户身份打开你的产品：从 Landing Page 到注册、到使用核心功能、到付费，整个流程顺畅吗？有没有让你困惑的地方？
-- 你的隐私政策是否准确描述了你收集哪些用户数据、如何使用、如何保护？
+| 资源 | 做什么 |
+|---|---|
+| [Resend：Next.js 发送邮件](https://resend.com/docs/send-with-nextjs) | Day 4 |
+| [React Email](https://react.email/) | Day 4 |
+| [Supabase：自定义 SMTP](https://supabase.com/docs/guides/auth/auth-smtp) | Day 5 |
+| [Landingfolio](https://www.landingfolio.com/) | Day 1：参考同类产品落地页 |
 
 ---
 
-#### 第 52 周（后半）：上线！
+#### 第 51 周：打磨、错误处理、监控与分析
 
-**主题：** 切换到生产模式，向世界发布你的第一个 SaaS 产品
+##### Day 1：错误处理策略（1.5h）
 
-**学习内容：**
+1. 渲染错误：每个路由段有合适的 `error.tsx`；根目录有 `global-error.tsx`。
+2. 服务器函数：可预期的失败（校验失败、无权限、超出套餐限制）**返回**结构化结果；不可预期的错误让它抛出，由错误边界和监控捕获。
+3. 用户看到的错误都是人话，并附带下一步操作。
 
-- 切换支付到生产模式：在支付平台中将环境从 Test 切换到 Live，更新 Webhook URL 和 API Key
-- 发布策略——在多个渠道同时宣传：
-  - **Product Hunt：** 准备好产品截图、一句话描述、Maker 评论
-  - **Twitter/X：** 发帖分享你的 Build in Public 故事——从零学编程到上线 SaaS 的旅程
-  - **Reddit：** 在相关 subreddit 分享（r/SideProject、r/SaaS、r/webdev 等）
-  - **Hacker News：** Show HN 帖子
-  - **V2EX：** 分享到创造者节点
-- 持续关注用户反馈：Sentry 告警是否有新错误？PostHog 中用户行为是否符合预期？
-- 快速修复关键 bug：上线后 48 小时内保持高响应，及时修复用户报告的问题
-- **复盘！** 你从零基础到上线一个可以验证付费意愿的 SaaS MVP，用了 52 周。无论有多少用户，这本身就是关键里程碑
+##### Day 2：加载与反馈（1.5h）
 
-**本周产出物：**
+所有异步操作都有反馈：骨架屏、按钮的提交中状态、操作结果的 toast（shadcn `sonner`）。断网测试：DevTools 设为 Offline，逐个操作，确认没有“点了没反应”的情况。
 
-- SaaS MVP 已上线，至少完成支付沙盒闭环，在至少 3 个渠道发布公告，获得至少 3 个真实试用用户；如果需求验证充分，争取 1 次真实付款或明确付费承诺
+##### Day 3：Sentry 错误监控（1.5h）
 
-**推荐资源：**
+1. 注册 [Sentry](https://sentry.io/)，创建 Next.js 项目，按 [Sentry Next.js 指南](https://docs.sentry.io/platforms/javascript/guides/nextjs/) 运行它的安装向导（它会修改若干配置文件——在单独分支上运行，逐个审查改动）。
+2. 故意在服务器函数和客户端组件中各抛一个错误，在 Sentry 中看到它们，并确认堆栈指向你的源代码（source map 已上传）。
+3. 配置告警：出现新类型错误时发邮件给你。
 
-- Product Hunt 发布指南：https://www.producthunt.com/launch
-- Ship It!（独立开发者发布心得合集）：https://www.indiehackers.com/post/how-to-launch-on-product-hunt-7b1843c5c9
+##### Day 4：PostHog 产品分析（1.5h）
 
-**AI 使用指南（Level 2）：**
+1. 注册 [PostHog](https://posthog.com/)，按 [PostHog Next.js 文档](https://posthog.com/docs/libraries/next-js) 接入。
+2. 定义 5 个关键事件：`signed_up`、`onboarding_completed`、`core_action_done`（你的核心功能）、`checkout_started`、`subscription_activated`（在 Webhook 中从服务器端发送）。
+3. 在 PostHog 中建一个漏斗：注册 → 完成引导 → 核心操作 → 开始结账 → 订阅成功。
+4. 隐私：不要把邮箱、姓名等个人信息作为事件属性发送。
 
-- ✅ 可以：让 AI 帮你撰写发布文案（Product Hunt 描述、Twitter 帖子）；让 AI 帮你快速定位和修复上线后的 bug
-- ❌ 禁止：让 AI 替你做发布决策（何时发布、在哪里发布、定价多少）——这些是产品决策，必须你自己做
+##### Day 5：安全头与依赖检查（1h）
 
-**自测问题：**
+1. 在 `next.config.ts` 的 `headers()` 中加入基础安全头：`X-Content-Type-Options: nosniff`、`Referrer-Policy: strict-origin-when-cross-origin`、`X-Frame-Options: DENY`（或用 CSP 的 `frame-ancestors`）。完整的 CSP 在第 85–86 周学习。
+2. `pnpm audit`，处理高危漏洞。
+3. 在 GitHub 仓库开启 Dependabot alerts。
 
-- 你的产品在真实世界中解决了什么问题？有没有用户的反馈验证了这一点？
-- 回顾过去 26 周的学习旅程，你最大的收获是什么？最意外的挑战是什么？
+##### Day 6：CI 与预览环境（1.5h）
+
+确认：每个 PR 运行 lint、typecheck、单元测试、构建、E2E 冒烟测试；Vercel 为每个 PR 生成预览链接；`main` 受保护。
+
+##### Day 7：回顾（1h）
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Sentry：Next.js](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Day 3 |
+| [PostHog：Next.js](https://posthog.com/docs/libraries/next-js) | Day 4 |
+| [Next.js：headers 配置](https://nextjs.org/docs/app/api-reference/config/next-config-js/headers) | Day 5 |
+
+---
+
+#### 第 52 周：上线前检查、内测与发布
+
+##### Day 1：上线检查清单（2h）
+
+逐项完成并勾选：
+
+- **安全：** 所有服务器函数都有认证+授权+校验（逐个文件过一遍）；所有表开启 RLS（Advisors 无警告）；Webhook 验证签名；没有密钥在代码或 Git 历史中（`git log -p | grep -i -E "sk_live|sk_test|secret"` 检查）；生产 Cookie 带 `Secure`（`@supabase/ssr` 在 HTTPS 下会自动处理，在浏览器中确认）。
+- **数据：** 生产数据库的备份策略已了解（免费版的备份范围有限——如果你的产品已有付费用户，升级到付费计划以获得每日备份）；迁移流程写进 README。
+- **法律：** 隐私政策、服务条款页面（可用生成器起草，但必须逐句读并改成符合你实际做法的内容；涉及欧盟用户时注意 GDPR 的基本要求）；页脚有联系方式。
+- **性能：** 落地页 Lighthouse ≥ 90，LCP < 2.5s。
+- **SEO：** 每页唯一 title/description；`sitemap.xml`、`robots.txt`；分享图正确。
+- **支付：** 第 46 周 Day 6 的 7 种情况在**生产环境的测试模式**下重测一遍。
+
+##### Day 2：选择上线时的收款方式（1.5h）
+
+1. 你现在有三条路，按你的实际情况选择并写下理由：
+   - **Stripe 直接收款：** 最灵活、手续费最低，但**各国的销售税/增值税由你自己负责**（可以用 Stripe Tax 计算和代收，但申报仍是你的责任）。
+   - **Stripe Managed Payments：** Stripe 作为“记录商户”（Merchant of Record）替你处理全球税务，代码基本沿用你已经写好的 Checkout 和 Webhook。先查看[官方文档](https://docs.stripe.com/payments/managed-payments)确认你的账户和国家是否可用、费率是多少。
+   - **Lemon Squeezy / Paddle：** 同样是记录商户。Lemon Squeezy 已被 Stripe 收购，目前仍在运营，Stripe 为其商户提供了迁移到 Managed Payments 的路径。选择它们意味着要重写结账和 Webhook 部分（概念相同）。
+2. 如果暂时不确定，可以先**只开测试模式上线**，以“免费 Beta”收集反馈，等第一个用户明确表示愿意付费时再开启真实收款。
+3. 开启真实收款前：完成所选平台的账户验证（身份、银行账户）；在生产环境换成 live 密钥和 live Webhook 签名密钥；用你自己的真实银行卡买一次最便宜的套餐，然后退款，确认全流程。
+
+##### Day 3：邀请内测用户（1.5h）
+
+找 5–10 位内测用户（朋友、第 44 周访谈过的人、等候名单上的人）。准备一个简短的反馈表（3–5 个问题）。观察 PostHog 漏斗和 Sentry 错误。
+
+##### Day 4：修复阻塞问题（2h）
+
+只修“阻塞使用”的 bug 和严重体验问题；其他记入待办。
+
+##### Day 5：准备发布材料（1.5h）
+
+一句话介绍、3 张截图或一个 30 秒演示视频、你的故事（“我从零基础学编程，用了 N 周做出了它”）。
+
+##### Day 6：发布（2h）
+
+在 2–3 个渠道发布：你的社交账号（Build in Public 故事）、相关社区（Reddit 的 r/SideProject、r/SaaS，V2EX 的“分享创造”节点，Indie Hackers）、Product Hunt（可以之后专门准备一次）。发布后 48 小时内及时回复评论、修复问题。
+
+##### Day 7：复盘（1h）
+
+写一篇复盘：做了什么、数据如何（访问、注册、激活、付费）、最大的意外、接下来 12 周做什么。完成 Phase 2 能力检查清单。
+
+**本周练习资源：**
+
+| 资源 | 做什么 |
+|---|---|
+| [Next.js：Production Checklist](https://nextjs.org/docs/app/guides/production-checklist) | Day 1 |
+| [Supabase：Production Checklist](https://supabase.com/docs/guides/deployment/going-into-prod) | Day 1 |
+| [Stripe Managed Payments](https://docs.stripe.com/payments/managed-payments) | Day 2 |
+| [Stripe：Go-live checklist](https://docs.stripe.com/get-started/checklist/go-live) | Day 2 |
+
+**本周产出物：** SaaS MVP 已上线，至少完成测试模式的完整支付流程，在至少 3 个渠道发布，获得至少 3 个真实试用用户；如果需求验证充分，争取 1 次真实付款或明确的付费承诺。
 
 ---
 
@@ -3568,11 +5622,13 @@ git reset --hard HEAD
 
 完成 Phase 2 后，你应该能够勾选以下所有项目：
 
-- [ ] 能独立搭建 Next.js + Supabase + Drizzle + 支付的全栈应用
+- [ ] 能独立搭建 Next.js + Supabase + Drizzle + Stripe 的全栈应用，并管理本地 / 预览 / 生产三套环境
 - [ ] 理解 Server Components / Client Components 的心智模型和使用场景
 - [ ] 能手写基础的 SQL 查询（SELECT / INSERT / UPDATE / JOIN）
 - [ ] 理解 OAuth 2.0 认证流程的每一步
-- [ ] 能解释 RLS 的作用并编写基础的 RLS 策略
+- [ ] 能解释 RLS 的作用并编写基础的 RLS 策略；能解释为什么 Drizzle 查询不受 RLS 约束，以及你的数据访问层如何做授权
+- [ ] 每个服务器函数都做了认证、授权、输入校验；服务器端只用 `getClaims()` 判断身份
+- [ ] 能解释 Cache Components 中静态外壳、`'use cache'` 和 `<Suspense>` 的分工
 - [ ] 能设计合理的多表数据库 Schema 并说明设计原因
 - [ ] 第一个 SaaS MVP 已上线，至少完成支付沙盒闭环，并获得真实用户反馈；如需求验证充分，争取真实付款或明确付费承诺
 - [ ] 有基础的 CI/CD 流程和错误监控
@@ -3604,7 +5660,7 @@ Phase 3 的核心哲学是 **"产品迭代"与"深度补课"交替进行**。你
 
 为什么这种交替模式比"先学完再用"更有效？因为你已经在 Phase 2 中遇到了真实问题。当你学到数据库索引原理时，你会想起自己的产品中那个加载了 3 秒的列表页；当你学到 XSS 防护时，你会想起自己的产品中那个直接渲染用户输入的地方。**带着真实痛点去学习，知识的吸收深度完全不同。** 这不是"补课"——这是"升级"。
 
-AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Composer 全面解锁，Claude Code CLI 用于后台重构任务。但所有非 trivial 功能必须通过 **TDD 门禁**：先写 spec → AI 生成测试 → AI 实现 → 人类审查。测试是你的安全网，不是可选项。
+AI 使用级别升至 **Level 3（AI 作为高级搭档）**。所有 Agent 工具（Cursor Agent、Claude Code、Codex）全面解锁。但所有非 trivial 功能必须通过 **TDD 门禁**：先用 OpenSpec 写 spec → AI 生成测试 → AI 实现 → 人类审查（流程见 1.5 节 Level 3）。测试是你的安全网，不是可选项。
 
 ---
 
@@ -3705,22 +5761,22 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 **学习内容：**
 
 - Cursor Agent 深度模式：理解 Agent 的工具调用机制（文件读写、终端执行、搜索），如何通过上下文引导 Agent 做出更好的决策
-- Composer 多文件编辑：跨文件重构的工作流，如何在 Composer 中有效地描述涉及多个文件的变更
+- Agent 多文件编辑：跨文件重构的工作流，如何有效地描述涉及多个文件的变更；用分支 / worktree 隔离每次尝试
 - Plan Mode 工作流：先用 Plan Mode 让 AI 分析代码库并提出方案，审查方案后再切换到实现模式
-- `.cursor/rules/` 体系化建设：按职责拆分规则文件——代码风格规则、项目结构规则、测试规范规则、安全规则、特定功能域规则
+- 规则体系化建设：`AGENTS.md` 作为所有工具共用的主规则（3.2 节）；`.cursor/rules/*.mdc` 按目录补充代码风格、测试、安全、特定功能域规则
 - `CLAUDE.md` 编写：项目上下文文档——技术栈说明、架构决策记录、编码规范、常见陷阱、禁止事项
 - Prompt Engineering 进阶：XML sandwich 结构（用 XML 标签包裹上下文）、Chain-of-thought 引导（让 AI 先分析再编码）、Few-shot 示例（提供示例输入输出）
 
 **本周产出物：**
 
-- 完整的 `.cursor/rules/` 目录，包含 5+ 个规则文件
+- 完善的 `AGENTS.md` + 至少 3 个按目录生效的 `.mdc` 规则文件
 - 项目 `CLAUDE.md` 文件，涵盖架构、规范和常见陷阱
 - 记录 3 个你发现的有效 prompt 模式，存入个人知识库
 
 **推荐资源：**
 
 - [Cursor 官方文档](https://docs.cursor.com/)
-- Anthropic 的 [Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
+- Anthropic 的 [Prompt Engineering Guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview)
 - 社区分享的 `.cursor/rules` 最佳实践（GitHub 搜索 `cursor rules`）
 
 **AI 使用指南（Level 3）：**
@@ -3732,20 +5788,20 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 **自测问题：**
 
-- `.cursor/rules/` 和 `CLAUDE.md` 的职责区别是什么？它们各自适合放什么内容？
+- `AGENTS.md`、`CLAUDE.md`、`.cursor/rules/*.mdc` 的职责区别是什么？为什么项目约定只写在 `AGENTS.md` 一处？
 - 什么是 XML sandwich prompt 结构？为什么它比纯自然语言 prompt 更有效？
 - Plan Mode 在什么场景下比直接让 Agent 编码更有效？
 - 如何衡量你的 `.cursor/rules/` 是否有效？（提示：AI 生成代码的首次通过率）
 
 ---
 
-#### 第 59-60 周：Claude Code CLI + Spec 驱动开发
+#### 第 59-60 周：Claude Code + OpenSpec 规格驱动开发
 
 **主题：** 掌握 Claude Code CLI 和 spec 驱动的 TDD 全流程
 
 **学习内容：**
 
-- Claude Code CLI 安装与配置：认证设置、项目初始化、`CLAUDE.md` 与 CLI 的关系
+- Claude Code 安装与配置：认证设置、项目初始化、`CLAUDE.md`（内容为 `@AGENTS.md`）的作用；与 OpenSpec 的 propose → apply → archive 流程结合
 - 使用模式：交互模式（实时对话）、非交互模式（后台任务）、管道模式（与其他工具链集成）
 - 后台重构任务实践：让 Claude Code 在后台完成大规模重命名、代码风格统一、依赖升级等机械性任务
 - Spec 驱动开发完整工作流：
@@ -3766,7 +5822,8 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 **推荐资源：**
 
 - [Claude Code 官方文档](https://docs.anthropic.com/en/docs/claude-code)
-- Anthropic 的 [Claude Code Best Practices](https://docs.anthropic.com/en/docs/claude-code/best-practices)
+- Anthropic 的 [Claude Code：Best practices](https://code.claude.com/docs/en/best-practices)
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec)（你已在项目中安装）
 - TDD (Test-Driven Development) 经典方法论：Kent Beck 的《Test-Driven Development: By Example》
 
 **AI 使用指南（Level 3）：**
@@ -3850,6 +5907,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 - WebSocket 基础概念：HTTP 轮询 vs 长轮询 vs WebSocket vs Server-Sent Events (SSE)，各自的适用场景和优劣
 - Supabase Realtime 架构：基于 Phoenix Channels 的 PostgreSQL 变更监听，Broadcast（广播消息）vs Presence（在线状态追踪）vs Postgres Changes（数据库变更推送）
+- **与第 40 周数据访问架构的关系（2026-10 补充）：** 你的业务表对 `authenticated` 角色没有任何 RLS 策略，所以浏览器订阅 Postgres Changes **收不到任何变更**——这是预期行为。两种做法：① 推荐：数据仍由服务器写入，写入成功后由服务器通过 Broadcast 向团队频道发送“数据已变化”消息，客户端收到后重新获取；② 需要直接订阅某张表时，为它写精确的 `select` 策略（只允许团队成员读取本团队数据），并为该策略写测试。频道本身也要做授权（Realtime Authorization），不要让任何登录用户都能加入任意团队的频道
 - 实时订阅实现：
   - 使用 `supabase.channel()` 创建频道
   - 监听数据库表变更（INSERT/UPDATE/DELETE）
@@ -4102,6 +6160,8 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 **学习内容：**
 
+- React Compiler：在 `next.config.ts` 中开启 `reactCompiler: true`（16.3 起还可试用实验性的 Rust 版本 `experimental.turbopackRustReactCompiler`），理解它如何自动完成过去需要手写的 `useMemo` / `useCallback` / `memo`；开启前后用 React DevTools Profiler 对比重渲染次数，并检查你的组件是否遵守 React 规则（纯函数、不在渲染中修改外部变量）
+
 - Core Web Vitals 深度理解：
   - LCP（Largest Contentful Paint）：最大内容元素的渲染时间。优化策略：预加载关键资源、优化服务器响应时间、优化图片
   - INP（Interaction to Next Paint，已替代 FID）：交互响应延迟。优化策略：减少主线程阻塞、拆分长任务、使用 `startTransition`
@@ -4116,7 +6176,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
   - 分析 bundle 大小：`@next/bundle-analyzer` 的使用
 - Next.js 16 高级缓存模式：
   - `use cache` 指令的高级用法：缓存粒度控制、`cacheTag` 用于精确缓存失效
-  - ISR（Incremental Static Regeneration）：静态生成 + 按需再生的混合策略
+  - 旧模型中的 ISR（增量静态再生成）与 Cache Components 中的 `'use cache'` + `cacheLife` + `revalidateTag(tag, 'max')` 的对应关系
   - PPR（Partial Prerendering）：同一页面中静态壳 + 动态内容的混合渲染
 
 **本周产出物：**
@@ -4141,7 +6201,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 **自测问题：**
 
 - LCP、INP、CLS 分别衡量的是什么？各自的"Good"阈值是多少？
-- `use cache` 和传统的 `getStaticProps` / ISR 有什么区别？Next.js 16 的缓存模型是怎样的？
+- `'use cache'` 和旧的 `getStaticProps` / ISR / `fetch` 缓存有什么区别？为什么 Cache Components 选择“默认不缓存、显式声明”？
 - PPR（Partial Prerendering）解决了什么问题？它和纯 SSR、纯 SSG 相比有什么优势？
 - 为什么 `<Image>` 组件比原生 `<img>` 标签性能更好？它在底层做了哪些优化？
 
@@ -4163,7 +6223,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
   - `ETag` 和 `Last-Modified`：条件请求和 304 响应
 - Vercel 边缘配置：
   - Vercel Edge Config：低延迟的全球键值存储，适用于 Feature Flags 和配置
-  - Vercel 的缓存策略：静态资源自动缓存、ISR 缓存、Edge Function 响应缓存
+  - Vercel 的缓存策略：静态资源自动缓存、静态外壳的 CDN 缓存、`'use cache'` 的服务器缓存
 - 静态资源优化：
   - 文件哈希命名（content hash）确保缓存安全更新
   - 字体优化：`next/font` 的 font-display 和 preload 策略
@@ -4429,8 +6489,8 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
   - Week 4：支付集成 + Landing Page + 上线部署
 - Level 3 AI 工作流实战：
   - 每个功能从 spec.md 开始
-  - 使用 Claude Code CLI 并行处理多个独立模块
-  - Cursor Agent 处理需要上下文的复杂功能
+  - 用 git worktree 让多个 Agent（Claude Code、Codex、Cursor）并行处理独立模块
+  - 需要大量上下文的复杂功能由你与一个 Agent 交互完成
   - 所有功能通过 TDD 门禁
 - 复用经验：
   - 从第一个产品提取可复用的代码：认证模块、支付集成、邮件模板、错误处理
@@ -4451,7 +6511,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 **AI 使用指南（Level 3）：**
 
 - ✅ 可以：全面使用 spec 驱动 TDD 流程，将整个功能模块委托给 AI 实现
-- ✅ 可以：用 Claude Code CLI 并行处理多个独立的功能模块
+- ✅ 可以：用多个 Agent（各自独立 worktree）并行处理多个独立的功能模块
 - ❌ 禁止：为了赶进度跳过测试——没有测试的快速开发是"技术债务加速器"
 - ❌ 禁止：完全复制第一个产品的架构而不考虑新产品的特殊需求
 
@@ -4553,6 +6613,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 - [Supabase Row Level Security 文档](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [RBAC 模式参考](https://auth0.com/docs/manage-users/access-control/rbac)
 - 学习 Clerk 或 WorkOS 等团队认证服务的 API 设计（作为参考，不需要使用它们）
+- 第二道防线：让 Drizzle 查询也受 RLS 约束——在事务中设置 `request.jwt.claims` 并 `set local role authenticated`（参考 [Drizzle RLS 文档](https://orm.drizzle.team/docs/rls) 中的 Supabase 示例与 drizzle-supabase-rls），为团队相关表编写 `pgPolicy`，并写测试证明跨团队访问被数据库拒绝
 
 **AI 使用指南（Level 3）：**
 
@@ -4633,7 +6694,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 - [ ] 所有页面 Lighthouse Performance 评分 > 90
 - [ ] 能说出 OWASP Top 10 中至少 7 项，并解释在 Next.js 中如何防御
 - [ ] 掌握 Spec 驱动 TDD 工作流，并用它完成了至少 5 个功能
-- [ ] 完整的 `.cursor/rules/` 和 `CLAUDE.md` 体系
+- [ ] 完整的 `AGENTS.md`（+ 必要的 `.mdc`）规则体系，并与 OpenSpec 流程配合
 - [ ] 产品有完善的错误监控（Sentry）和日志体系
 - [ ] 所有耗时操作在后台异步执行，用户请求响应 < 500ms
 - [ ] 第二个产品已上线（路线 B）或第一个产品有重大功能扩展（路线 A）
@@ -4797,7 +6858,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 **学习内容：**
 
-- Vercel 的扩展原理：Serverless Functions 自动扩缩容、Edge Network 全球分发、ISR（增量静态生成）减少服务器压力
+- Vercel 的扩展原理：函数自动扩缩容、CDN 全球分发、静态外壳与 `'use cache'` 减少服务器压力
 - 无状态应用设计：为什么 Serverless 要求你的应用不持有状态？Session 信息存哪里？文件上传存哪里？
 - 数据库连接池在规模化时的挑战：Serverless 每次冷启动都会创建新连接，100 个并发函数 = 100 个数据库连接
 - 连接池方案：Supabase 内置的 Supavisor（connection pooler）、PgBouncer 概念
@@ -4964,7 +7025,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 - Token 概念：什么是 token、如何估算 token 数量、输入 token vs 输出 token 的成本差异
 - 成本估算：按功能计算 AI 调用成本，确保商业模型可行
 - 错误处理和重试逻辑：API 限流（429）处理、超时处理、指数退避重试
-- Vercel AI SDK 入门：统一的 LLM API 抽象层、流式输出支持、React hooks（`useChat`、`useCompletion`）
+- Vercel AI SDK 入门：统一的 LLM API 抽象层、流式输出、React hooks（如 `useChat`）。注意 AI SDK 在 v5、v6 中 API 变化较大，网上旧教程的写法可能已不适用，以 ai-sdk.dev 当前文档为准
 - 流式输出的用户体验：为什么流式比等待完整响应更好、如何实现打字机效果
 
 **本周产出物：**
@@ -4975,9 +7036,9 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 **推荐资源：**
 
-- [Vercel AI SDK 官方文档](https://sdk.vercel.ai/docs)
+- [Vercel AI SDK 官方文档](https://ai-sdk.dev/docs)
 - [OpenAI API 文档](https://platform.openai.com/docs/api-reference)
-- [Anthropic API 文档](https://docs.anthropic.com/en/docs)
+- [Claude API 文档](https://platform.claude.com/docs)
 
 **AI 使用指南（Level 4）：**
 
@@ -5015,7 +7076,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 **推荐资源：**
 
 - [OpenAI Prompt Engineering 指南](https://platform.openai.com/docs/guides/prompt-engineering)
-- [Anthropic Prompt Engineering 文档](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
+- [Anthropic Prompt Engineering 文档](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview)
 - Brex 的 "Prompt Engineering Guide"（GitHub 开源）
 
 **AI 使用指南（Level 4）：**
@@ -5120,7 +7181,7 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 - Tool/Function Calling：让 LLM 调用外部工具（搜索 API、数据库查询、第三方接口）
 - Agent 循环模式：Think（推理）→ Act（调用工具）→ Observe（观察结果）→ 循环直到任务完成
 - 多步骤工作流：Agent 需要多次工具调用才能完成一个复杂任务——如何设计工作流程
-- 外部工具集成：Web 搜索、数据库查询、发送邮件、调用第三方 API——将产品能力暴露给 Agent
+- 外部工具集成：Web 搜索、数据库查询、发送邮件、调用第三方 API——将产品能力暴露给 Agent；了解 MCP（Model Context Protocol）这一标准接口
 - 安全防护（Guardrails）：限制 Agent 可调用的工具、限制执行次数、人机确认关键操作、防止无限循环
 - 错误恢复：Agent 中间步骤失败时如何回退和重试
 
@@ -5132,9 +7193,10 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 **推荐资源：**
 
-- [Vercel AI SDK: Tool Calling](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [Vercel AI SDK: Tool Calling](https://ai-sdk.dev/docs/ai-sdk-core/tools-and-tool-calling)
 - [OpenAI Function Calling 文档](https://platform.openai.com/docs/guides/function-calling)
-- Anthropic: "Building Effective Agents" 指南
+- Anthropic：[Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
+- [Model Context Protocol（MCP）](https://modelcontextprotocol.io/)：了解如何把你产品的能力以标准方式开放给外部 AI 工具
 
 **AI 使用指南（Level 4）：**
 
@@ -5764,6 +7826,8 @@ AI 使用级别升至 **Level 3（AI 作为高级搭档）**。Cursor Agent + Co
 
 ### 3.1 `.cursor/rules/` 目录结构模板
 
+> **2026-10 说明：** 项目约定的**主文件是 `AGENTS.md`**（3.2 节），Cursor、Codex、Claude Code 共用。`.cursor/rules/*.mdc` 只用来放 Cursor 特有的、按目录或文件类型生效的补充规则，不要把同一条规则在两处各写一遍。以下模板中与 3.2 重复的内容，实际使用时保留一处即可。
+
 #### 从 `.cursorrules` 到 `.cursor/rules/`：规则系统的演进
 
 早期 Cursor 使用项目根目录下的 `.cursorrules` 单文件来定义项目约定。这种方式的问题显而易见：随着项目增长，一个文件承载所有规则会变得臃肿、难以维护，且无法针对不同文件类型应用不同规则。
@@ -5824,10 +7888,10 @@ alwaysApply: true
 
 ## Tech Stack
 - Framework: Next.js 16 (App Router) with TypeScript strict mode
-- Styling: Tailwind CSS + shadcn/ui (based on Radix UI)
-- Database: Supabase (PostgreSQL) with Drizzle ORM
-- Auth: Supabase Auth
-- Payment: Lemon Squeezy (or Stripe)
+- Styling: Tailwind CSS v4 (CSS-first @theme, no tailwind.config.js) + shadcn/ui
+- Database: Supabase (PostgreSQL) with Drizzle ORM (Drizzle bypasses RLS: authorize in lib/dal)
+- Auth: Supabase Auth via @supabase/ssr (getClaims on the server)
+- Payment: Stripe
 - Deployment: Vercel
 - Testing: Vitest + React Testing Library + Playwright
 - Package Manager: pnpm
@@ -5881,7 +7945,7 @@ Separate each group with a blank line.
 
 **文件 2：`.cursor/rules/nextjs-patterns.mdc`**
 
-```yaml
+````yaml
 ---
 description: Next.js App Router patterns
 globs: ["app/**"]
@@ -5907,7 +7971,7 @@ When creating Client Components, follow the "islands" pattern:
 
 - Place in `app/_actions/` directory, grouped by domain (e.g., `team-actions.ts`, `billing-actions.ts`).
 - Every Server Action file starts with `"use server"` at the top.
-- Input validation with Zod is mandatory — never trust client data.
+- Every Server Action is a public HTTP endpoint: authenticate (`requireUser()`), authorize, then validate input with Zod. Never trust client data.
 - Return pattern:
 
 ```typescript
@@ -5916,7 +7980,7 @@ type ActionResult<T = void> =
   | { success: false; error: string };
 ```
 
-- Use `revalidatePath()` or `revalidateTag()` after mutations.
+- After mutations call `updateTag(tag)` (read-your-writes). Never call `revalidateTag(tag)` with a single argument — it is deprecated; outside Server Actions use `revalidateTag(tag, 'max')`.
 - Never redirect inside a try/catch — call `redirect()` after the try/catch block.
 
 ## Data Fetching
@@ -5934,7 +7998,8 @@ async function getTeamMembers(teamId: string) {
 ```
 
 - Co-locate data fetching with the component that uses it.
-- Use `loading.tsx` for streaming/Suspense boundaries.
+- Request-time data (cookies, headers, uncached queries) must be rendered inside `<Suspense>`; use `loading.tsx` or explicit boundaries.
+- `params` and `searchParams` are Promises — always `await` them.
 - Use parallel data fetching with `Promise.all()` when requests are independent.
 
 ## Metadata
@@ -5969,13 +8034,13 @@ Prefix with `_` for non-routable directories within `app/`.
 - Every route group should have `error.tsx` and `loading.tsx`.
 - `not-found.tsx` for custom 404 pages.
 - `error.tsx` must be a Client Component (`"use client"`).
-```
+````
 
 ---
 
 **文件 3：`.cursor/rules/database.mdc`**
 
-```yaml
+````yaml
 ---
 description: Database and Drizzle ORM conventions
 globs: ["db/**", "drizzle/**"]
@@ -6039,8 +8104,9 @@ const teamWithMembers = await db.query.teams.findFirst({
 
 ## Row Level Security (RLS)
 
-- Enable RLS on all tables containing user data.
-- Define policies using Supabase Dashboard or SQL migrations.
+- Enable RLS on ALL public tables (`pgTable.withRLS`). With no anon/authenticated policies the Data API is locked.
+- Drizzle connects as `postgres` (BYPASSRLS): RLS does NOT protect Drizzle queries. Authorization lives in `lib/dal/*`.
+- Only browser-accessed resources (Storage, Realtime) get explicit policies, written as drizzle custom migrations.
 - Policy naming: `{action}_{table}_{description}` (e.g., `select_teams_own_team`)
 - Test RLS policies: verify both allowed AND denied access paths.
 
@@ -6048,13 +8114,13 @@ const teamWithMembers = await db.query.teams.findFirst({
 - Add indexes for columns used in WHERE clauses and JOINs.
 - Use `select()` to pick only needed columns — avoid `SELECT *`.
 - Use connection pooling via Supabase's built-in pgBouncer (port 6543).
-```
+````
 
 ---
 
 **文件 4：`.cursor/rules/testing.mdc`**
 
-```yaml
+````yaml
 ---
 description: Testing conventions
 globs: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "tests/**"]
@@ -6119,13 +8185,13 @@ it("shows error message when email is invalid", async () => {
 - Tests must be deterministic — no reliance on time, random values, or network.
 - Each test must be independent — no shared mutable state between tests.
 - Aim for >80% coverage on core business logic; don't chase 100% on UI.
-```
+````
 
 ---
 
 **文件 5：`.cursor/rules/ui-components.mdc`**
 
-```yaml
+````yaml
 ---
 description: UI component conventions
 globs: ["components/**", "app/_components/**"]
@@ -6197,170 +8263,119 @@ Example: `"flex items-center gap-2 p-4 text-sm text-muted-foreground bg-card rou
 ## Icons
 - Use `lucide-react` (included with shadcn/ui).
 - Consistent sizing: `size={16}` for inline, `size={20}` for buttons, `size={24}` for standalone.
-```
+````
 
 ---
 
-### 3.2 `CLAUDE.md` 项目初始化协议模板
+### 3.2 `AGENTS.md` 项目说明模板（所有 AI 工具共用）
 
-`CLAUDE.md` 是 Claude Code（CLI 工具）的项目上下文文件，放置在项目根目录。当你使用 `claude` 命令行工具时，它会自动读取此文件来理解项目上下文。与 `.cursor/rules/` 不同，`CLAUDE.md` 面向的是 Claude Code CLI 而非 Cursor IDE 内的 AI 助手。
+> **2026-10 重写：** 旧版本节是只给 Claude Code 用的 `CLAUDE.md` 模板。现在推荐把项目约定写在 **`AGENTS.md`** 一处：Codex、Cursor（Agent 模式）等工具会直接读取它；Next.js 16.2 起 `create-next-app` 会自动生成它，并在其中放入一段由 Next.js 维护的区块（指向 `node_modules/next/dist/docs/` 中与版本匹配的文档）。Claude Code 读取 `CLAUDE.md`，所以 `CLAUDE.md` 只需要一行 `@AGENTS.md`。`.cursor/rules/*.mdc`（3.1 节）只放 Cursor 特有的、按目录生效的补充规则。
 
-以下是一个完整的 SaaS 项目模板：
+**`CLAUDE.md`（全部内容就这一行）：**
 
 ```markdown
-# CLAUDE.md
+@AGENTS.md
+```
 
-## Project: [产品名称]
-[一句话描述产品做什么，为谁做]
+**`AGENTS.md`：** 保留文件开头由 Next.js 生成的 `<!-- BEGIN:nextjs-agent-rules -->` … `<!-- END:nextjs-agent-rules -->` 区块不动，在它**下面**追加：
+
+````markdown
+# Project: [产品名称]
+[一句话：产品做什么，给谁用]
 
 ## Tech Stack
-- **Runtime**: Node.js 22 LTS
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript 5.x (strict mode)
-- **Styling**: Tailwind CSS 4 + shadcn/ui
-- **Database**: Supabase (PostgreSQL 15) + Drizzle ORM
-- **Auth**: Supabase Auth (email + Google OAuth)
-- **Payment**: Lemon Squeezy
-- **Email**: Resend + React Email
-- **Monitoring**: Sentry (error tracking) + PostHog (analytics)
-- **Deployment**: Vercel
-- **Testing**: Vitest + React Testing Library + Playwright
-- **Package Manager**: pnpm
+- Runtime: Node.js 24 LTS (see .node-version)
+- Framework: Next.js 16 (App Router, Cache Components enabled)
+- Language: TypeScript 7, strict mode
+- Styling: Tailwind CSS v4 (CSS-first config, no tailwind.config.js) + shadcn/ui
+- Database: Supabase Postgres + Drizzle ORM (drizzle-kit is the only migration tool)
+- Auth: Supabase Auth via @supabase/ssr (publishable key, getClaims)
+- Payments: Stripe (Checkout + Billing + webhooks)
+- Email: Resend + React Email
+- Monitoring: Sentry (errors) + PostHog (product analytics)
+- Testing: Vitest + React Testing Library + Playwright
+- Package manager: pnpm
 
-## Project Structure
-```
-├── app/                    # Next.js App Router
-│   ├── (marketing)/        # Public pages
-│   ├── (auth)/             # Auth pages
-│   ├── (dashboard)/        # Protected app pages
-│   ├── _actions/           # Server Actions
-│   ├── _components/        # App-specific shared components
-│   └── api/                # Webhooks & external API routes
-├── components/
-│   └── ui/                 # shadcn/ui components
-├── db/
-│   ├── index.ts            # Drizzle client
-│   └── schema/             # Drizzle schema definitions
-├── drizzle/                # Generated migration files
-├── lib/                    # Shared utilities
-│   ├── utils.ts            # cn() and general helpers
-│   ├── supabase/           # Supabase client (server + browser)
-│   └── validations/        # Zod schemas
-├── tests/
-│   └── e2e/                # Playwright E2E tests
-├── public/                 # Static assets
-└── .cursor/rules/          # Cursor AI rules
-```
+## Commands
+- `pnpm dev` / `pnpm build` / `pnpm lint` / `pnpm typecheck`
+- `pnpm test:run` (unit) / `pnpm test:e2e` (Playwright)
+- `pnpm exec drizzle-kit generate` then review SQL, then `pnpm exec drizzle-kit migrate`
+- Local stack: `supabase start` (requires OrbStack/Docker)
 
-## Key Commands
+## Data access architecture (MUST follow)
+1. All business data is read/written on the server through `lib/dal/*`.
+2. Every DAL function first calls `requireUser()` and scopes queries by user/team membership. Authorization lives here.
+3. Drizzle connects as the `postgres` role and BYPASSES RLS. Never assume RLS protects Drizzle queries.
+4. All public tables have RLS enabled with no anon/authenticated policies (Data API locked).
+5. Only Storage/Realtime accessed from the browser have explicit RLS policies (see `drizzle/*storage_policies*.sql`).
+
+## Next.js rules
+- Use `proxy.ts`, never `middleware.ts` (renamed in Next.js 16).
+- Server Components by default; `"use client"` only on leaf components.
+- Request-time data (cookies, headers, uncached queries) must be inside `<Suspense>`.
+- Cacheable data uses `'use cache'` + `cacheLife()` + `cacheTag()`. Do not use `export const revalidate` / `dynamic`.
+- After mutations in Server Actions use `updateTag(tag)`. Never call `revalidateTag(tag)` with one argument.
+- `params`, `searchParams`, `cookies()`, `headers()` are async — always `await`.
+
+## Server Actions (every one of them)
+1. Authenticate (`requireUser()`), 2. authorize (team membership / role / plan), 3. validate input with Zod,
+4. call DAL, 5. `updateTag`, 6. return `{ ok: true, data } | { ok: false, error }`.
+Never trust IDs, prices, or roles sent from the client.
+
+## Auth
+- Server-side identity: `supabase.auth.getClaims()` only. Never use `getSession()` for authorization.
+- `proxy.ts` refreshes the session cookie; it may redirect optimistically but is NOT the security boundary.
+
+## Payments
+- Webhook route: `app/api/webhooks/stripe/route.ts`. Verify signature with the raw body.
+- Idempotency: insert event id into `webhook_events` first, in the same transaction as the state change.
+- Store provider status values verbatim; access decisions go through `hasPaidAccess()`.
+
+## Conventions
+- File names kebab-case; named exports; Zod schemas in `lib/validations/`.
+- Money is stored in integer cents.
+- Timestamps are `timestamptz`, stored in UTC.
+- No `any`, no unexplained `!`, no `@ts-ignore`.
+
+## Do not
+- Do not run production migrations, change payment logic, delete user data, or change DNS without explicit human approval.
+- Do not add dependencies without explaining why.
+- Do not modify `components/ui/*` styling tokens without being asked.
+````
+
+**环境变量清单（写进 README，不要写进 AGENTS.md 的具体值）：**
+
 ```bash
-pnpm dev              # Start dev server (Turbopack)
-pnpm build            # Production build
-pnpm test             # Run Vitest
-pnpm test:e2e         # Run Playwright
-pnpm lint             # ESLint + TypeScript check
-pnpm db:generate      # Generate Drizzle migrations
-pnpm db:migrate       # Apply migrations
-pnpm db:studio        # Open Drizzle Studio (DB viewer)
-```
-
-## Architecture Decisions
-
-### Why Server Components by default
-Minimize client JS bundle. Only use `"use client"` for interactive elements.
-Server Components can directly await database queries without API layer.
-
-### Why Drizzle over Prisma
-Smaller bundle, faster cold start on Vercel Serverless Functions.
-SQL-like syntax keeps us aware of actual DB operations.
-
-### Why Server Actions over API routes
-Type-safe mutations with automatic form handling. API routes exist only for
-webhooks (Lemon Squeezy, Stripe) and third-party integrations.
-
-### Why Lemon Squeezy over Stripe
-Merchant of Record model handles global tax compliance automatically.
-Simpler integration for subscription SaaS.
-
-## Database Schema Overview
-- `users` — extends Supabase auth.users with profile data
-- `teams` — multi-tenant workspace
-- `team_members` — join table with role (owner/admin/member)
-- `subscriptions` — Lemon Squeezy subscription state (synced via webhook)
-- `[domain tables]` — product-specific data tables
-
-RLS enabled on all tables. Access scoped to team membership.
-
-## Auth Model
-- Supabase Auth handles signup/login/session.
-- Server-side: `createServerClient()` from `@supabase/ssr`.
-- Middleware (`middleware.ts`) refreshes session on every request.
-- Protected routes check session in `(dashboard)/layout.tsx`.
-- Team-scoped access: all data queries include `team_id` filter.
-
-## Payment Model
-- Plans: Free, Pro ($19/mo), Team ($49/mo)
-- Lemon Squeezy webhook → `app/api/webhooks/lemonsqueezy/route.ts`
-- Webhook updates `subscriptions` table, triggers `revalidateTag("subscription")`
-- Feature gating: check `subscription.plan` in Server Components/Actions
-
-## Environment Variables
-```
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-
-# Lemon Squeezy
-LEMONSQUEEZY_API_KEY
-LEMONSQUEEZY_WEBHOOK_SECRET
-LEMONSQUEEZY_STORE_ID
-
-# Resend
-RESEND_API_KEY
-
+# Supabase（公开）
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+# 数据库（保密；生产用连接池 Transaction 模式连接串）
+DATABASE_URL=
+# Stripe（保密）
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+# Resend（保密）
+RESEND_API_KEY=
 # Sentry
-NEXT_PUBLIC_SENTRY_DSN
-SENTRY_AUTH_TOKEN
-
-# PostHog
-NEXT_PUBLIC_POSTHOG_KEY
-
+NEXT_PUBLIC_SENTRY_DSN=
+SENTRY_AUTH_TOKEN=
+# PostHog（公开）
+NEXT_PUBLIC_POSTHOG_KEY=
 # App
-NEXT_PUBLIC_APP_URL
+NEXT_PUBLIC_APP_URL=
 ```
 
-Never commit `.env` files. Use Vercel Environment Variables for production.
-
-## Common Pitfalls
-1. **Supabase client mismatch**: Use `createServerClient` on server, `createBrowserClient` on client. Never import the wrong one.
-2. **`redirect()` in try/catch**: `redirect()` throws a special error internally. Call it outside try/catch blocks.
-3. **Missing `revalidatePath`/`revalidateTag`**: After Server Action mutations, always revalidate or the UI shows stale data.
-4. **RLS blocking queries**: If a query returns empty unexpectedly, check RLS policies first.
-5. **Webhook idempotency**: Lemon Squeezy may send the same webhook multiple times. Use event ID for deduplication.
-
-## Testing Conventions
-- Co-locate unit tests: `foo.ts` → `foo.test.ts`
-- E2E tests in `tests/e2e/`
-- Mock Supabase and external APIs in tests — never hit real services.
-- CI runs: lint → type-check → unit tests → build → e2e tests
-
-## Deployment
-- Push to `main` → Vercel auto-deploys to production
-- Push to feature branch → Vercel creates Preview Deployment
-- Preview URLs shared for review before merge
-- Database migrations run manually before deploying schema-dependent code
-```
+如果某个功能确实需要 Supabase **secret key**（例如管理员脚本），它只能出现在服务器端代码和后台定时任务中，变量名不能带 `NEXT_PUBLIC_`。
 
 ---
 
 ### 3.3 `spec.md` 需求文档模板
 
-`spec.md` 是 AI 辅助开发工作流的核心文档。从 Phase 3 开始，每个非 trivial 功能在开发前都必须先编写 spec。它既是你理清思路的工具，也是 AI 理解需求的上下文。
+`spec.md` 是 AI 辅助开发工作流的核心文档。**你已经在项目中安装了 OpenSpec**：它会按 proposal → tasks → spec 生成同类文档并管理变更的归档，实际工作中优先用 OpenSpec；本模板可作为你检查 OpenSpec 产物是否完整的清单。从 Phase 3 开始，每个非 trivial 功能在开发前都必须先编写 spec。它既是你理清思路的工具，也是 AI 理解需求的上下文。
 
 #### 通用模板
 
-```markdown
+````markdown
 # Feature: [功能名称]
 
 ## Summary
@@ -6430,13 +8445,13 @@ Never commit `.env` files. Use Vercel Environment Variables for production.
 ## Out of Scope
 - [Explicitly state what this feature does NOT include]
 - [This prevents scope creep during implementation]
-```
+````
 
 ---
 
 #### 实例：团队邀请功能 spec
 
-```markdown
+````markdown
 # Feature: Team Invitation
 
 ## Summary
@@ -6568,7 +8583,7 @@ collaborative workflow.
 - Custom invitation message — future feature
 - Invitation link sharing (only email delivery for now)
 - Role change for existing members (separate feature)
-```
+````
 
 ---
 
@@ -6633,7 +8648,7 @@ collaborative workflow.
 | 3 | **[必须]** 能用 Drizzle ORM 进行 CRUD 操作和关联查询 | ☐ |
 | 4 | **[必须]** 能手写基础 SQL：SELECT、INSERT、UPDATE、JOIN、WHERE、GROUP BY | ☐ |
 | 5 | **[必须]** 理解 OAuth 2.0 的授权流程，能画出时序图 | ☐ |
-| 6 | 能集成 Lemon Squeezy / Stripe 支付，处理 Webhook 回调 | ☐ |
+| 6 | 能集成 Stripe 订阅支付（测试模式完整流程），安全处理 Webhook（签名验证 + 幂等） | ☐ |
 | 7 | 理解 Server Actions 的工作原理和使用场景 | ☐ |
 | 8 | 能使用 `use cache` 和 `cacheTag` / `cacheLife` API | ☐ |
 | 9 | 能配置 Sentry 错误监控并在 Dashboard 中定位错误 | ☐ |
@@ -6642,6 +8657,8 @@ collaborative workflow.
 | 12 | 理解 DNS 基础：A 记录、CNAME、自定义域名配置 | ☐ |
 | 13 | 能设计合理的数据库 Schema（范式、外键关系、索引） | ☐ |
 | 14 | 能编写 Zod Schema 进行输入验证 | ☐ |
+| 15 | **[必须]** 每个服务器函数都做认证、授权、输入校验；能解释为什么 Drizzle 查询不受 RLS 约束 | ☐ |
+| 16 | 能解释 Cache Components 中静态外壳、`'use cache'`、`<Suspense>` 的分工 | ☐ |
 
 #### 产出物检查
 
@@ -6679,8 +8696,8 @@ collaborative workflow.
 | 5 | 理解数据库索引原理：B-tree、复合索引、EXPLAIN ANALYZE | ☐ |
 | 6 | 理解 HTTP/2、WebSocket 协议的基本工作原理 | ☐ |
 | 7 | 能配置完整的 CI/CD 流水线（lint → type-check → test → build → deploy） | ☐ |
-| 8 | 能高效使用 Cursor Agent + Claude Code CLI 的 AI 开发工作流 | ☐ |
-| 9 | 能编写清晰的 `.cursor/rules/` 规则文件来约束 AI 行为 | ☐ |
+| 8 | 能高效使用 Agent 工具（Cursor / Claude Code / Codex）+ OpenSpec 的开发工作流 | ☐ |
+| 9 | 能编写清晰的 `AGENTS.md`（及必要的 `.mdc`）来约束 AI 行为 | ☐ |
 | 10 | 能编写详细的 `spec.md` 文档来定义功能需求 | ☐ |
 | 11 | 理解缓存策略：浏览器缓存、CDN 缓存、`use cache`、stale-while-revalidate | ☐ |
 | 12 | 能进行基础的系统设计讨论：负载均衡、读写分离、水平扩展的概念 | ☐ |
@@ -6750,7 +8767,7 @@ collaborative workflow.
 
 ### 4.5 常见失败模式与应对策略
 
-> 以下是 156 周学习旅程中最常见的 12 种失败模式。提前了解它们，就像提前知道路上有哪些坑——不能保证你不会踩，但至少踩了你知道怎么爬出来。
+> 以下是 156 周学习旅程中最常见的 14 种失败模式。提前了解它们，就像提前知道路上有哪些坑——不能保证你不会踩，但至少踩了你知道怎么爬出来。
 
 | # | 失败模式 | 症状描述 | 应对策略 |
 |---|---------|---------|---------|
@@ -6766,10 +8783,14 @@ collaborative workflow.
 | 10 | **跳过测试**（Skipping Tests） | "先把功能做完再补测试"——测试永远补不上。生产环境频繁出 bug，用户反馈"又坏了"。半夜收到 Sentry 告警不知道哪里出了问题。 | **从 Phase 3 开始执行"无测试不合并"规则：** 每个 PR 必须包含对应的测试。不需要 100% 覆盖率，但核心业务路径（注册→登录→核心功能→支付）必须有 E2E 测试覆盖。 |
 | 11 | **闭门造车**（Ignoring Users） | 花 3 个月开发一个"完美"的功能，上线后发现没人用。不做用户调研，不收集反馈，坚持"我觉得用户需要这个"。 | **每周至少一次用户接触：** 可以是：发一封用户调查邮件、看用户行为数据（PostHog）、在社交媒体上问一个关于产品的问题。在用户验证之前，所有功能想法都只是"假设"。 |
 | 12 | **成本盲视**（Cost Blindness） | 不看 Vercel / Supabase / 第三方 API 的用量和账单。某天收到一封 $200 的 Vercel 账单才发现图片没有优化、API 调用没有缓存、Edge Function 调用次数爆表。 | **每月 1 号检查所有 SaaS 工具账单：** 设日历提醒。了解每个服务的免费额度上限。设置 Vercel 的 Spend Management 告警。关注 Supabase Dashboard 的用量图表。账单超预期时立即排查原因。 |
+| 13 | **冲刺—中断循环**（Burst and Stall） | 连续两周每天学好几个小时，然后一停就是一两个月；回来时觉得“全忘了”，于是换一个新教程从头开始。 | **按第零部分执行：** 0.5 回归协议（按中断时长决定先复习什么）、0.6 最低维持周（忙时每周 3 小时只复习）、0.7 月度复盘（按真实速度重估日期）。中断不是失败，“换教程从头来”才是。 |
+| 14 | **多计划并行**（Plan Sprawl） | 同时打开好几份教程或计划，每份都学到一半，不知道今天该学哪一份。 | **只认一个调度表：** 第零部分规定了两份文档的唯一顺序；`PROGRESS.md` 只写“下一步”。想加新资源时，先问它替代计划里的哪一项。 |
 
 ---
 
-## 第五部分：Gemini 蓝图勘误表
+## 第五部分（附录）：Gemini 蓝图勘误表
+
+> **2026-10 说明：** 本部分是 v1→v3 修订时留下的历史记录，帮助你练习“批判性阅读 AI 输出”。**学习时不需要阅读。** 其中第 2、4 条原先的“修正”本身也有错误，已在下表中更正。
 
 > **背景说明：** 本蓝图的初始版本由 Gemini 2.5 Pro 生成。AI 生成的长文档不可避免地包含事实错误、过时信息和观点性偏差。本部分对原始蓝图进行系统性勘误，分为三类：事实性错误、观点性偏差和结构性问题。
 >
@@ -6782,9 +8803,9 @@ collaborative workflow.
 | # | 原文描述 | 事实核查结果 | 修正建议 |
 |---|---------|------------|---------|
 | 1 | 推荐 PlanetScale 作为数据库选项 | PlanetScale 于 **2024 年 4 月关闭免费层**，Hobby 计划不再可用，对独立开发者不再友好。 | 替换为 **Supabase**（PostgreSQL + 一站式后端服务）或 **Neon**（纯 Serverless PostgreSQL，scale-to-zero）。 |
-| 2 | 描述 Next.js 16 具有"原生 MCP 集成" | Next.js 16 本身没有"原生 MCP 集成"。实际情况是 Next.js **16.2**（2026 年 3 月）引入了**实验性的 Agent DevTools**，可通过 `@next/agent` 包启用，允许 AI Agent 通过 MCP（Model Context Protocol）与开发服务器交互——这是开发工具层面的功能，不是框架运行时功能。 | 将"原生 MCP 集成"更正为"实验性 Agent DevTools（16.2+）"。明确这是**开发者工具**而非**用户功能**。不应列为 Next.js 16 的核心特性来学习。 |
+| 2 | 描述 Next.js 16 具有"原生 MCP 集成" | Next.js 16 本身没有"原生 MCP 集成"。实际情况是 Next.js **16.2**（2026 年 3 月）为 AI 编码工具加入了：`create-next-app` 自带 `AGENTS.md`（指向 `node_modules/next/dist/docs/` 中与版本匹配的文档）、浏览器错误转发到终端、开发服务器锁文件，以及实验性的 `@vercel/next-browser`（让 Agent 通过命令行检查运行中的应用）。**v3 中写的 `@next/agent` 包并不存在。**这些都是开发工具层面的功能，不是框架运行时功能。 | 将"原生 MCP 集成"更正为"面向 AI 编码工具的开发体验改进（16.2+）"。明确这是**开发者工具**而非**用户功能**。不应列为 Next.js 16 的核心特性来学习。 |
 | 3 | 将 shadcn/ui 描述为"headless component library" | **shadcn/ui 不是 headless 组件库。** 它是**预样式化的、可复制粘贴的组件集合**，构建在 headless 库（Radix UI / Base UI）之上。你得到的是带样式的完整组件源代码，复制到项目中后可以完全自定义。这与 Radix UI（真正的 headless 库，不带样式）有本质区别。 | 准确描述为"**基于 Radix UI 构建的预样式化组件集合**"。理解这个区别很重要——它决定了你使用 shadcn/ui 的方式：直接用，而不是从头写样式。 |
-| 4 | 将 React Server Components 和 Server Actions 描述为 Next.js 16 的新特性 | **RSC 在 Next.js 13 (2023) 引入，Server Actions 在 Next.js 14 (2023) 稳定。** Next.js 16（2025）的真正新特性是：`use cache` API（声明式缓存）、**Turbopack 作为默认构建工具**、**React Compiler**（自动优化）、`proxy.ts`（WebSocket 代理支持）。 | 正确归属各特性的引入版本。学习 RSC 和 Server Actions 时参考 Next.js 13/14 文档也完全有效。重点学习 16 的**真正新增特性**：`use cache`、Turbopack、React Compiler。 |
+| 4 | 将 React Server Components 和 Server Actions 描述为 Next.js 16 的新特性 | **RSC 在 Next.js 13 (2023) 引入，Server Actions 在 Next.js 14 (2023) 稳定。** Next.js 16（2025）的真正新特性是：`use cache` API（声明式缓存）、**Turbopack 作为默认构建工具**、**React Compiler**（自动优化）、`proxy.ts`（`middleware.ts` 改名而来，运行在 Node.js 运行时；**v3 写的“WebSocket 代理支持”是错误的**）。16.3–16.4 又加入了 Instant Navigations、Cache Components 默认开启等。 | 正确归属各特性的引入版本。学习 RSC 和 Server Actions 时参考 Next.js 13/14 文档也完全有效。重点学习 16 的**真正新增特性**：`use cache`、Turbopack、React Compiler。 |
 | 5 | React 19 课程内容未提及新 Hooks | **React 19（2024 年 12 月正式发布）引入了多个重要新 API**，原始蓝图完全未提及：`use()` hook（读取 Promise/Context 的新方式）、`useOptimistic`（乐观更新）、`useActionState`（Server Action 状态管理）、`useFormStatus`（表单提交状态）。这些是 Next.js 16 + Server Actions 工作流的核心 API。 | 在 Phase 2 的 Next.js 课程中必须覆盖这四个新 Hook。特别是 `useActionState` + `useFormStatus`，它们是 Server Actions 表单处理的标准模式。 |
 | 6 | 描述 Next.js 16 使用 React 19 | **Next.js 16 实际搭载的是 React 19.2**，而非 React 19.0。React 19.2 包含增量改进和 bug 修复。虽然大部分 API 与 19.0 一致，但某些行为细节（特别是 Suspense 边界和 streaming）有调整。 | 注明"React 19.2"而非笼统的"React 19"。当查阅 API 时参考最新的 React 文档而非发布时的博客文章。 |
 
